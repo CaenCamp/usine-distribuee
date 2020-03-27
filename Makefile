@@ -44,3 +44,25 @@ connect-api: ## Start cli in api container
 
 connect-admin: ## Start cli in admin container
 	${DC_DEV} exec admin bash
+
+# =====================================================================
+# DATABASE ============================================================
+# =====================================================================
+
+migrate-create: ## Create a new migration file, ie make migrate-create name=whatever-title
+	$(DC_DEV) exec api bash -ci 'yarn migrate:create -- ${name}'
+
+migrate-latest: ## Apply Migrations up to the last one
+	$(DC_DEV) exec api bash -ci 'yarn migrate:latest'
+
+migrate-rollback: ## Apply Migrations down to last state
+	$(DC_DEV) exec api bash -ci 'yarn migrate:rollback'
+
+migrate-down: ## Apply Migrations down one step
+	$(DC_DEV) exec api bash -ci 'yarn migrate:down'
+
+migrate-up: ## Apply Migrations up one step
+	$(DC_DEV) exec api bash -ci 'yarn migrate:up'
+
+migrate-list: ## Apply Migrations list
+	$(DC_DEV) exec api bash -ci 'yarn migrate:list'

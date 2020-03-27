@@ -11,7 +11,13 @@
   "license": "GPL-3.0",
   "private": false,
   "scripts": {
-    "dev": "nodemon --watch src src/index.js"
+    "dev": "nodemon --watch src src/index.js",
+    "migrate:latest": "knex migrate:latest",
+    "migrate:rollback": "knex migrate:rollback",
+    "migrate:up": "knex migrate:up",
+    "migrate:down": "knex migrate:down",
+    "migrate:list": "knex migrate:list",
+    "migrate:create": "knex migrate:make"
   },
   "dependencies": {
     "convict": "5.2.0",
