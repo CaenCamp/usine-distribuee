@@ -1,4 +1,4 @@
-# Usine Distribuée
+# Usine Partagée
 
 ## Prérequis
 
