@@ -1,0 +1,37 @@
+{
+  "name": "usine-distrubuee-api",
+  "version": "0.1.0",
+  "description": "Le backend de l'usine distribuée",
+  "main": "src/index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/CaenCamp/usine-distribuee.git"
+  },
+  "author": "Alexis Janvier <alexis@marmelab.com> (https://www.marmelab.com)",
+  "license": "GPL-3.0",
+  "private": false,
+  "scripts": {
+    "dev": "nodemon --watch src src/index.js"
+  },
+  "dependencies": {
+    "convict": "5.2.0",
+    "knex": "0.20.13",
+    "knex-paginate": "1.2.0",
+    "knex-stringcase": "1.4.1",
+    "koa": "2.11.0",
+    "koa-bodyparser": "4.3.0",
+    "koa-cors": "0.0.16",
+    "koa-json-error": "3.1.2",
+    "koa-router": "8.0.8",
+    "koa-static": "5.0.0",
+    "koa2-cors": "2.0.6",
+    "nodemon": "2.0.2",
+    "pg": "7.18.2",
+    "signale": "1.4.0"
+  },
+  "devDependencies": {
+    "eslint": "6.8.0",
+    "eslint-config-prettier": "6.10.0",
+    "prettier": "1.19.1"
+  }
+}

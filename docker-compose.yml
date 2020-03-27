@@ -1,0 +1,44 @@
+version: "3.5"
+
+services:
+  admin:
+    image: node:13.11.0
+    volumes:
+      - ./apps/admin:/admin
+    working_dir: "/admin"
+    user: ${CURRENT_UID}
+    ports:
+      - 8002:3000
+    command: "yarn start"
+    depends_on:
+      - api
+    environment:
+      - HOST=0.0.0.0
+      - BROWSER=none
+      - CI=true
+
+  api:
+    image: node:13.11.0
+    volumes:
+      - ./apps/api:/api
+    working_dir: "/api"
+    user: ${CURRENT_UID}
+    ports:
+      - 8001:3001
+    env_file:
+      - ./config/${NODE_ENV}.env
+    depends_on:
+      - postgres
+    command: "yarn dev"
+
+  postgres:
+    image: postgres:12.2
+    volumes:
+      - usine-distribuee-pgData:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
+    env_file:
+      - ./config/${NODE_ENV}.env
+
+volumes:
+  usine-distribuee-pgData:
