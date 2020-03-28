@@ -1,3 +1,4 @@
+const path = require('path');
 const Koa = require('koa');
 const cors = require('koa2-cors');
 const Router = require('koa-router');
@@ -37,15 +38,7 @@ const formatError = error => {
 app.use(bodyParser());
 app.use(error(formatError));
 
-if (env === 'development') {
-    router.get('/', ctx => {
-        ctx.body = {
-            message: 'Front is not serve here in dev environment.'
-        };
-    });
-} else {
-    app.use(serve(`${__dirname}/../builds/front`));
-}
+app.use(serve(path.resolve(__dirname, '../public')))
 
 router.get('/api', ctx => {
     ctx.body = { message: 'Usine Distribuée API' };
