@@ -1,6 +1,7 @@
 const Router = require('koa-router');
-const crypto = require('crypto');
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
+const crypto = require('crypto');
 
 const usersQueries = require('../user/usersQueries');
 const config = require('./config');
