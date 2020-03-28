@@ -18,6 +18,7 @@ exports.up = async function (knex) {
             );
             table.dateTime('created_at').defaultTo(knex.fn.now());
             table.dateTime('updated_at').defaultTo(knex.fn.now());
+            table.unique('email');
         })
         .createTable('production_management', function (table) {
             table

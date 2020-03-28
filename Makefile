@@ -66,3 +66,6 @@ migrate-up: ## Apply Migrations up one step
 
 migrate-list: ## Apply Migrations list
 	$(DC_DEV) exec api bash -ci 'yarn migrate:list'
+
+create-admin: ## Create a new administrator user_account in database
+	$(DC_DEV) exec api bash -ci 'node ./cli/create-admin.js'
