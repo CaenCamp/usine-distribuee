@@ -29,6 +29,7 @@
     "koa-bodyparser": "4.3.0",
     "koa-cors": "0.0.16",
     "koa-json-error": "3.1.2",
+    "koa-mount": "4.0.0",
     "koa-router": "8.0.8",
     "koa-static": "5.0.0",
     "koa2-cors": "2.0.6",
