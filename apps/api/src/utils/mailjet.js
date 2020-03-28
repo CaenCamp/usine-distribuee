@@ -1,4 +1,5 @@
 const config = require("../config");
+const signale = require('signale');
 
 const mailjet = require("node-mailjet").connect(
   config.mailjet.publicKey,
@@ -29,11 +30,8 @@ const sendRequestConfirmation = (emailTo, nameTo, maskRequestId) => {
     ]
   });
   request
-    .then(result => {
-      console.log(result.body);
-    })
     .catch(err => {
-      console.log(err.statusCode);
+      signale.error("Mailjet error: "+err.statusCode);
     });
 };
 
