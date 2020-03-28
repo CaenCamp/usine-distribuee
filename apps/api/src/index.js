@@ -6,7 +6,6 @@ const mount = require('koa-mount');
 const bodyParser = require('koa-bodyparser');
 const serve = require('koa-static');
 const error = require('koa-json-error');
-const mount = require('koa-mount');
 
 const config = require('./config');
 const dbMiddleware = require('./dbMiddleware');
