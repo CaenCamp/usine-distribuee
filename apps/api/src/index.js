@@ -6,6 +6,7 @@ const mount = require('koa-mount');
 const bodyParser = require('koa-bodyparser');
 const serve = require('koa-static');
 const error = require('koa-json-error');
+const compress = require('koa-compress');
 
 const config = require('./config');
 const dbMiddleware = require('./dbMiddleware');
@@ -41,6 +42,8 @@ const formatError = error => {
 
 app.use(bodyParser());
 app.use(error(formatError));
+
+app.use(compress());
 
 app.use(serve(path.resolve(__dirname, '../public')));
 app.use(mount('/', front));
