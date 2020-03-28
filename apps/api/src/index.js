@@ -54,8 +54,6 @@ app
     .use(authenticationRouter.routes())
     .use(authenticationRouter.allowedMethods());
 
-app.use(mount("/user_account", userRouter.routes()));
-
 // app.use(authenticationMiddleware);
 
 router.get("/api", ctx => {
@@ -63,6 +61,7 @@ router.get("/api", ctx => {
 });
 app.use(router.routes()).use(router.allowedMethods());
 app.use(productionManagementRouter.routes()).use(productionManagementRouter.allowedMethods());
+app.use(userRouter.routes()).use(userRouter.allowedMethods());
 
 app.listen(config.port, () =>
     global.console.log(`API started on port ${config.port}`)
