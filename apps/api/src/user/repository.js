@@ -2,7 +2,7 @@ const getOneByEmail = (client, email) => {
   return client
     .table("user_account")
     .first("user_account.*")
-    .where({ email });
+    .where("email", email);
 };
 
 const getOneById = (client, id) => {
@@ -13,6 +13,6 @@ const getOneById = (client, id) => {
 };
 
 module.exports = {
-    getOneByEmail,
-    getOneById,
+  getOneByEmail,
+  getOneById
 };

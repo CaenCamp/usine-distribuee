@@ -11,19 +11,16 @@ const router = new Router();
 router.post("/login", async ctx => {
   const { email, password } = ctx.request.body;
 
-  console.log(1);
   const user = await getOneByEmail(ctx.state.db, email);
-  console.log(1.5, { user });
+
   if (!user) {
     ctx.throw("Invalid credentials.", 401);
   }
-  console.log(2);
-  const passwordHash = bcrypt.hashSync(password, user.salt);
-  if (passwordHash !== user.password) {
+
+  if (!bcrypt.compareSync(password, user.password)) {
     ctx.throw("Invalid credentials.", 401);
   }
 
-  console.log(3);
   const token = jwt.sign(
     {
       id: user.id,
@@ -36,8 +33,11 @@ router.post("/login", async ctx => {
     .createHmac("sha256", config.authentication.secret)
     .update(token)
     .digest("hex");
+
   const delay = config.authentication.expirationTokenDelay * 1000;
+
   const tokenExpires = new Date(new Date().getTime() + delay);
+
   const cookieOptions = {
     expires: tokenExpires,
     httpOnly: true,
@@ -46,6 +46,7 @@ router.post("/login", async ctx => {
     secureProxy: false,
     signed: false
   };
+
   ctx.cookies.set("token", cookieToken, cookieOptions);
 
   ctx.body = {
