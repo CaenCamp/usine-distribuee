@@ -13,6 +13,8 @@ const dbMiddleware = require('./dbMiddleware');
 const authenticationRouter = require('./authentication/authenticationRouter');
 const authenticationMiddleware = require('./authentication/authenticationMiddleware');
 const front = require('./front');
+const productionManagementRouter = require('./production-management/router');
+
 
 const app = new Koa();
 
@@ -59,6 +61,7 @@ router.get('/api', ctx => {
     ctx.body = { message: 'Usine Distribuée API' };
 });
 app.use(router.routes()).use(router.allowedMethods());
+app.use(productionManagementRouter.routes()).use(productionManagementRouter.allowedMethods());
 
 app.listen(config.port, () =>
     global.console.log(`API started on port ${config.port}`)
