@@ -1,5 +1,5 @@
 {
-  "name": "usine-distrubuee-api",
+  "name": "usine-distribuee-api",
   "version": "0.1.0",
   "description": "Le backend de l'usine distribuée",
   "main": "src/index.js",
