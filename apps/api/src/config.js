@@ -72,7 +72,7 @@ const config = convict({
                 format: String,
                 env: 'POSTGRESQL_ADDON_PASSWORD'
             }
-        },
+        }
     }
 });
 

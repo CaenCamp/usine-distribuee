@@ -7,7 +7,7 @@ on:
     - github-actions-clever-cloud
 
 jobs:
-  deploy_admin:
+  api_admin:
     runs-on: ubuntu-latest
 
     steps:
@@ -16,21 +16,7 @@ jobs:
 
     - uses: 47ng/actions-clever-cloud@v1
       with:
-        appID: ${{ secrets.CLEVER_ADMIN_APP_ID }}
-      env:
-        CLEVER_TOKEN: ${{ secrets.CLEVER_TOKEN }}
-        CLEVER_SECRET: ${{ secrets.CLEVER_SECRET }}
-
-  deploy_api:
-    runs-on: ubuntu-latest
-
-    steps:
-    - uses: actions/checkout@v2
-    - run: git fetch --prune --unshallow
-
-    - uses: 47ng/actions-clever-cloud@v1
-      with:
-        appID: ${{ secrets.CLEVER_API_APP_ID }}
+        appID: ${{ secrets.CLEVER_APP_ID }}
       env:
         CLEVER_TOKEN: ${{ secrets.CLEVER_TOKEN }}
         CLEVER_SECRET: ${{ secrets.CLEVER_SECRET }}
