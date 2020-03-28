@@ -40,6 +40,13 @@
         </div>
         <% } %>
 
+        <% if (internalError) { %>
+        <div class="alert alert-danger alert-dismissable">
+            <h4>Erreur interne</h4>
+            <p>Un problème a été rencontré lors de l'enregistrement de votre commande. Veuillez retenter plus tard.</p>
+        </div>
+        <% } %>
+
         <div class="panel panel-default">
             <div class="panel-body">
                 <h2 style="margin-top: 0;">Usine Partagée</h2>
@@ -213,8 +220,8 @@
                     <h4>COMMENTAIRE</h4>
                 </div>
                 <div class="panel-body">
-                    <textarea id="comment" name="comment" class="form-control" rows="3"
-                        placeholder="Une précision pour le producteur ou le livreur ?"><%= request.comment %></textarea>
+                    <textarea id="requester_comment" name="requester_comment" class="form-control" rows="3"
+                        placeholder="Une précision pour le producteur ou le livreur ?"><%= request.requester_comment %></textarea>
                 </div>
             </div>
 

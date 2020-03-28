@@ -3,11 +3,24 @@ const path = require('path');
 const Koa = require('koa');
 const Router = require('koa-router')
 const views = require('koa-views');
+const signale = require('signale');
+
+const dbMiddleware = require('./dbMiddleware');
+const { insertOne } = require('./request/repository');
 
 const app = new Koa();
 const router = new Router();
 
+app.use(dbMiddleware);
+
 const { mtime } = fs.statSync(path.resolve(__dirname, './views/index.ejs'));
+
+const initContextState = (ctx) => {
+    ctx.state.errors = {};
+    ctx.state.internalError = false;
+    ctx.state.request = {};
+    ctx.state.success = false;
+}
 
 const renderCachedHomepage = async (ctx) => {
     ctx.set('ETag', `"${mtime.getTime().toString()}"`);
@@ -17,7 +30,7 @@ const renderCachedHomepage = async (ctx) => {
         return;
     }
 
-    ctx.state = { errors: {}, request: {}, success: false };
+    initContextState(ctx);
     return ctx.render('index.ejs');
 };
 
@@ -51,7 +64,7 @@ const validate = ({ mask_small_size_quantity, mask_large_size_quantity }) => {
 }
 
 router.post('/', async (ctx) => {
-    ctx.state = { errors: {}, request: {}, success: false };
+    initContextState(ctx);
 
     if (!ctx.request.body) {
         ctx.status = 400;
@@ -68,9 +81,16 @@ router.post('/', async (ctx) => {
         return ctx.render('index.ejs');
     }
 
-    // TODO: Create the request in DB
+    try {
+        await insertOne(ctx.state.db, request);
+        ctx.state.success = true;
+    } catch (error) {
+        signale.error(error);
+        ctx.status = 500;
+        ctx.state.internalError = true;
+        ctx.state.request = request;
+    }
 
-    ctx.state.success = true;
     return ctx.render('index.ejs');
 })
 
