@@ -5,6 +5,7 @@ export CURRENT_UID
 export NODE_ENV ?= development
 
 DC_DEV := docker-compose -p usine-distribuee
+DOCKER_ADMIN := docker run --rm -v ${PWD}/apps/admin:/admin -u=${CURRENT_UID} -w /admin node:13.11.0
 
 help: ## Display available commands
 	@fgrep -h "##" $(MAKEFILE_LIST) | fgrep -v fgrep | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
@@ -69,3 +70,13 @@ migrate-list: ## Apply Migrations list
 
 create-admin: ## Create a new administrator user_account in database
 	$(DC_DEV) exec api bash -ci 'node ./cli/create-admin.js'
+
+# =====================================================================
+# Deploy ==============================================================
+# =====================================================================
+
+prepare-deploy: ## Prepare app for production
+	${DOCKER_ADMIN} yarn build
+	rm -rf apps/api/admin
+	mkdir -p apps/api/admin
+	cp -R apps/admin/build/* apps/api/admin/

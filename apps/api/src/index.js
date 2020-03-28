@@ -2,6 +2,7 @@ const path = require('path');
 const Koa = require('koa');
 const cors = require('koa2-cors');
 const Router = require('koa-router');
+const mount = require('koa-mount');
 const bodyParser = require('koa-bodyparser');
 const serve = require('koa-static');
 const error = require('koa-json-error');
@@ -38,7 +39,9 @@ const formatError = error => {
 app.use(bodyParser());
 app.use(error(formatError));
 
-app.use(serve(path.resolve(__dirname, '../public')))
+app.use(serve(path.resolve(__dirname, '../public')));
+
+app.use(mount('/admin', serve(path.resolve(__dirname, '../admin'))));
 
 router.get('/api', ctx => {
     ctx.body = { message: 'Usine Distribuée API' };
