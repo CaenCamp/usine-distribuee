@@ -13,7 +13,7 @@ jobs:
     steps:
     - uses: 47ng/actions-clever-cloud@v1
       with:
-        alias: ${{ secrets.CLEVER_ADMIN_APP_ID }}
+        appID: ${{ secrets.CLEVER_ADMIN_APP_ID }}
       env:
         CLEVER_TOKEN: ${{ secrets.CLEVER_TOKEN }}
         CLEVER_SECRET: ${{ secrets.CLEVER_SECRET }}
@@ -24,7 +24,7 @@ jobs:
     steps:
     - uses: 47ng/actions-clever-cloud@v1
       with:
-        alias: ${{ secrets.CLEVER_API_APP_ID }}
+        appID: ${{ secrets.CLEVER_API_APP_ID }}
       env:
         CLEVER_TOKEN: ${{ secrets.CLEVER_TOKEN }}
         CLEVER_SECRET: ${{ secrets.CLEVER_SECRET }}
