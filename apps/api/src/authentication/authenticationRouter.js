@@ -57,7 +57,7 @@ router.get('/login', async ctx => {
 
     ​ctx.body = {
         token,
-        roles: user.roles,
+        role: user.role,
         email: user.email,
     };
 });

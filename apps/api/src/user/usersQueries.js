@@ -7,7 +7,7 @@ export const selectOneByEmail = async (email) => {
         email: '',
         salt: '',
         password: '',
-        roles: [],
+        role: '',
     })
 };
 
@@ -18,6 +18,6 @@ export const selectOneById = async (id) => {
         email: '',
         salt: '',
         password: '',
-        roles: [],
+        role: '',
     })
 };
