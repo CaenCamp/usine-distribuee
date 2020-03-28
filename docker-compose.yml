@@ -16,6 +16,7 @@ services:
       - HOST=0.0.0.0
       - BROWSER=none
       - CI=true
+      - API_URL=http://api:8001
 
   api:
     image: node:13.11.0
