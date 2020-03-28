@@ -12,7 +12,21 @@ const getOneById = (client, id) => {
     .where({ id });
 };
 
+const getAll = (client, email) => {
+  return client
+    .table("user_account")
+    .select("user_account.*");
+};
+
+const countAll = (client, email) => {
+  return client
+    .table("user_account")
+    .count("id");
+};
+
 module.exports = {
   getOneByEmail,
-  getOneById
+  getOneById,
+  getAll,
+  countAll,
 };

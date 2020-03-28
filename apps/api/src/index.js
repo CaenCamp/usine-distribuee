@@ -14,16 +14,16 @@ const authenticationRouter = require('./authentication/authenticationRouter');
 const authenticationMiddleware = require('./authentication/authenticationMiddleware');
 const front = require('./front');
 const productionManagementRouter = require('./production-management/router');
-
+const userRouter = require("./user/router");
 
 const app = new Koa();
 
 // See https://github.com/zadzbw/koa2-cors for configuration
 app.use(
     cors({
-        origin: '*',
-        allowHeaders: ['Origin, Content-Type, Accept'],
-        exposeHeaders: ['Content-Range']
+        origin: "*",
+        allowHeaders: ["Origin, Content-Type, Accept"],
+        exposeHeaders: ["Content-Range"]
     })
 );
 
@@ -44,21 +44,22 @@ const formatError = error => {
 
 app.use(bodyParser());
 app.use(error(formatError));
-
 app.use(compress());
 
-app.use(serve(path.resolve(__dirname, '../public')));
 app.use(mount('/', front));
 app.use(mount('/admin', serve(path.resolve(__dirname, '../admin'))));
 
 app.use(dbMiddleware);
+app
+    .use(authenticationRouter.routes())
+    .use(authenticationRouter.allowedMethods());
 
-app.use(authenticationRouter.routes()).use(authenticationRouter.allowedMethods());;
+app.use(mount("/user_account", userRouter.routes()));
 
 // app.use(authenticationMiddleware);
 
-router.get('/api', ctx => {
-    ctx.body = { message: 'Usine Distribuée API' };
+router.get("/api", ctx => {
+    ctx.body = { message: "Usine Distribuée API" };
 });
 app.use(router.routes()).use(router.allowedMethods());
 app.use(productionManagementRouter.routes()).use(productionManagementRouter.allowedMethods());
