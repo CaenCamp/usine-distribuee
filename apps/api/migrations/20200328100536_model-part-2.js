@@ -11,7 +11,6 @@ exports.up = function (knex) {
                 ['finess', 'rpps', 'adeli', 'other'],
                 { useNative: true, enumName: 'health_professional_type' }
             ).notNullable();
-            table.string('requester_other_type').nullable();
             table.string('requester_professional_identifier').notNullable();
             table.string('contact_name').notNullable();
             table.string('contact_email').notNullable();
