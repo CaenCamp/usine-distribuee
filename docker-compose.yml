@@ -12,6 +12,8 @@ services:
     command: "yarn start"
     depends_on:
       - api
+    env_file:
+      - ./config/${NODE_ENV}.env
     environment:
       - HOST=0.0.0.0
       - BROWSER=none
