@@ -160,6 +160,8 @@
                     <h4>COMMANDE</h4>
                 </div>
                 <div class="panel-body">
+                    <p>Minimum 5 masques par commande</p>
+
                     <div class="form-group">
                         <label for="mask_small_size_quantity">Quantité souhaitée modèle court</label>
                         <input type="number" id="mask_small_size_quantity" name="mask_small_size_quantity"
@@ -178,6 +180,33 @@
 
             <div class="panel panel-default">
                 <div class="panel-heading">
+                    <h4>PREVISIONNEL</h4>
+                </div>
+                <div class="panel-body">
+                    <p>
+                        Afin d'anticiper au mieux la production de masque dans les prochaines semaines, pensez-vous
+                        devoir
+                        passer une nouvelle commande dans les temps à venir ?
+                        <br />
+                        Si non, vous pouvez passer à la suite.
+                    </p>
+
+                    <div class="form-group">
+                        <label for="forecast_quantity">Combien de masque ?</label>
+                        <input type="number" id="forecast_quantity" name="forecast_quantity"
+                            class="form-control stepper-input" min="0" value="0" />
+                    </div>
+
+                    <div class="form-group">
+                        <label for="forecast_days">Dans combien de jours ?</label>
+                        <input type="number" id="forecast_days" name="forecast_days" class="form-control stepper-input"
+                            min="0" value="0" />
+                    </div>
+                </div>
+            </div>
+
+            <div class="panel panel-default">
+                <div class="panel-heading">
                     <h4>COMMENTAIRE</h4>
                 </div>
                 <div class="panel-body">
@@ -185,8 +214,40 @@
                         placeholder="Une précision pour le producteur ou le livreur ?"></textarea>
                 </div>
             </div>
+
+            <div class="submit">
+                <button type="button" class="btn btn-primary">ENVOYER</button>
+            </div>
         </form>
     </div>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="clearfix">
+                <div class="footer-logo"><img src="/img/caencamp.png" alt="" width="120" /></div>
+                <dl class="footer-nav">
+                    <dt class="nav-title">PRODUCTION</dt>
+                    <dd class="nav-item"><a href="https://www.caen.camp/">CaenCamp</a></dd>
+                    <dd class="nav-item"><a href="https://github.com/CaenCamp">GitHub</a></dd>
+                    <dd class="nav-item"><a href="https://twitter.com/caencamp">Twitter</a></dd>
+                </dl>
+                <dl class="footer-nav">
+                    <dt class="nav-title">VIE PRIVEE</dt>
+                    <dd class="nav-item">Aucun cookie</dd>
+                    <dd class="nav-item">Aucune donnée n'est récoltée, ni stockée</dd>
+                </dl>
+                <dl class="footer-nav">
+                    <dt class="nav-title">HEBERGEMENT</dt>
+                    <dd class="nav-item"><a href="https://www.clever-cloud.com">Clever Cloud SAS</a></dd>
+                    <dd class="nav-item">3 rue de l'Allier</dd>
+                    <dd class="nav-item">44000 NANTES</dd>
+                    <dd class="nav-item">+33 2 85 52 07 69</dd>
+                </dl>
+            </div>
+            <div class="footer-copyright text-center">Les sources de ce site internet sont disponible à l'adresse <a
+                    href="https://github.com/CaenCamp/usine-distribuee">github.com/CaenCamp/usine-distribuee</a></div>
+        </div>
+    </footer>
 
     <script src="/bootstrap/jquery-1.11.0.min.js"></script>
     <script src="/bootstrap/bootstrap.min.js"></script>
