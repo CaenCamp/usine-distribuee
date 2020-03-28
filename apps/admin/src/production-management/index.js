@@ -1,12 +1,13 @@
 import PMIcon from "@material-ui/icons/Storefront";
-import { ListGuesser, EditGuesser } from 'react-admin';
 
 import { ProductionManagementCreate } from './Create';
+import { ProductionManagementEdit } from './Edit';
+import { ProductionManagementList } from './List';
 
 export default {
     create: ProductionManagementCreate,
-    edit: EditGuesser,
+    edit: ProductionManagementEdit,
     icon: PMIcon,
-    list: ListGuesser,
-    options: { label: "Pôle de gestion" }
+    list: ProductionManagementList,
+    options: { label: "Pôles de gestion" }
 };
