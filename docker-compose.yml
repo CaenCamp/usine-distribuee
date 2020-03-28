@@ -9,6 +9,8 @@ services:
     user: ${CURRENT_UID}
     ports:
       - 8002:3000
+    env_file:
+      - ./config/${NODE_ENV}.env
     command: "yarn start"
     depends_on:
       - api
