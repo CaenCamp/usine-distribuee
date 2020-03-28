@@ -50,7 +50,7 @@ app.use(dbMiddleware);
 
 app.use(authenticationRouter.routes()).use(authenticationRouter.allowedMethods());;
 
-app.use(authenticationMiddleware);
+// app.use(authenticationMiddleware);
 
 router.get('/api', ctx => {
     ctx.body = { message: 'Usine Distribuée API' };

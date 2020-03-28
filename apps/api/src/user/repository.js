@@ -1,14 +1,14 @@
-const getOneByEmail = async (client, email) => {
+const getOneByEmail = (client, email) => {
   return client
-    .table("user_accounts")
-    .first("user_accounts.*")
+    .table("user_account")
+    .first("user_account.*")
     .where({ email });
 };
 
-const getOneById = async (client, id) => {
+const getOneById = (client, id) => {
   return client
-    .table("user_accounts")
-    .first("user_accounts.*")
+    .table("user_account")
+    .first("user_account.*")
     .where({ id });
 };
 

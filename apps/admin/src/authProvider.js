@@ -9,9 +9,9 @@ import {
 export default (type, params) => {
   if (type === AUTH_LOGIN) {
     const { username, password } = params;
-    const request = new Request(`${process.env.API_URL}/login`, {
+    const request = new Request(`http://localhost:8001/login`, {
       method: "POST",
-      body: JSON.stringify({ username, password }),
+      body: JSON.stringify({ email: username, password }),
       headers: new Headers({ "Content-Type": "application/json" })
     });
     return fetch(request)
