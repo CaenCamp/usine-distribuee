@@ -11,6 +11,7 @@ exports.up = function (knex) {
                 ['finess', 'rpps', 'adeli', 'other'],
                 { useNative: true, enumName: 'health_professional_type' }
             ).notNullable();
+            table.string('requester_other_type').nullable();
             table.string('requester_professional_identifier').notNullable();
             table.string('contact_name').notNullable();
             table.string('contact_email').notNullable();
@@ -42,6 +43,8 @@ exports.up = function (knex) {
                 ],
                 { useNative: true, enumName: 'request_status_type' }
             ).notNullable().defaultTo('DISPATCH_TODO');
+            table.integer('forecast_number_of_mask').notNullable().defaultTo(0);
+            table.integer('forecast_number_of_days').notNullable().defaultTo(0);
             table.dateTime('created_at').defaultTo(knex.fn.now());
             table.dateTime('updated_at').defaultTo(knex.fn.now());
         });
