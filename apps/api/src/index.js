@@ -8,6 +8,9 @@ const serve = require('koa-static');
 const error = require('koa-json-error');
 
 const config = require('./config');
+const dbMiddleware = require('./dbMiddleware');
+const authenticationRouter = require('./authentication/authenticationRouter');
+const authenticationMiddleware = require('./authentication/authenticationMiddleware');
 
 const app = new Koa();
 
@@ -42,6 +45,12 @@ app.use(error(formatError));
 app.use(serve(path.resolve(__dirname, '../public')));
 
 app.use(mount('/admin', serve(path.resolve(__dirname, '../admin'))));
+
+app.use(dbMiddleware);
+
+app.use(authenticationRouter.routes()).use(authenticationRouter.allowedMethods());;
+
+// app.use(authenticationMiddleware);
 
 router.get('/api', ctx => {
     ctx.body = { message: 'Usine Distribuée API' };
