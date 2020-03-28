@@ -1,0 +1,33 @@
+html, body {
+    background-color: rgb(240, 235, 248) !important;
+}
+
+.navbar {
+    border-top-left-radius: 0 !important;
+    border-top-right-radius: 0 !important;
+}
+
+.content-container {
+    max-width: 720px;
+    margin: 0 auto;
+}
+
+.panel {
+    margin-top: 3rem;
+}
+
+.panel-heading h4 {
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+.address-box {
+    display: flex;
+}
+.address-box .postal-code {
+    flex: 1 0 0;
+}
+.address-box .city {
+    flex: 4 0 0;
+    padding-left: 3rem;
+}

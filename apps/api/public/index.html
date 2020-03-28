@@ -4,10 +4,195 @@
 <head>
     <meta charset="utf-8" />
     <title>Usine Distribuée</title>
+    <link rel="stylesheet" href="/bootstrap/bootstrap.min.css" />
+    <link rel="stylesheet" href="/bootflat/css/bootflat.css" />
+    <link rel="stylesheet" href="/index.css" />
 </head>
 
 <body>
-    Coucou
+    <header>
+        <nav class="navbar navbar-inverse" role="navigation">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="/">Usine Distribuée</a>
+                </div>
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-6">
+                    <p class="navbar-text">Dispositif Régional - Référencement des besoins</p>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <div class="content-container">
+        <div class="jumbotron">
+            <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+                <ol class="carousel-indicators">
+                    <li data-target="#rc2" data-slide-to="0" class="active"></li>
+                    <li data-target="#rc3-stacked" data-slide-to="1" class=""></li>
+                    <li data-target="#usage-example" data-slide-to="2" class=""></li>
+                    <li data-target="#zoom" data-slide-to="3" class=""></li>
+                    <li data-target="#spec" data-slide-to="4" class=""></li>
+                </ol>
+                <div class="carousel-inner">
+                    <div class="item active"><img src="/img/rc2.jpg"></div>
+                    <div class="item"><img src="/img/rc3-stacked.jpg"></div>
+                    <div class="item"><img src="/img/usage-example.jpg"></div>
+                    <div class="item"><img src="/img/zoom.jpg" /></div>
+                    <div class="item"><img src="/img/spec.png" /></div>
+                </div>
+                <a class="left carousel-control" href="#carousel-example-generic" data-slide="prev">
+                    <span class="glyphicon glyphicon-chevron-left"></span>
+                </a>
+                <a class="right carousel-control" href="#carousel-example-generic" data-slide="next">
+                    <span class="glyphicon glyphicon-chevron-right"></span>
+                </a>
+            </div>
+
+            <div class="jumbotron-contents">
+                <h1>Usine Distribuée</h1>
+                <h2>Référencement des besoins</h2>
+                <p>
+                    Ce formulaire est destiné aux professionnels de santé.
+                    <br />
+                    <br />
+                    Son objectif est de référencer les besoins en matière d'écrans faciaux liés au COVID-19.
+                    <br />
+                    Sous réserve d'un accord définitif et formalisé, la <a href="https://www.normandie.fr/">Région
+                        Normandie</a> prendra en charge tous les
+                    frais de
+                    l'opération.
+                    <br />
+                    Ce cas échéant, les masques seront donc gratuits.
+                </p>
+            </div>
+        </div>
+
+        <form>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4>ORGANISATION</h4>
+                </div>
+                <div class="panel-body">
+                    <div class="form-group">
+                        <label for="requester_name">Nom de la structure</label>
+                        <input type="text" class="form-control" id="requester_name" name="requester_name" placeholder=""
+                            required />
+                    </div>
+
+                    <div class="form-group">
+                        <label for="requester_type">Type de numéro de professionnel de santé</label>
+                        <select class="form-control" id="requester_type" name="requester_type" required>
+                            <option value="finess">FINESS</option>
+                            <option value="rpps">RPPS</option>
+                            <option value="adeli">ADELI</option>
+                            <option value="other">Autre</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="requester_professional_identifier">Numéro de professionnel de santé</label>
+                        <input type="text" class="form-control" id="requester_professional_identifier"
+                            name="requester_professional_identifier" placeholder="" required />
+                    </div>
+                </div>
+            </div>
+
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4>CONTACT OPERATIONEL</h4>
+                </div>
+                <div class="panel-body">
+                    <p>Il s'agit du référent qui s'occupera de receptionner la commande, qui pourra être contacté pour
+                        les besoins de la livraison.</p>
+
+                    <div class="form-group">
+                        <label for="contact_name">Nom</label>
+                        <input type="text" class="form-control" id="contact_name" name="contact_name"
+                            placeholder="NOM Prénom" required />
+                    </div>
+
+                    <div class="form-group">
+                        <label for="contact_email">Adresse email</label>
+                        <input type="email" class="form-control" id="contact_email" name="contact_email" required />
+                    </div>
+
+                    <div class="form-group">
+                        <label for="contact_phone">Numéro de téléphone</label>
+                        <input type="text" class="form-control" id="contact_phone" name="contact_phone" required />
+                        <p class="help-block">Téléphone mobile, si possible</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4>ADRESSE DE LIVRAISON</h4>
+                </div>
+                <div class="panel-body">
+                    <div class="form-group">
+                        <label for="delivery_address">Adresse</label>
+                        <input type="text" class="form-control" id="delivery_address" name="delivery_address"
+                            required />
+                    </div>
+
+                    <div class="address-box">
+                        <div class="postal-code">
+                            <div class="form-group">
+                                <label for="delivery_postal_code">Code Postal</label>
+                                <input type="text" class="form-control" id="delivery_postal_code"
+                                    name="delivery_postal_code" required />
+                            </div>
+                        </div>
+                        <div class="city">
+                            <div class="form-group">
+                                <label for="delivery_city">Ville</label>
+                                <input type="text" class="form-control" id="delivery_city" name="delivery_city"
+                                    required />
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4>COMMANDE</h4>
+                </div>
+                <div class="panel-body">
+                    <div class="form-group">
+                        <label for="mask_small_size_quantity">Quantité souhaitée modèle court</label>
+                        <input type="number" id="mask_small_size_quantity" name="mask_small_size_quantity"
+                            class="form-control stepper-input" value="0" min="0" />
+                        <p class="help-block">Hauteur visière : 24cm</p>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="mask_large_size_quantity">Quantité souhaitée modèle long</label>
+                        <input type="number" id="mask_large_size_quantity" name="mask_large_size_quantity"
+                            class="form-control stepper-input" value="0" min="0" />
+                        <p class="help-block">Hauteur visière : 34cm</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4>COMMENTAIRE</h4>
+                </div>
+                <div class="panel-body">
+                    <textarea id="comment" class="form-control" rows="3"
+                        placeholder="Une précision pour le producteur ou le livreur ?"></textarea>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <script src="/bootstrap/jquery-1.11.0.min.js"></script>
+    <script src="/bootstrap/bootstrap.min.js"></script>
+    <script src="/bootflat/js/icheck.min.js"></script>
+    <script src="/bootflat/js/jquery.fs.selecter.min.js"></script>
+    <script src="/bootflat/js/jquery.fs.stepper.min.js"></script>
 </body>
 
 </html>
