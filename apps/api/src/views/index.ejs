@@ -40,6 +40,13 @@
         </div>
         <% } %>
 
+        <% if (internalError) { %>
+        <div class="alert alert-danger alert-dismissable">
+            <h4>Erreur interne</h4>
+            <p>Un problème a été rencontré lors de l'enregistrement de votre commande. Veuillez retenter plus tard.</p>
+        </div>
+        <% } %>
+
         <div class="panel panel-default">
             <div class="panel-body">
                 <h2 style="margin-top: 0;">Usine Partagée</h2>

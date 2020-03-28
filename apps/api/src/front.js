@@ -3,6 +3,8 @@ const path = require('path');
 const Koa = require('koa');
 const Router = require('koa-router')
 const views = require('koa-views');
+const signale = require('signale');
+
 const dbMiddleware = require('./dbMiddleware');
 const { insertOne } = require('./request/repository');
 
@@ -15,6 +17,7 @@ const { mtime } = fs.statSync(path.resolve(__dirname, './views/index.ejs'));
 
 const initContextState = (ctx) => {
     ctx.state.errors = {};
+    ctx.state.internalError = false;
     ctx.state.request = {};
     ctx.state.success = false;
 }
@@ -78,9 +81,16 @@ router.post('/', async (ctx) => {
         return ctx.render('index.ejs');
     }
 
-    await insertOne(ctx.state.db, request);
+    try {
+        await insertOne(ctx.state.db, request);
+        ctx.state.success = true;
+    } catch (error) {
+        signale.error(error);
+        ctx.status = 500;
+        ctx.state.internalError = true;
+        ctx.state.request = request;
+    }
 
-    ctx.state.success = true;
     return ctx.render('index.ejs');
 })
 
