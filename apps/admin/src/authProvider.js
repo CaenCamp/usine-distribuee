@@ -5,12 +5,11 @@ import {
   AUTH_CHECK,
   AUTH_GET_PERMISSIONS
 } from "react-admin";
-import decodeJwt from "jwt-decode";
 
 export default (type, params) => {
   if (type === AUTH_LOGIN) {
     const { username, password } = params;
-    const request = new Request(`${process.env.API_URL}/authenticate`, {
+    const request = new Request(`${process.env.API_URL}/login`, {
       method: "POST",
       body: JSON.stringify({ username, password }),
       headers: new Headers({ "Content-Type": "application/json" })
@@ -22,10 +21,9 @@ export default (type, params) => {
         }
         return response.json();
       })
-      .then(({ token }) => {
-        const decodedToken = decodeJwt(token);
+      .then(({ token, roles }) => {
         localStorage.setItem("token", token);
-        localStorage.setItem("roles", decodedToken.roles);
+        localStorage.setItem("roles", roles);
       });
   }
   if (type === AUTH_LOGOUT) {
