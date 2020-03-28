@@ -10,6 +10,7 @@ html, body {
 .content-container {
     max-width: 720px;
     margin: 0 auto;
+    margin-bottom: 5rem;
 }
 
 .panel {
@@ -30,4 +31,12 @@ html, body {
 .address-box .city {
     flex: 4 0 0;
     padding-left: 3rem;
+}
+
+.submit {
+    text-align: right;
+}
+
+footer .nav-item {
+    color: #e6e9ed;
 }
