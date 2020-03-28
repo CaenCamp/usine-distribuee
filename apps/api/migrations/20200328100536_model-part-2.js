@@ -21,9 +21,9 @@ exports.up = function (knex) {
             table.text('requester_comment').nullable();
             table.integer('mask_small_size_quantity').notNullable().defaultTo(0);
             table.integer('mask_large_size_quantity').notNullable().defaultTo(0);
-            table.uuid('id_production_management').nullable();
+            table.uuid('production_management_id').nullable();
             table
-                .foreign('id_production_management')
+                .foreign('production_management_id')
                 .references('production_management.id')
                 .onDelete('SET NULL');
 
@@ -31,9 +31,17 @@ exports.up = function (knex) {
 
             table.enu(
                 'status',
-                ['to_dispatch', 'rejected', 'to_confirm', 'assigned', 'in_production', 'produced', 'delivered'],
+                [
+                    'DISPATCH_TODO',
+                    'DISPATCH_REJECTED',
+                    'DISPATCH_PENDING',
+                    'MANAGEMENT_TODO',
+                    'MANAGEMENT_BUILDING',
+                    'MANAGEMENT_BUILT',
+                    'MANAGEMENT_DELIVERED',
+                ],
                 { useNative: true, enumName: 'request_status_type' }
-            ).notNullable().defaultTo('to_dispatch');
+            ).notNullable().defaultTo('DISPATCH_TODO');
             table.dateTime('created_at').defaultTo(knex.fn.now());
             table.dateTime('updated_at').defaultTo(knex.fn.now());
         });

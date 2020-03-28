@@ -34,14 +34,14 @@ exports.up = async function (knex) {
             table.dateTime('updated_at').defaultTo(knex.fn.now());
         })
         .createTable('production_management_user', function (table) {
-            table.uuid('id_user_account').notNullable();
+            table.uuid('user_account_id').notNullable();
             table
-                .foreign('id_user_account')
+                .foreign('user_account_id')
                 .references('user_account.id')
                 .onDelete('CASCADE');
-            table.uuid('id_production_management').notNullable();
+            table.uuid('production_management_id').notNullable();
             table
-                .foreign('id_production_management')
+                .foreign('production_management_id')
                 .references('production_management.id')
                 .onDelete('CASCADE');
             table.dateTime('created_at').defaultTo(knex.fn.now());
