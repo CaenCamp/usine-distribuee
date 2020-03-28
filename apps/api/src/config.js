@@ -39,6 +39,26 @@ const config = convict({
             env: 'POSTGRES_PASSWORD'
         }
     },
+    authentication: {
+        privateKey:  {
+            doc: 'Authentication jwt private key',
+            format: String,
+            default: 'pr1v4t3-k3y',
+            env: 'AUTHENTICATION_PRIVATE_KEY'
+        },
+        secret: {
+            doc: 'Authentication cryptography secret',
+            format: String,
+            default: 's3cr3t',
+            env: 'AUTHENTICATION_SECRET'
+        },
+        expirationTokenDelay: {
+            doc: 'Authentication token expiration delay (seconds)',
+            format: 'nat',
+            default: 3600 * 24,
+            env: 'AUTHENTICATION_EXPIRATION_TOKEN_DELAY'
+        }
+    },
     port: {
         doc: 'API port',
         format: 'port',
