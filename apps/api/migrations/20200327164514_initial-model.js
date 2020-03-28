@@ -13,7 +13,7 @@ exports.up = async function (knex) {
             table.string('phone').nullable();
             table.enu(
                 'role',
-                ['admin', 'dispatcher', 'production manager', 'guest'],
+                ['admin', 'dispatcher', 'production_manager', 'guest'],
                 { useNative: true, enumName: 'user_role' }
             );
             table.dateTime('created_at').defaultTo(knex.fn.now());
@@ -48,9 +48,12 @@ exports.up = async function (knex) {
         });
 };
 
-exports.down = function (knex) {
-    return knex.schema
+exports.down = async function (knex) {
+    await knex.schema
         .dropTable('production_management_user')
         .dropTable('production_management')
-        .dropTable('user_account');
+        .dropTable('user_account')
+        .dropExtensionIfExists('uuid-ossp');
+
+    return knex.raw('DROP TYPE IF EXISTS user_role');
 };
