@@ -7103,6 +7103,11 @@ jsx-ast-utils@^2.2.1, jsx-ast-utils@^2.2.3:
     array-includes "^3.0.3"
     object.assign "^4.1.0"
 
+jwt-decode@^2.2.0:
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/jwt-decode/-/jwt-decode-2.2.0.tgz#7d86bd56679f58ce6a84704a657dd392bba81a79"
+  integrity sha1-fYa9VmefWM5qhHBKZX3TkruoGnk=
+
 keygrip@~1.1.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/keygrip/-/keygrip-1.1.0.tgz#871b1681d5e159c62a445b0c74b615e0917e7226"
@@ -8060,7 +8065,7 @@ node-polyglot@^2.2.2:
     string.prototype.trim "^1.1.2"
     warning "^4.0.3"
 
-node-pre-gyp@*, node-pre-gyp@0.14.0:
+node-pre-gyp@0.14.0:
   version "0.14.0"
   resolved "https://registry.yarnpkg.com/node-pre-gyp/-/node-pre-gyp-0.14.0.tgz#9a0596533b877289bcad4e143982ca3d904ddc83"
   integrity sha512-+CvDC7ZttU/sSt9rFjix/P05iS43qHCOOGzcr3Ry99bXG7VX953+vFyEuph/tfqoYu8dttBkE86JSKBO2OzcxA==
@@ -9892,6 +9897,13 @@ ra-core@^3.3.3:
     recompose "~0.26.0"
     reselect "~3.0.0"
 
+ra-data-simple-rest@^3.3.2:
+  version "3.3.2"
+  resolved "https://registry.yarnpkg.com/ra-data-simple-rest/-/ra-data-simple-rest-3.3.2.tgz#cf64a830b88571af6f9ecfdeee96ec2501fa79ca"
+  integrity sha512-BaV3jGYaT0bLo1KkaC5nLt3FBxdhmv1lXItBT0oPkXfjnQgiMDIJkZIjvkOCJofDSW8L4M/Tkc2uQ5u+MBS81w==
+  dependencies:
+    query-string "^5.1.1"
+
 ra-i18n-polyglot@^3.3.3:
   version "3.3.3"
   resolved "https://registry.yarnpkg.com/ra-i18n-polyglot/-/ra-i18n-polyglot-3.3.3.tgz#52cad332a71c6cda26fd02be1372e03ee1bc8b27"
@@ -9981,7 +9993,7 @@ rc@^1.0.1, rc@^1.1.6, rc@^1.2.7:
     minimist "^1.2.0"
     strip-json-comments "~2.0.1"
 
-react-admin@3.3.3:
+react-admin@^3.3.3:
   version "3.3.3"
   resolved "https://registry.yarnpkg.com/react-admin/-/react-admin-3.3.3.tgz#05d03ea8bcb7425caf4e48076138f4da1a4825b8"
   integrity sha512-sUiwC/jaL+0RvJFuA/8dsKB7brmno0+d+++Y52G9coBeJceEmY41gEh9Q9w/GUQb4+9VstyJj9Aoq1ns2Qnteg==
