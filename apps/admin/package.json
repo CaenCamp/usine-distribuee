@@ -2,7 +2,7 @@
   "name": "usine-distribuee-admin",
   "version": "0.1.0",
   "description": "L'administration de l'usine distribuée",
-  "private": false,
+  "private": true,
   "license": "GPL-3.0",
   "dependencies": {
     "@testing-library/jest-dom": "^4.2.4",
