@@ -1,7 +1,7 @@
 .PHONY: install start stop
 
-CURRENT_UID=$(id -u):$(id -g)
-export CURRENT_UID ?= $(shell id -u):$(shell id -g)
+CURRENT_UID=$(shell id -u):$(shell id -g)
+export CURRENT_UID
 export NODE_ENV ?= development
 
 DC_DEV := docker-compose -p usine-distribuee
