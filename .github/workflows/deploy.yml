@@ -3,14 +3,17 @@ name: Deployment
 on:
   push:
     branches:
-      - master
-      - github-actions-clever-cloud
+    - master
+    - github-actions-clever-cloud
 
 jobs:
   deploy_admin:
     runs-on: ubuntu-latest
 
     steps:
+    - uses: actions/checkout@v2
+    - run: git fetch --prune --unshallow
+
     - uses: 47ng/actions-clever-cloud@v1
       with:
         appID: ${{ secrets.CLEVER_ADMIN_APP_ID }}
@@ -22,6 +25,9 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+    - uses: actions/checkout@v2
+    - run: git fetch --prune --unshallow
+
     - uses: 47ng/actions-clever-cloud@v1
       with:
         appID: ${{ secrets.CLEVER_API_APP_ID }}
