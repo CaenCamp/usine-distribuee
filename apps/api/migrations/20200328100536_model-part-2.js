@@ -43,8 +43,6 @@ exports.up = function (knex) {
                 ],
                 { useNative: true, enumName: 'request_status_type' }
             ).notNullable().defaultTo('DISPATCH_TODO');
-            table.integer('forecast_number_of_mask').notNullable().defaultTo(0);
-            table.integer('forecast_number_of_days').notNullable().defaultTo(0);
             table.dateTime('created_at').defaultTo(knex.fn.now());
             table.dateTime('updated_at').defaultTo(knex.fn.now());
         });
