@@ -19,7 +19,7 @@ const sendRequestConfirmation = (emailTo, nameTo, maskRequestId) => {
             Name: nameTo
           }
         ],
-        TemplateID: 1323123,
+        TemplateID: config.mailjet.maskRequestConfirmTemplateId,
         TemplateLanguage: true,
         Subject: "Demande de masques enregistrée",
         Variables: {

@@ -77,6 +77,12 @@ const config = convict({
             format: String,
             default: '',
             env: 'MJ_APIKEY_PRIVATE'
+        },
+        maskRequestConfirmTemplateId: {
+            doc: 'Mailjet mask request confirmation template id',
+            format: String,
+            default: '',
+            env: 'MJ_MASKREQCONFIRM_TPL_ID'
         }
     },
     cleverCloud: {
