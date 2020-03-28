@@ -1,5 +1,5 @@
 {
-  "name": "usine-distrubuee-api",
+  "name": "usine-distribuee-api",
   "version": "0.1.0",
   "description": "Le backend de l'usine distribuée",
   "main": "src/index.js",
@@ -9,8 +9,9 @@
   },
   "author": "Alexis Janvier <alexis@marmelab.com> (https://www.marmelab.com)",
   "license": "GPL-3.0",
-  "private": false,
+  "private": true,
   "scripts": {
+    "start": "node src/index.js",
     "dev": "nodemon --watch src src/index.js",
     "migrate:latest": "knex migrate:latest",
     "migrate:rollback": "knex migrate:rollback",
