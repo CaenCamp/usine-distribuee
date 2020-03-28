@@ -1,15 +1,25 @@
 import React from "react";
-import { Edit, SimpleForm, TextInput } from "react-admin";
+import { SelectInput, Edit, SimpleForm, TextInput } from "react-admin";
+
+import { userRoles } from './index';
+
+const Title = ({ record }) =>
+    record ? `Edition d'utilisateur "${record.email}"` : null;
 
 export default props => (
-  <Edit {...props}>
-    <SimpleForm>
-      <TextInput source="email" />
-      <TextInput source="password" />
-      <TextInput source="firstName" />
-      <TextInput source="lastName" />
-      <TextInput source="phone" />
-      <TextInput source="role" />
-    </SimpleForm>
-  </Edit>
+    <Edit title={<Title />} {...props}>
+        <SimpleForm>
+            <TextInput source="email" label="Email" fullWidth />
+            <TextInput source="firstName" label="Prénom" fullWidth />
+            <TextInput source="lastName" label="Nom" fullWidth />
+            <TextInput source="phone" label="Téléphone" fullWidth />
+            <SelectInput
+                source="role"
+                label="Role"
+                choices={userRoles}
+                fullWidth
+            />
+            <TextInput source="newPassword" label="Nouveau mot de passe" fullWidth />
+        </SimpleForm>
+    </Edit>
 );
