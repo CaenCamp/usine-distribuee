@@ -13,15 +13,24 @@ const getOneById = (client, id) => {
 };
 
 const getAll = (client, email) => {
-  return client
-    .table("user_account")
-    .select("user_account.*");
+  return client.table("user_account").select("user_account.*");
 };
 
 const countAll = (client, email) => {
+  return client.table("user_account").count("id");
+};
+
+const updateOne = (client, id, changes) => {
   return client
     .table("user_account")
-    .count("id");
+    .where({ id })
+    .update(changes, ["user_account.*"]);
+};
+
+const insertOne = (client, data) => {
+  return client
+    .table("user_account")
+    .insert(data, ["user_account.*"]);
 };
 
 module.exports = {
@@ -29,4 +38,6 @@ module.exports = {
   getOneById,
   getAll,
   countAll,
+  updateOne,
+  insertOne,
 };
