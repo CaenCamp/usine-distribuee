@@ -9,11 +9,14 @@ import {
 export default (type, params) => {
   if (type === AUTH_LOGIN) {
     const { username, password } = params;
-    const request = new Request(`http://localhost:8001/login`, {
-      method: "POST",
-      body: JSON.stringify({ email: username, password }),
-      headers: new Headers({ "Content-Type": "application/json" })
-    });
+    const request = new Request(
+      `${process.env.REACT_APP_API_URL || ""}/authenticate`,
+      {
+        method: "POST",
+        body: JSON.stringify({ email: username, password }),
+        headers: new Headers({ "Content-Type": "application/json" })
+      }
+    );
     return fetch(request)
       .then(response => {
         if (response.status < 200 || response.status >= 300) {
