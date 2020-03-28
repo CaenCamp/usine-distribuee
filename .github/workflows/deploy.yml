@@ -2,9 +2,9 @@ name: Deployment
 
 on:
   push:
-    branches: [ master ]
-  pull_request:
-    branches: [ master, github-actions-clever-cloud ]
+    branches:
+      - master
+      - github-actions-clever-cloud
 
 jobs:
   deploy_admin:
