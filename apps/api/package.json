@@ -25,7 +25,7 @@
     "crypto": "^1.0.1",
     "jsonwebtoken": "^8.5.1",
     "knex": "0.20.13",
-    "knex-paginate": "1.2.0",
+    "knex-paginate": "^1.2.0",
     "knex-stringcase": "1.4.1",
     "koa": "2.11.0",
     "koa-bodyparser": "4.3.0",

@@ -3,19 +3,18 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const crypto = require('crypto');
 
-const usersQueries = require('../user/usersQueries');
-const config = require('./config');
+const { getOneByEmail } = require('../user/repository');
+const config = require('../config');
 
 const router = new Router();
 
 router.get('/login', async ctx => {
     const { email, password } = ctx.request.body;
 
-    const user = await usersQueries.selectOneByEmail(email);
+    const user = await selectOneByEmail(ctx.state.db, email);
     if (!user) {
         ctx.throw('Invalid credentials.', 401);
     }
-​
 
     const passwordHash = bcrypt.hashSync(
         password,
@@ -24,7 +23,6 @@ router.get('/login', async ctx => {
     if (passwordHash !== user.password) {
         ctx.throw('Invalid credentials.', 401);
     }
-​
 
     const token = jwt.sign(
         {
@@ -34,15 +32,12 @@ router.get('/login', async ctx => {
         config.authentication.privateKey
     );
 
-​
     const cookieToken = crypto
         .createHmac('sha256', config.authentication.secret)
         .update(token)
         .digest('hex');
-​
     const delay = config.authentication.expirationTokenDelay * 1000;
     const tokenExpires = new Date(new Date().getTime() + delay);
-​
     const cookieOptions = {
         expires: tokenExpires,
         httpOnly: true,
@@ -51,17 +46,14 @@ router.get('/login', async ctx => {
         secureProxy: false,
         signed: false,
     };
-​
     ctx.cookies.set('token', cookieToken, cookieOptions);
 
-
-    ​ctx.body = {
-        token,
+    ctx.body = {
+        token: token,
         role: user.role,
         email: user.email,
     };
 });
 
 
-export default router;
-​
+module.exports = router;
