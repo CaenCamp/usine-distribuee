@@ -7,12 +7,29 @@
     "sourceType": "module",
     "ecmaVersion": 2019
   },
-  "extends": ["plugin:prettier/recommended"],
+  "plugins": [
+    "prettier"
+  ],
+  "extends": [
+    "plugin:prettier/recommended"
+  ],
   "rules": {
-    "indent": ["error", 4],
-    "linebreak-style": ["error", "unix"],
+    "indent": [
+      "error",
+      4
+    ],
+    "linebreak-style": [
+      "error",
+      "unix"
+    ],
     "prefer-expect-assertions": 0,
-    "quotes": ["error", "single"],
-    "semi": ["error", "always"]
+    "quotes": [
+      "error",
+      "single"
+    ],
+    "semi": [
+      "error",
+      "always"
+    ]
   }
 }
