@@ -11,6 +11,7 @@
   "license": "GPL-3.0",
   "private": true,
   "scripts": {
+    "start": "node src/index.js",
     "dev": "nodemon --watch src src/index.js",
     "migrate:latest": "knex migrate:latest",
     "migrate:rollback": "knex migrate:rollback",
