@@ -65,6 +65,26 @@ const config = convict({
         default: 3001,
         env: 'API_PORT'
     },
+    mailjet: {
+        publicKey: {
+            doc: 'Mailjet API public key',
+            format: String,
+            default: '',
+            env: 'MJ_APIKEY_PUBLIC'
+        },
+        privateKey: {
+            doc: 'Mailjet API private key',
+            format: String,
+            default: '',
+            env: 'MJ_APIKEY_PRIVATE'
+        },
+        maskRequestConfirmTemplateId: {
+            doc: 'Mailjet mask request confirmation template id',
+            format: String,
+            default: '',
+            env: 'MJ_MASKREQCONFIRM_TPL_ID'
+        }
+    },
     cleverCloud: {
         db: {
             host: {
