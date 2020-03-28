@@ -1,21 +1,18 @@
 import React from "react";
 import {
-    Create,
+    Edit,
     TextInput,
     SimpleForm,
-    required
 } from "react-admin";
 
-export const ProductionManagementCreate = props => {
+const ProductionManagementTitle = ({ record }) =>
+    record ? `Edition de du pôle de gestion "${record.name}"` : null;
+
+export const ProductionManagementEdit = props => {
     return (
-        <Create title="Création d'un nouveau pôle de gestion" {...props}>
+        <Edit title={<ProductionManagementTitle />} {...props}>
             <SimpleForm>
-                <TextInput
-                    source="name"
-                    label="Nom"
-                    fullWidth
-                    validate={required()}
-                />
+                <TextInput source="name" label="Nom" fullWidth />
                 <TextInput
                     source="description"
                     multiline
@@ -33,6 +30,6 @@ export const ProductionManagementCreate = props => {
                     fullWidth
                 />
             </SimpleForm>
-        </Create>
+        </Edit>
     );
 };

@@ -61,8 +61,34 @@ const createProductionManagement = async ({ client, apiData }) => {
         .catch(error => ({ error }));
 };
 
+const getProductionManagement = async ({ client, productionManagementId }) => {
+    return getProductionManagementByIdQuery(client, productionManagementId)
+        .catch(error => ({ error }));
+};
+
+const updateProductionManagement = async ({ client, productionManagementId, apiData }) => {
+    return client('production_management')
+        .where({ id: productionManagementId })
+        .update(apiData)
+        .then(() => getProductionManagementByIdQuery(client, productionManagementId))
+        .catch(error => ({ error }));
+};
+
+const deleteProductionManagement = async ({ client, productionManagementId }) => {
+    return client('production_management')
+        .where({ id: productionManagementId })
+        .del()
+        .then(nbDeletion => {
+            return nbDeletion ? { id: productionManagementId } : {};
+        })
+        .catch(error => ({ error }));
+};
+
 
 module.exports = {
     createProductionManagement,
+    deleteProductionManagement,
+    getProductionManagement,
     getProductionManagementPaginatedList,
+    updateProductionManagement,
 };
