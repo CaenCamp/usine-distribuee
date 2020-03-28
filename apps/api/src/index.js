@@ -6,11 +6,13 @@ const mount = require('koa-mount');
 const bodyParser = require('koa-bodyparser');
 const serve = require('koa-static');
 const error = require('koa-json-error');
+const mount = require('koa-mount');
 
 const config = require('./config');
 const dbMiddleware = require('./dbMiddleware');
 const authenticationRouter = require('./authentication/authenticationRouter');
 const authenticationMiddleware = require('./authentication/authenticationMiddleware');
+const front = require('./front');
 
 const app = new Koa();
 
@@ -24,7 +26,6 @@ app.use(
 );
 
 const router = new Router();
-const env = process.env.NODE_ENV;
 
 /**
  * This method is used to format message return by the global error middleware
@@ -43,7 +44,7 @@ app.use(bodyParser());
 app.use(error(formatError));
 
 app.use(serve(path.resolve(__dirname, '../public')));
-
+app.use(mount('/', front));
 app.use(mount('/admin', serve(path.resolve(__dirname, '../admin'))));
 
 app.use(dbMiddleware);
