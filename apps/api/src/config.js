@@ -64,6 +64,20 @@ const config = convict({
         format: 'port',
         default: 3001,
         env: 'API_PORT'
+    },
+    mailjet: {
+        publicKey: {
+            doc: 'Mailjet API public key',
+            format: String,
+            default: '',
+            env: 'MJ_APIKEY_PUBLIC'
+        },
+        privateKey: {
+            doc: 'Mailjet API private key',
+            format: String,
+            default: '',
+            env: 'MJ_APIKEY_PRIVATE'
+        }
     }
 });
 
