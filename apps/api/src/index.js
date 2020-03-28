@@ -14,7 +14,7 @@ app.use(
     cors({
         origin: '*',
         allowHeaders: ['Origin, Content-Type, Accept'],
-        exposeHeaders: ['Content-Range'],
+        exposeHeaders: ['Content-Range']
     })
 );
 
@@ -30,7 +30,7 @@ const env = process.env.NODE_ENV;
 const formatError = error => {
     return {
         status: error.status,
-        message: error.message,
+        message: error.message
     };
 };
 
@@ -40,8 +40,7 @@ app.use(error(formatError));
 if (env === 'development') {
     router.get('/', ctx => {
         ctx.body = {
-            message:
-                'Front is not serve here in dev environment.',
+            message: 'Front is not serve here in dev environment.'
         };
     });
 } else {
@@ -53,5 +52,6 @@ router.get('/api', ctx => {
 });
 app.use(router.routes()).use(router.allowedMethods());
 
-app.listen(config.port, () => global.console.log(`API started on port ${config.port}`));
-
+app.listen(config.port, () =>
+    global.console.log(`API started on port ${config.port}`)
+);
