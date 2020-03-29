@@ -14,7 +14,8 @@ const getFilteredProductionManagementQuery = (client, filters = {}, sort) => {
     const query = client
         .select('*')
         .from('production_management')
-        .where(filters);
+        .where(filters)
+        .orderBy(...sort);
 
     return query;
 };

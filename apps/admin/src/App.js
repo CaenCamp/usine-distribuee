@@ -3,13 +3,14 @@ import { Admin, Resource } from "react-admin";
 
 import authProvider from "./authProvider";
 import dataProvider from "./dataProvider";
-import ProductionManagement from "./production-management";
+import productionManagement from "./production-management";
+import userAccount from './user';
 
 const App = () => (
-  <Admin authProvider={authProvider} dataProvider={dataProvider}>
-    <Resource name="test" />
-    <Resource name="production-managements" {...ProductionManagement} />
-  </Admin>
+    <Admin authProvider={authProvider} dataProvider={dataProvider}>
+        <Resource name="production-managements" {...productionManagement} />
+        <Resource name="users" {...userAccount} />
+    </Admin>
 );
 
 export default App;
