@@ -18,6 +18,13 @@ const front = require('./front');
 
 const userAccountRouter = require("./user-account/router");
 const productionManagementRouter = require('./production-management/router');
+<<<<<<< HEAD
+||||||| merged common ancestors
+const userRouter = require("./user/router");
+=======
+const userRouter = require("./user/router");
+const requestRouter = require("./request/router");
+>>>>>>> Requests list
 
 const app = new Koa();
 
@@ -61,6 +68,7 @@ app
 
 app.use(mount("/api/user-accounts", userAccountRouter.routes()));
 app.use(mount("/api/production-managements", productionManagementRouter.routes()));
+app.use(mount("/api/requests", requestRouter.routes()));
 
 app.listen(config.port, () =>
     global.console.log(`API started on port ${config.port}`)
