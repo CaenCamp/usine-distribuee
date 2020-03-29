@@ -42,7 +42,7 @@ export default (props) => (
     <List
         {...props}
         filters={<UserFilter />}
-        sort={{ field: "created_at", order: "ASC" }}
+        sort={{ field: "createdAt", order: "ASC" }}
         exporter={false}
         pagination={<UserPagination />}
         bulkActionButtons={false}
