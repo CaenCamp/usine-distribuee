@@ -1,19 +1,29 @@
-const ownProductionManagement = (user, from, to) =>
-    user.production_management_ids.includes(to.id);
+const ownProductionManagement = (user, from, to) => {
+    return user.productionManagementIds.includes(from.productionManagementId);
+};
 
-const isAffectedToManagement = (user, from, to) =>
-    !!to.production_management_id;
-
-const manager = {
+const production_manager = {
     MANAGEMENT_TODO: {
         MANAGEMENT_TODO: ownProductionManagement,
-        MANAGEMENT_BUILDING: ownProductionManagement
+        MANAGEMENT_BUILDING: ownProductionManagement,
+        MANAGEMENT_BUILT: ownProductionManagement,
+        MANAGEMENT_DELIVERED: ownProductionManagement
     },
     MANAGEMENT_BUILDING: {
+        MANAGEMENT_TODO: ownProductionManagement,
         MANAGEMENT_BUILDING: ownProductionManagement,
-        MANAGEMENT_BUILT: ownProductionManagement
+        MANAGEMENT_BUILT: ownProductionManagement,
+        MANAGEMENT_DELIVERED: ownProductionManagement
     },
     MANAGEMENT_BUILT: {
+        MANAGEMENT_TODO: ownProductionManagement,
+        MANAGEMENT_BUILDING: ownProductionManagement,
+        MANAGEMENT_BUILT: ownProductionManagement,
+        MANAGEMENT_DELIVERED: ownProductionManagement
+    },
+    MANAGEMENT_DELIVERED: {
+        MANAGEMENT_TODO: ownProductionManagement,
+        MANAGEMENT_BUILDING: ownProductionManagement,
         MANAGEMENT_BUILT: ownProductionManagement,
         MANAGEMENT_DELIVERED: ownProductionManagement
     }
@@ -24,7 +34,7 @@ const dispatcher = {
         DISPATCH_TODO: true,
         DISPATCH_REJECTED: true,
         DISPATCH_PENDING: true,
-        MANAGEMENT_TODO: isAffectedToManagement
+        MANAGEMENT_TODO: true
     },
     DISPATCH_REJECTED: {
         DISPATCH_REJECTED: true,
@@ -33,14 +43,14 @@ const dispatcher = {
     DISPATCH_PENDING: {
         DISPATCH_PENDING: true,
         DISPATCH_TODO: true,
-        MANAGEMENT_TODO: isAffectedToManagement
+        MANAGEMENT_TODO: true
     },
-    ...manager
+    ...production_manager
 };
 
 module.exports = {
     dispatcher,
-    manager,
+    production_manager,
     admin: {
         DISPATCH_TODO: {
             DISPATCH_TODO: true,
