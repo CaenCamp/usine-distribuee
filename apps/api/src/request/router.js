@@ -2,7 +2,7 @@ const Router = require("koa-router");
 
 const { parseJsonQueryParameter } = require("../toolbox/sanitizers");
 const { getPaginatedList, getOne, updateOne } = require("./repository");
-const { isStatusChangeAuthorized } = require("./authorization");
+const { isAuthorized } = require("./authorization");
 
 const router = new Router();
 
@@ -22,16 +22,13 @@ router.put("/:id", async ctx => {
     const user = ctx.state.user;
     const updatedData = ctx.request.body;
 
-    const { status } = await getOne(ctx.params.id);
-    if (status !== updatedData.status) {
-        if (!isStatusChangeAuthorized(user.role, status, updatedData.status)) {
-            const error = new Error(
-                `Forbidden. Cannot change status from ${status} to ${updatedData.status} in that case`
-            );
-            error.status = 403;
+    const request = await getOne(ctx.params.id);
 
-            throw error;
-        }
+    if (!isAuthorized(user, request, updatedData)) {
+        const error = new Error("Forbidden.");
+        error.status = 403;
+
+        throw error;
     }
 
     const updatedRequest = await updateOne({
