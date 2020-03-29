@@ -1,5 +1,13 @@
 import React from "react";
-import { Create, SimpleForm, TextInput, SelectInput, required } from "react-admin";
+import {
+    Create,
+    ReferenceArrayInput,
+    required,
+    SelectArrayInput,
+    SelectInput,
+    SimpleForm,
+    TextInput,
+} from "react-admin";
 import owasp from 'owasp-password-strength-test';
 
 import { userRoles } from './index';
@@ -15,9 +23,25 @@ const validPassword = value => {
     return undefined
 }
 
+const validateUserCreation = (values) => {
+    const errors = {};
+
+    console.log(values);
+
+    if (values.role === 'production_manager' && values.productionManagementIds && !values.productionManagementIds.length) {
+        errors.role = 'Vous devez associer au moins un pôle de gestion pour le rôle "Pôle de gestion".'
+    }
+
+    if (values.role === 'guest' && values.productionManagementIds && values.productionManagementIds.length) {
+        errors.role = 'Vous ne devez pas associer de pôle de gestion pour le rôle "Invité".'
+    }
+
+    return errors;
+};
+
 export default props => (
     <Create title="Création d'un utilisateur" {...props}>
-        <SimpleForm>
+        <SimpleForm validate={validateUserCreation}>
             <TextInput source="email" label="Email" fullWidth validate={required()} />
             <SelectInput
                 source="role"
@@ -26,6 +50,9 @@ export default props => (
                 validate={required()}
                 fullWidth
             />
+            <ReferenceArrayInput label="Pôle.s associé.s" source="productionManagementIds" reference="production-managements">
+                <SelectArrayInput optionText="name" />
+            </ReferenceArrayInput>
             <TextInput source="password" label="Mot de passe" validate={[required(), validPassword]} fullWidth />
             <TextInput source="firstName" label="Prénom" fullWidth />
             <TextInput source="lastName" label="Nom" fullWidth />
