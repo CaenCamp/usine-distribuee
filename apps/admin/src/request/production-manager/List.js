@@ -19,7 +19,7 @@ import {
 
 import { requesterType } from './index';
 import RequestShow from '../dispatcher/Show';
-import DispatchActions from './DispatchActions';
+import StatusActions from './StatusActions';
 
 const UserFilter = props => (
     <Filter {...props}>
@@ -43,7 +43,7 @@ const tabs = [
 ];
 
 const RequestDatagrid = props => (
-    <Datagrid {...props} expand={<RequestShow renderActions={(record) => <DispatchActions record={record} />} />} rowClick="expand">
+    <Datagrid {...props} expand={<RequestShow renderActions={(record) => <StatusActions record={record} />} />} rowClick="expand">
         <TextField source="requesterName" label="Organisation" />
         <NumberField source="maskSmallSizeQuantity" label="Masques Standards" />
         <NumberField source="maskLargeSizeQuantity" label="Masques Longs" />
@@ -60,7 +60,7 @@ const TabbedList = (props) => {
 
     return (
         <>
-            <AppBar position="relative" color="transparent">
+            <AppBar position="relative" color="transparent" elevation={0} >
                 <Tabs
                     variant="fullWidth"
                     centered

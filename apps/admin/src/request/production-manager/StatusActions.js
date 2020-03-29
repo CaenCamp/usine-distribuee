@@ -54,7 +54,7 @@ const DispatchActions = ({ record }) => {
             break;
     }
 
-    const [up] = useMutation({
+    const [up, { loading: upLoading }] = useMutation({
         type: 'update',
         resource: 'dispatcher-requests',
         payload: {
@@ -64,7 +64,7 @@ const DispatchActions = ({ record }) => {
             }
         },
     }, { onSuccess: refresh });
-    const [down] = useMutation({
+    const [down, { loading: downLoading }] = useMutation({
         type: 'update',
         resource: 'dispatcher-requests',
         payload: {
@@ -78,7 +78,7 @@ const DispatchActions = ({ record }) => {
     return (
         <Grid container className={classes.container}>
             {downValues.newStatus && <Grid item xs={upValues.newStatus ? 6 : 12}>
-                <Button variant="contained" color="secondary" onClick={down}>
+                <Button variant="contained" color="secondary" onClick={down} disabled={downLoading}>
                     {downValues.newLabel}
                 </Button>
             </Grid>}
@@ -93,6 +93,7 @@ const DispatchActions = ({ record }) => {
                         variant="contained"
                         color="primary"
                         onClick={up}
+                        disabled={upLoading}
                     >{upValues.newLabel}</Button>
                 </Grid>
             )}
