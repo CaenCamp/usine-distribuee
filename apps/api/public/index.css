@@ -85,7 +85,7 @@ ul.status {
 }
 
 ul.status li {
-    margin: 20px;
+    margin: 10px 20px;
 
 }
 
@@ -94,6 +94,13 @@ ul.status li.done:before {
     color: darkgreen;
     background:#a9d8be;
 }
+
+ul.status li.ko:before {
+    content: '✗';
+    color: red;
+    background:rgb(255, 194, 194);
+}
+
 
 ul.status li:before {
     display: inline-block;
