@@ -65,11 +65,48 @@ const getPaginatedList = async ({
         }));
 };
 
-const updateOne = ({ client, id, data }) => {
-    return client
-        .table('user_account')
-        .where({ id })
-        .update(data, ['*']);
+const updateOne = async ({ client, id, data }) => {
+    const { productionManagementIds, ...userData } = data;
+
+    try {
+        await client.transaction(trx => {
+            client('user_account')
+                .transacting(trx)
+                .where({ id })
+                .update(userData)
+                .then(async () => {
+                    await client('production_management_user')
+                        .transacting(trx)
+                        .del()
+                        .where({ userAccountId: id });
+
+                    const linksToCreate = productionManagementIds.reduce(
+                        (acc, productionManagementId) => {
+                            acc.push(
+                                client('production_management_user')
+                                    .transacting(trx)
+                                    .insert({
+                                        userAccountId: id,
+                                        productionManagementId,
+                                    })
+                            );
+
+                            return acc;
+                        },
+                        []
+                    );
+
+                    return Promise.all(linksToCreate);
+                })
+                .then(trx.commit)
+                .catch(trx.rollback);
+        });
+    } catch (error) {
+        return { error };
+    }
+
+    return getOneQuery(client, id)
+        .catch(error => ({ error }));
 };
 
 const getOneQuery = (client, id) => {
