@@ -35,6 +35,7 @@ const getFilteredQuery = (client, filters, sort, user) => {
         created_at_before,
         created_at_after,
         ownership,
+        status,
         ...restFilters
     } = filters;
     const query = client
@@ -58,6 +59,17 @@ const getFilteredQuery = (client, filters, sort, user) => {
     }
     if (ownership && ownership === 'me') {
         query.whereIn('production_management_id', user.productionManagementIds || []);
+    }
+    if (status && status !== 'MANAGEMENT_ALL') {
+        query.andWhere('status', status);
+    }
+    if (status && status === 'MANAGEMENT_ALL') {
+        query.whereIn('status', [
+            'MANAGEMENT_TODO',
+            'MANAGEMENT_BUILDING',
+            'MANAGEMENT_BUILT',
+            'MANAGEMENT_DELIVERED',
+        ]);
     }
 
     if (sort && sort.length) {
