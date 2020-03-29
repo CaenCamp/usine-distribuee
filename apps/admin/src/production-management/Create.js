@@ -9,7 +9,7 @@ import {
 export const ProductionManagementCreate = props => {
     return (
         <Create title="Création d'un nouveau pôle de gestion" {...props}>
-            <SimpleForm>
+            <SimpleForm redirect="list">
                 <TextInput
                     source="name"
                     label="Nom"

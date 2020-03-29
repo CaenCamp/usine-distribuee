@@ -53,7 +53,7 @@ const validateUserCreation = (values) => {
 
 export default (props) => (
     <Create title="Création d'un utilisateur" {...props}>
-        <SimpleForm validate={validateUserCreation}>
+        <SimpleForm validate={validateUserCreation} redirect="list">
             <TextInput
                 source="email"
                 label="Email"
