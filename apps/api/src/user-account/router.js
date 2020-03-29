@@ -2,8 +2,9 @@ const Router = require("koa-router");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const crypto = require("crypto");
+const pick = require('lodash.pick');
 
-const { parseJsonQueryParameter } = require('../toolbox/sanitizers');
+const { parseJsonQueryParameter } = require("../toolbox/sanitizers");
 const {
     deleteOne,
     getPaginatedList,
@@ -14,15 +15,15 @@ const {
 
 const router = new Router();
 
-router.get('/', async ctx => {
+router.get("/", async ctx => {
     const { users, contentRange } = await getPaginatedList({
         client: ctx.state.db,
         filters: parseJsonQueryParameter(ctx.query.filters),
         sort: parseJsonQueryParameter(ctx.query.sort),
-        pagination: parseJsonQueryParameter(ctx.query.pagination),
+        pagination: parseJsonQueryParameter(ctx.query.pagination)
     });
 
-    ctx.set('Content-Range', contentRange);
+    ctx.set("Content-Range", contentRange);
     ctx.body = users;
 });
 
@@ -39,16 +40,31 @@ router.put("/:id", async ctx => {
         updatedData.password = bcrypt.hashSync(newPassword, salt);
     }
 
-    await updateOne({ client: ctx.state.db, id: ctx.params.id, data: updatedData });
-    const updatedUser = await getOne({ client: ctx.state.db, id: ctx.params.id });
+    await updateOne({
+        client: ctx.state.db,
+        id: ctx.params.id,
+        data: pick(updatedData, [
+            'email',
+            'password',
+            'first_name',
+            'last_name',
+            'phone',
+            'role',
+            'productionManagementIds',
+        ])
+    });
+    const updatedUser = await getOne({
+        client: ctx.state.db,
+        id: ctx.params.id
+    });
 
     ctx.body = updatedUser;
 });
 
-router.delete('/:id', async ctx => {
+router.delete("/:id", async ctx => {
     const deletedUser = await deleteOne({
         client: ctx.state.db,
-        id: ctx.params.id,
+        id: ctx.params.id
     });
 
     if (deletedUser.error) {
@@ -71,33 +87,25 @@ router.delete('/:id', async ctx => {
 });
 
 router.post("/", async ctx => {
-    const {
-        email,
-        role,
-        firstName,
-        lastName,
-        phone,
-        password
-    } = ctx.request.body;
-
     const salt = bcrypt.genSaltSync(10);
-    const hashedPassword = bcrypt.hashSync(password, salt);
+    const hashedPassword = bcrypt.hashSync(ctx.request.body.password, salt);
 
     const user = await insertOne({
         client: ctx.state.db,
         data: {
-            email,
-            role,
-            firstName,
-            lastName,
-            phone,
+            ...pick(ctx.request.body, [
+                'email',
+                'first_name',
+                'last_name',
+                'phone',
+                'role',
+                'productionManagementIds',
+            ]),
             password: hashedPassword
         }
     });
 
-    ctx.body = user[0];
+    ctx.body = user;
 });
-
-
 
 module.exports = router;

@@ -9,6 +9,9 @@ import {
     Pagination,
     SelectInput,
     TextField,
+    ChipField,
+    ReferenceArrayField,
+    SingleFieldList,
 } from "react-admin";
 
 import { userRoles } from './index';
@@ -53,6 +56,15 @@ export default (props) => (
             <EmailField source="email" sortable={false} />
             <Role source="role" label="Role" />
             <TextField source="phone" sortable={false} label="Téléphone" />
+            <ReferenceArrayField
+                label="Pôle.s associé.s"
+                reference="production-managements"
+                source="productionManagementIds"
+            >
+                <SingleFieldList>
+                    <ChipField source="name" />
+                </SingleFieldList>
+            </ReferenceArrayField>
             <DateField source="createdAt" label="Ajouté le" />
             <EditButton />
         </Datagrid>
