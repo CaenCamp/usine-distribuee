@@ -5,6 +5,7 @@ const crypto = require("crypto");
 
 const { parseJsonQueryParameter } = require('../toolbox/sanitizers');
 const {
+    deleteOne,
     getPaginatedList,
     getOneById,
     updateOne,
@@ -46,6 +47,31 @@ router.put("/:id", async ctx => {
     ctx.body = user;
 });
 
+router.delete('/:id', async ctx => {
+    const deletedUser = await deleteOne(
+        ctx.state.db,
+        ctx.params.id,
+    );
+
+    if (deletedUser.error) {
+        const explainedError = new Error(deletedUser.error.message);
+        explainedError.status = 400;
+
+        throw explainedError;
+    }
+
+    if (!deletedUser.id) {
+        const explainedError = new Error(
+            `The user of id ${ctx.params.UserId} does not exist.`
+        );
+        explainedError.status = 404;
+
+        throw explainedError;
+    }
+
+    ctx.body = deletedUser;
+});
+
 router.post("/", async ctx => {
     const {
         email,
@@ -70,5 +96,7 @@ router.post("/", async ctx => {
 
     ctx.body = user[0];
 });
+
+
 
 module.exports = router;

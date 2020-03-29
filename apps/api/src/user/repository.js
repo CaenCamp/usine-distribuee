@@ -74,7 +74,18 @@ const insertOne = (client, data) => {
         .insert(data, ['*']);
 };
 
+const deleteOne = (client, id) => {
+    return client('user_account')
+        .where({ id })
+        .del()
+        .then(nbDeletion => {
+            return nbDeletion ? { id } : {};
+        })
+        .catch(error => ({ error }));
+};
+
 module.exports = {
+    deleteOne,
     getOneByEmail,
     getOneById,
     getPaginatedList,
