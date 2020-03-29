@@ -21,10 +21,8 @@ const getOneByEmail = ({ client, email }) => {
 };
 
 const getOne = ({ client, id }) => {
-    return client
-        .table('user_account')
-        .first('*')
-        .where({ id });
+    return getOneQuery(client, id)
+        .catch(error => ({ error }));
 };
 
 const getFilteredQuery = (client, filters, sort) => {
