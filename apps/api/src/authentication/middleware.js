@@ -1,7 +1,7 @@
 const crypto = require("crypto");
 const jwt = require("jsonwebtoken");
 
-const { getOneById } = require("../user/repository");
+const { getOneById } = require("../user-account/repository");
 const config = require("../config");
 
 module.exports = async (ctx, next) => {

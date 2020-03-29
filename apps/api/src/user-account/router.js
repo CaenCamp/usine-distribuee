@@ -12,9 +12,7 @@ const {
     insertOne
 } = require("./repository");
 
-const router = new Router({
-    prefix: '/api/users',
-});
+const router = new Router();
 
 router.get('/', async ctx => {
     const { users, contentRange } = await getPaginatedList({
