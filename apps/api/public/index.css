@@ -79,3 +79,39 @@ textarea {
     min-width: 100%;
     min-height: 100px;
 }
+
+ul.status {
+    list-style: none;
+}
+
+ul.status li {
+    margin: 10px 20px;
+
+}
+
+ul.status li.done:before {
+    content: '✓';
+    color: darkgreen;
+    background:#a9d8be;
+}
+
+ul.status li.ko:before {
+    content: '✗';
+    color: red;
+    background:rgb(255, 194, 194);
+}
+
+
+ul.status li:before {
+    display: inline-block;
+    content:'⋯';
+    color: blue;
+    margin: 10px 20px 10px 10px;
+    width: 25px;
+    height: 25px;
+    line-height: 25px;
+    text-align:center;
+    border-radius: 25px;
+    border: 1px solid #ccc;
+    background: #c4c4f8;
+}
