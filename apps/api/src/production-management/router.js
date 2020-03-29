@@ -2,17 +2,17 @@ const Router = require('koa-router');
 
 const { parseJsonQueryParameter } = require('../toolbox/sanitizers');
 const {
-    createProductionManagement,
-    deleteProductionManagement,
-    getProductionManagement,
-    getProductionManagementPaginatedList,
-    updateProductionManagement,
+    insertOne,
+    removeOne,
+    getOne,
+    getPaginatedList,
+    updateOne,
 } = require('./repository');
 
 const router = new Router();
 
 router.get('/', async ctx => {
-    const { productionManagements, contentRange } = await getProductionManagementPaginatedList({
+    const { productionManagements, contentRange } = await getPaginatedList({
         client: ctx.state.db,
         filters: parseJsonQueryParameter(ctx.query.filters),
         sort: parseJsonQueryParameter(ctx.query.sort),
@@ -24,9 +24,9 @@ router.get('/', async ctx => {
 });
 
 router.post('/', async ctx => {
-    const newProductionManagement = await createProductionManagement({
+    const newProductionManagement = await insertOne({
         client: ctx.state.db,
-        apiData: ctx.request.body,
+        data: ctx.request.body,
     });
 
     if (newProductionManagement.error) {
@@ -40,7 +40,7 @@ router.post('/', async ctx => {
 });
 
 router.get('/:productionManagementId', async ctx => {
-    const productionManagement = await getProductionManagement({
+    const productionManagement = await getOne({
         client: ctx.state.db,
         productionManagementId: ctx.params.productionManagementId,
     });
@@ -65,7 +65,7 @@ router.get('/:productionManagementId', async ctx => {
 });
 
 router.delete('/:productionManagementId', async ctx => {
-    const deletedProductionManagement = await deleteProductionManagement({
+    const deletedProductionManagement = await removeOne({
         client: ctx.state.db,
         productionManagementId: ctx.params.productionManagementId,
     });
@@ -90,10 +90,10 @@ router.delete('/:productionManagementId', async ctx => {
 });
 
 router.put('/:productionManagementId', async ctx => {
-    const updatedProductionManagement = await updateProductionManagement({
+    const updatedProductionManagement = await updateOne({
         client: ctx.state.db,
         productionManagementId: ctx.params.productionManagementId,
-        apiData: ctx.request.body,
+        data: ctx.request.body,
     });
 
     if (updatedProductionManagement.error) {

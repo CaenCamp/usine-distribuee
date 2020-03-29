@@ -10,7 +10,7 @@ const sortableFields = [
     'name',
 ];
 
-const getFilteredProductionManagementQuery = (client, filters = {}, sort) => {
+const getFilteredQuery = (client, filters = {}, sort) => {
     const query = client
         .select('*')
         .from('production_management')
@@ -20,13 +20,13 @@ const getFilteredProductionManagementQuery = (client, filters = {}, sort) => {
     return query;
 };
 
-const getProductionManagementPaginatedList = async ({
+const getPaginatedList = async ({
     client,
     filters,
     sort,
     pagination,
 }) => {
-    const query = getFilteredProductionManagementQuery(
+    const query = getFilteredQuery(
         client,
         filtersSanitizer(filters, filterableFields),
         sortSanitizer(sort, sortableFields)
@@ -44,7 +44,7 @@ const getProductionManagementPaginatedList = async ({
         }));
 };
 
-const getProductionManagementByIdQuery = (client, id) => {
+const getOneByIdQuery = (client, id) => {
     const query = client
         .first('*')
         .from('production_management')
@@ -53,29 +53,29 @@ const getProductionManagementByIdQuery = (client, id) => {
     return query;
 };
 
-const createProductionManagement = async ({ client, apiData }) => {
+const insertOne = async ({ client, data }) => {
     return client('production_management')
         .returning('id')
-        .insert(apiData)
+        .insert(data)
         .then(([pmId]) => pmId)
-        .then(newPmId => getProductionManagementByIdQuery(client, newPmId))
+        .then(newPmId => getOneByIdQuery(client, newPmId))
         .catch(error => ({ error }));
 };
 
-const getProductionManagement = async ({ client, productionManagementId }) => {
-    return getProductionManagementByIdQuery(client, productionManagementId)
+const getOne = async ({ client, productionManagementId }) => {
+    return getOneByIdQuery(client, productionManagementId)
         .catch(error => ({ error }));
 };
 
-const updateProductionManagement = async ({ client, productionManagementId, apiData }) => {
+const updateOne = async ({ client, productionManagementId, data }) => {
     return client('production_management')
         .where({ id: productionManagementId })
-        .update(apiData)
-        .then(() => getProductionManagementByIdQuery(client, productionManagementId))
+        .update(data)
+        .then(() => getOneByIdQuery(client, productionManagementId))
         .catch(error => ({ error }));
 };
 
-const deleteProductionManagement = async ({ client, productionManagementId }) => {
+const removeOne = async ({ client, productionManagementId }) => {
     return client('production_management')
         .where({ id: productionManagementId })
         .del()
@@ -87,9 +87,9 @@ const deleteProductionManagement = async ({ client, productionManagementId }) =>
 
 
 module.exports = {
-    createProductionManagement,
-    deleteProductionManagement,
-    getProductionManagement,
-    getProductionManagementPaginatedList,
-    updateProductionManagement,
+    insertOne,
+    removeOne,
+    getOne,
+    getPaginatedList,
+    updateOne,
 };

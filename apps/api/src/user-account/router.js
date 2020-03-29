@@ -7,7 +7,7 @@ const { parseJsonQueryParameter } = require('../toolbox/sanitizers');
 const {
     deleteOne,
     getPaginatedList,
-    getOneById,
+    getOne,
     updateOne,
     insertOne
 } = require("./repository");
@@ -27,7 +27,7 @@ router.get('/', async ctx => {
 });
 
 router.get("/:id", async ctx => {
-    const user = await getOneById(ctx.state.db, ctx.params.id);
+    const user = await getOne({ client: ctx.state.db, id: ctx.params.id });
     ctx.body = user;
 });
 
@@ -39,17 +39,17 @@ router.put("/:id", async ctx => {
         updatedData.password = bcrypt.hashSync(newPassword, salt);
     }
 
-    await updateOne(ctx.state.db, ctx.params.id, updatedData);
-    const updatedUser = await getOneById(ctx.state.db, ctx.params.id);
+    await updateOne({ client: ctx.state.db, id: ctx.params.id, data: updatedData });
+    const updatedUser = await getOne({ client: ctx.state.db, id: ctx.params.id });
 
     ctx.body = updatedUser;
 });
 
 router.delete('/:id', async ctx => {
-    const deletedUser = await deleteOne(
-        ctx.state.db,
-        ctx.params.id,
-    );
+    const deletedUser = await deleteOne({
+        client: ctx.state.db,
+        id: ctx.params.id,
+    });
 
     if (deletedUser.error) {
         const explainedError = new Error(deletedUser.error.message);
@@ -83,13 +83,16 @@ router.post("/", async ctx => {
     const salt = bcrypt.genSaltSync(10);
     const hashedPassword = bcrypt.hashSync(password, salt);
 
-    const user = await insertOne(ctx.state.db, {
-        email,
-        role,
-        firstName,
-        lastName,
-        phone,
-        password: hashedPassword
+    const user = await insertOne({
+        client: ctx.state.db,
+        data: {
+            email,
+            role,
+            firstName,
+            lastName,
+            phone,
+            password: hashedPassword
+        }
     });
 
     ctx.body = user[0];

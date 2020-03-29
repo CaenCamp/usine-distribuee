@@ -5,7 +5,7 @@ const {
     sortSanitizer,
 } = require('../toolbox/sanitizers');
 
-const requestFilterableFields = [
+const filterableFields = [
     'requester_type',
     'delivery_postal_code',
     'delivery_city',
@@ -14,7 +14,7 @@ const requestFilterableFields = [
     'created_at_before',
     'created_at_after',
 ];
-const requestSortableFields = [
+const sortableFields = [
     'created_at',
     'requester_type',
     'delivery_postal_code',
@@ -66,8 +66,8 @@ const getPaginatedList = async ({
 }) => {
     const query = getFilteredQuery(
         client,
-        filtersSanitizer(filters, requestFilterableFields),
-        sortSanitizer(sort, requestSortableFields)
+        filtersSanitizer(filters, filterableFields),
+        sortSanitizer(sort, sortableFields)
     );
     const [perPage, currentPage] = paginationSanitizer(pagination);
 
@@ -82,7 +82,7 @@ const getPaginatedList = async ({
         }));
 };
 
-const insertOne = (client, request) => client.insert(request).into('request');
+const insertOne = ({ client, data }) => client.insert(data).into('request');
 
 module.exports = {
     getPaginatedList,
