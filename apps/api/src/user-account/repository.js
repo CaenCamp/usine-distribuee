@@ -5,10 +5,10 @@ const {
     sortSanitizer,
 } = require('../toolbox/sanitizers');
 
-const userFilterableFields = [
+const filterableFields = [
     'role'
 ];
-const userSortableFields = [
+const sortableFields = [
     'created_at',
     'last_name',
 ];
@@ -45,8 +45,8 @@ const getPaginatedList = async ({
 }) => {
     const query = getFilteredQuery(
         client,
-        filtersSanitizer(filters, userFilterableFields),
-        sortSanitizer(sort, userSortableFields)
+        filtersSanitizer(filters, filterableFields),
+        sortSanitizer(sort, sortableFields)
     );
     const [perPage, currentPage] = paginationSanitizer(pagination);
 

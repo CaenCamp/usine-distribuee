@@ -5,8 +5,8 @@ const {
     sortSanitizer,
 } = require('../toolbox/sanitizers');
 
-const ProductionManagementFilterableFields = [];
-const ProductionManagementSortableFields = [
+const filterableFields = [];
+const sortableFields = [
     'name',
 ];
 
@@ -28,8 +28,8 @@ const getProductionManagementPaginatedList = async ({
 }) => {
     const query = getFilteredProductionManagementQuery(
         client,
-        filtersSanitizer(filters, ProductionManagementFilterableFields),
-        sortSanitizer(sort, ProductionManagementSortableFields)
+        filtersSanitizer(filters, filterableFields),
+        sortSanitizer(sort, sortableFields)
     );
     const [perPage, currentPage] = paginationSanitizer(pagination);
 

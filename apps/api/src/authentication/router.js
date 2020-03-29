@@ -3,7 +3,7 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const crypto = require("crypto");
 
-const { getOneByEmail } = require("../user/repository");
+const { getOneByEmail } = require("../user-account/repository");
 const config = require("../config");
 
 const router = new Router();

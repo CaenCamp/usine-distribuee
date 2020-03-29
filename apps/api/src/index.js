@@ -10,11 +10,14 @@ const compress = require('koa-compress');
 
 const config = require('./config');
 const dbMiddleware = require('./dbMiddleware');
-const authenticationRouter = require('./authentication/authenticationRouter');
-const authenticationMiddleware = require('./authentication/authenticationMiddleware');
+
+const authenticationRouter = require('./authentication/router');
+const authenticationMiddleware = require('./authentication/middleware');
+
 const front = require('./front');
+
+const userAccountRouter = require("./user-account/router");
 const productionManagementRouter = require('./production-management/router');
-const userRouter = require("./user/router");
 
 const app = new Koa();
 
@@ -27,7 +30,6 @@ app.use(
     })
 );
 
-const router = new Router();
 
 /**
  * This method is used to format message return by the global error middleware
@@ -57,12 +59,8 @@ app
 
 // app.use(authenticationMiddleware);
 
-router.get("/api", ctx => {
-    ctx.body = { message: "Usine Distribuée API" };
-});
-app.use(router.routes()).use(router.allowedMethods());
-app.use(productionManagementRouter.routes()).use(productionManagementRouter.allowedMethods());
-app.use(userRouter.routes()).use(userRouter.allowedMethods());
+app.use(mount("/api/user-accounts", userAccountRouter.routes()));
+app.use(mount("/api/production-managements", productionManagementRouter.routes()));
 
 app.listen(config.port, () =>
     global.console.log(`API started on port ${config.port}`)

@@ -9,9 +9,7 @@ const {
     updateProductionManagement,
 } = require('./repository');
 
-const router = new Router({
-    prefix: '/api/production-managements',
-});
+const router = new Router();
 
 router.get('/', async ctx => {
     const { productionManagements, contentRange } = await getProductionManagementPaginatedList({
