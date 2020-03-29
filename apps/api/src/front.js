@@ -114,8 +114,7 @@ const requestStatuses = [
 router.get('/tracking/:id', async (ctx) => {
     const request = await getOne({ client : ctx.state.db, id :ctx.params.id });
 
-    // TODO: get one
-    ctx.state.commandNumber = request.id;
+    ctx.state.commandNumber = `${request.publicNumber}`.padStart(5, '0');
     ctx.state.request = request;
     ctx.state.statusIndex = requestStatuses.indexOf(request.status);
 
