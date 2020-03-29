@@ -44,7 +44,7 @@ router.post("/authenticate", async ctx => {
         expires: tokenExpires,
         httpOnly: true,
         overwrite: true,
-        secure: false,
+        secure: config.https,
         secureProxy: false,
         signed: false
     };

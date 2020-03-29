@@ -7,6 +7,12 @@ const config = convict({
         default: '',
         env: 'NODE_ENV'
     },
+    https: {
+        doc: 'Enforce TLS or not',
+        format: Boolean,
+        default: true,
+        env: 'ENFORCE_HTTPS'
+    },
     db: {
         host: {
             doc: 'Database host name/IP',
@@ -40,7 +46,7 @@ const config = convict({
         }
     },
     authentication: {
-        privateKey:  {
+        privateKey: {
             doc: 'Authentication jwt private key',
             format: String,
             default: 'pr1v4t3-k3y',
