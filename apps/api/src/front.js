@@ -82,7 +82,7 @@ router.post('/', async (ctx) => {
     }
 
     try {
-        await insertOne(ctx.state.db, request);
+        await insertOne({ client: ctx.state.db, data: request });
         ctx.state.success = true;
     } catch (error) {
         signale.error(error);

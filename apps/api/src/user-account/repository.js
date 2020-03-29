@@ -13,14 +13,14 @@ const sortableFields = [
     'last_name',
 ];
 
-const getOneByEmail = (client, email) => {
+const getOneByEmail = ({ client, email }) => {
     return client
         .table('user_account')
         .first('*')
         .where('email', email);
 };
 
-const getOneById = (client, id) => {
+const getOne = ({ client, id }) => {
     return client
         .table('user_account')
         .first('*')
@@ -61,20 +61,20 @@ const getPaginatedList = async ({
         }));
 };
 
-const updateOne = (client, id, changes) => {
+const updateOne = ({ client, id, data }) => {
     return client
         .table('user_account')
         .where({ id })
-        .update(changes, ['*']);
+        .update(data, ['*']);
 };
 
-const insertOne = (client, data) => {
+const insertOne = ({ client, data }) => {
     return client
         .table('user_account')
         .insert(data, ['*']);
 };
 
-const deleteOne = (client, id) => {
+const deleteOne = ({ client, id }) => {
     return client('user_account')
         .where({ id })
         .del()
@@ -87,7 +87,7 @@ const deleteOne = (client, id) => {
 module.exports = {
     deleteOne,
     getOneByEmail,
-    getOneById,
+    getOne,
     getPaginatedList,
     insertOne,
     updateOne,
