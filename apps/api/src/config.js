@@ -40,7 +40,7 @@ const config = convict({
         }
     },
     authentication: {
-        privateKey:  {
+        privateKey: {
             doc: 'Authentication jwt private key',
             format: String,
             default: 'pr1v4t3-k3y',
@@ -80,7 +80,7 @@ const config = convict({
         },
         maskRequestConfirmTemplateId: {
             doc: 'Mailjet mask request confirmation template id',
-            format: String,
+            format: Number,
             default: '',
             env: 'MJ_MASKREQCONFIRM_TPL_ID'
         }
