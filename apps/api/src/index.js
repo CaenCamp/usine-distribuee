@@ -24,6 +24,10 @@ const requestRouter = require("./request/router");
 
 const app = new Koa();
 
+if (config.env === 'production') {
+    app.proxy = true;
+}
+
 // See https://github.com/zadzbw/koa2-cors for configuration
 app.use(
     cors({
