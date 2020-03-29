@@ -47,6 +47,10 @@ const parseRequest = ({ mask_small_size_quantity, mask_large_size_quantity, fore
 const validate = ({ requester_type, requester_other_type, mask_small_size_quantity, mask_large_size_quantity }) => {
     const errors = {};
 
+    if (!requester_type) {
+        errors.requester_type = 'Veuillez choisir un type de numéro professionnel de santé';
+    }
+
     if (requester_type === 'other' && (!requester_other_type && requester_other_type.trim() === '')) {
         errors.requester_type = 'Veuillez préciser le type de numéro de professionnel de santé';
     }
