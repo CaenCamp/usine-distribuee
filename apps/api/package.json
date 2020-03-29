@@ -36,7 +36,6 @@
         "koa-json-error": "3.1.2",
         "koa-mount": "4.0.0",
         "koa-router": "8.0.8",
-        "koa-sslify": "^4.0.3",
         "koa-static": "5.0.0",
         "koa-views": "6.2.1",
         "koa2-cors": "2.0.6",

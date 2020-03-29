@@ -7492,11 +7492,6 @@ koa-send@^5.0.0:
     mz "^2.7.0"
     resolve-path "^1.4.0"
 
-koa-sslify@^4.0.3:
-  version "4.0.3"
-  resolved "https://registry.yarnpkg.com/koa-sslify/-/koa-sslify-4.0.3.tgz#79ec31042a607d0c4c0a32e21cea513708840c1c"
-  integrity sha512-5RwsRc+Zkawoq9ev5pNAPP8r+wj4Eqo3b7IfSXrpYISBDNo0fwrMcYMioR+B00piV9NpXqPZA4gh36SpIeZSvw==
-
 koa-static@5.0.0:
   version "5.0.0"
   resolved "https://registry.yarnpkg.com/koa-static/-/koa-static-5.0.0.tgz#5e92fc96b537ad5219f425319c95b64772776943"
@@ -7721,11 +7716,6 @@ lodash.curry@^4.1.1:
   version "4.1.1"
   resolved "https://registry.yarnpkg.com/lodash.curry/-/lodash.curry-4.1.1.tgz#248e36072ede906501d75966200a86dab8b23170"
   integrity sha1-JI42By7ekGUB11lmIAqG2riyMXA=
-
-lodash.get@^4.4.2:
-  version "4.4.2"
-  resolved "https://registry.yarnpkg.com/lodash.get/-/lodash.get-4.4.2.tgz#2d177f652fa31e939b4438d5341499dfa3825e99"
-  integrity sha1-LRd/ZS+jHpObRDjVNBSZ36OCXpk=
 
 lodash.includes@^4.3.0:
   version "4.3.0"
@@ -10275,13 +10265,6 @@ querystringify@^2.1.1:
   version "2.1.1"
   resolved "https://registry.yarnpkg.com/querystringify/-/querystringify-2.1.1.tgz#60e5a5fd64a7f8bfa4d2ab2ed6fdf4c85bad154e"
   integrity sha512-w7fLxIRCRT7U8Qu53jQnJyPkYZIaR4n5151KMfcJlO/A9397Wxb1amJvROTK6TOnp7PfoAmg/qXiNHI+08jRfA==
-
-ra-auth-acl@0.1.1:
-  version "0.1.1"
-  resolved "https://registry.yarnpkg.com/ra-auth-acl/-/ra-auth-acl-0.1.1.tgz#0ecb67731f161d6528400ed23233748c69b5cc3b"
-  integrity sha512-1dlZ98Z2TrlwojNURpQOj8t/pliILuPSItSSst73jZfFj/9BkfLdmR1URpS7NchfZjv5eaHtRzppYXBw7zriOg==
-  dependencies:
-    lodash.get "^4.4.2"
 
 ra-core@^3.3.3:
   version "3.3.3"

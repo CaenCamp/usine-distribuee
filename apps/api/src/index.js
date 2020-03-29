@@ -7,7 +7,6 @@ const bodyParser = require('koa-bodyparser');
 const serve = require('koa-static');
 const error = require('koa-json-error');
 const compress = require('koa-compress');
-const httpsRedirectionMiddleware = require('koa-sslify').default;
 
 const config = require('./config');
 const dbMiddleware = require('./dbMiddleware');
@@ -21,6 +20,7 @@ const userAccountRouter = require("./user-account/router");
 const productionManagementRouter = require('./production-management/router');
 const requestRouter = require("./request/router");
 
+
 const app = new Koa();
 
 // See https://github.com/zadzbw/koa2-cors for configuration
@@ -32,6 +32,7 @@ app.use(
         exposeHeaders: ["Content-Range"]
     })
 );
+
 
 /**
  * This method is used to format message return by the global error middleware
@@ -50,25 +51,19 @@ app.use(bodyParser());
 app.use(error(formatError));
 app.use(compress());
 
-if (config.https) {
-    app.use(httpsRedirectionMiddleware());
-}
-
 app.use(serve(path.resolve(__dirname, '../public')));
 app.use(mount('/', front));
 app.use(mount('/admin', serve(path.resolve(__dirname, '../admin'))));
 
 app.use(dbMiddleware);
-app.use(authenticationRouter.routes()).use(
-    authenticationRouter.allowedMethods()
-);
+app
+    .use(authenticationRouter.routes())
+    .use(authenticationRouter.allowedMethods());
 
 app.use(authenticationMiddleware);
 
 app.use(mount("/api/user-accounts", userAccountRouter.routes()));
-app.use(
-    mount('/api/production-managements', productionManagementRouter.routes())
-);
+app.use(mount("/api/production-managements", productionManagementRouter.routes()));
 app.use(mount("/api/dispatcher-requests", requestRouter.routes()));
 app.use(mount("/api/production-manager-requests", requestRouter.routes()));
 
