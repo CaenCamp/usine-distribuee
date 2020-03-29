@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useQuery, useMutation } from 'react-admin';
+import { useQuery, useMutation, useRefresh } from 'react-admin';
 import {
     Grid,
     Button,
@@ -26,6 +26,7 @@ const useStyles = makeStyles({
 const DispatchActions = ({ record }) => {
     const [selectedProductionManager, setProductionManager] = useState();
     const classes = useStyles();
+    const refresh = useRefresh();
 
     const { data: productionManagers, loading: queryLoading } = useQuery({
         type: 'getList',
@@ -45,8 +46,8 @@ const DispatchActions = ({ record }) => {
                 status: 'MANAGEMENT_TODO',
                 production_management_id: selectedProductionManager
             }
-        }
-    });
+        },
+    }, { onSuccess: refresh });
 
     const [postpone, { loading: postoneLoading }] = useMutation({
         type: 'update',
@@ -56,8 +57,8 @@ const DispatchActions = ({ record }) => {
             data: {
                 status: 'DISPATCH_PENDING',
             }
-        }
-    });
+        },
+    }, { onSuccess: refresh });
 
     const disabled = queryLoading || dispatchLoading || postoneLoading;
 

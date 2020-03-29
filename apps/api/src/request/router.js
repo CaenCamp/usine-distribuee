@@ -19,11 +19,39 @@ router.get("/", async ctx => {
     ctx.body = requests;
 });
 
+router.get('/:id', async ctx => {
+    const request = await getOne({
+        client: ctx.state.db,
+        id: ctx.params.id,
+    });
+
+    if (request.error) {
+        const explainedError = new Error(request.error.message);
+        explainedError.status = 404;
+
+        throw explainedError;
+    }
+
+    if (!request.id) {
+        const explainedError = new Error(
+            `The production management of id ${ctx.params.id} does not exist.`
+        );
+        explainedError.status = 404;
+
+        throw explainedError;
+    }
+
+    ctx.body = request;
+});
+
 router.put("/:id", async ctx => {
     const user = ctx.state.user;
     const updatedData = ctx.request.body;
 
-    const request = await getOne(ctx.params.id);
+    const request = await getOne({
+        client: ctx.state.db,
+        id: ctx.params.id,
+    });
 
     if (!isAuthorized(user, request, updatedData)) {
         const error = new Error("Forbidden.");
@@ -40,12 +68,13 @@ router.put("/:id", async ctx => {
 
     if (!updatedRequest.id) {
         const error = new Error(
-            `The organization of id ${ctx.params.productionManagementId} does not exist, so it could not be updated`
+            `The organization of id ${ctx.params.id} does not exist, so it could not be updated`
         );
         error.status = 404;
 
         throw error;
     }
+
     if (updatedRequest.error) {
         const error = new Error(updatedProductionManagement.error.message);
         error.status = 400;
