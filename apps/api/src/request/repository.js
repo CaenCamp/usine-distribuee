@@ -15,13 +15,17 @@ const filterableFields = [
     'created_at_after',
 ];
 const sortableFields = [
-    'created_at',
-    'requester_type',
-    'delivery_postal_code',
-    'delivery_city',
-    'production_management_id',
+    'createdAt',
+    'requesterType',
+    'deliveryPostalCode',
+    'deliveryCity',
+    'productionManagementId',
     'status',
+    'maskSmallSizeQuantity',
+    'maskLargeSizeQuantity'
 ];
+
+const table = 'request';
 
 const getFilteredQuery = (client, filters, sort) => {
     const {
@@ -33,7 +37,7 @@ const getFilteredQuery = (client, filters, sort) => {
     } = filters;
     const query = client
         .select('*')
-        .from('request')
+        .from(table)
         .where(restFilters);
 
     if (delivery_postal_code) {
@@ -82,9 +86,19 @@ const getPaginatedList = async ({
         }));
 };
 
-const insertOne = ({ client, data }) => client.insert(data).into('request');
+const insertOne = ({ client, data }) => client.insert(data).into(table);
+
+const getOne = async ({ client, id }) => {
+    return client
+        .first('*')
+        .from(table)
+        .where({ id })
+        .catch(error => ({ error }));
+};
+
 
 module.exports = {
     getPaginatedList,
     insertOne,
+    getOne,
 }

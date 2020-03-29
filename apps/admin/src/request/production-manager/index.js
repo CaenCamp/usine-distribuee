@@ -13,7 +13,7 @@ export const requestStatus = [
 ];
 
 export const requesterType = [
-    { id: "finess", name: "FITNESS" },
+    { id: "finess", name: "FINESS" },
     { id: "rpps", name: "RPPS" },
     { id: "adeli", name: "ADELI" },
     { id: "other", name: "Autre" },

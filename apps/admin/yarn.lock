@@ -8855,7 +8855,7 @@ querystringify@^2.1.1:
   resolved "https://registry.yarnpkg.com/querystringify/-/querystringify-2.1.1.tgz#60e5a5fd64a7f8bfa4d2ab2ed6fdf4c85bad154e"
   integrity sha512-w7fLxIRCRT7U8Qu53jQnJyPkYZIaR4n5151KMfcJlO/A9397Wxb1amJvROTK6TOnp7PfoAmg/qXiNHI+08jRfA==
 
-ra-auth-acl@^0.1.1:
+ra-auth-acl@0.1.1:
   version "0.1.1"
   resolved "https://registry.yarnpkg.com/ra-auth-acl/-/ra-auth-acl-0.1.1.tgz#0ecb67731f161d6528400ed23233748c69b5cc3b"
   integrity sha512-1dlZ98Z2TrlwojNURpQOj8t/pliILuPSItSSst73jZfFj/9BkfLdmR1URpS7NchfZjv5eaHtRzppYXBw7zriOg==
