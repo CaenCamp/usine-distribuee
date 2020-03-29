@@ -13,6 +13,7 @@ const filterableFields = [
     'status',
     'created_at_before',
     'created_at_after',
+    'ownership',
 ];
 const sortableFields = [
     'createdAt',
@@ -27,12 +28,13 @@ const sortableFields = [
 
 const table = 'request';
 
-const getFilteredQuery = (client, filters, sort) => {
+const getFilteredQuery = (client, filters, sort, user) => {
     const {
         delivery_postal_code,
         delivery_city,
         created_at_before,
         created_at_after,
+        ownership,
         ...restFilters
     } = filters;
     const query = client
@@ -54,6 +56,9 @@ const getFilteredQuery = (client, filters, sort) => {
         const queryDate = new Date(created_at_before);
         query.andWhere('created_at', '>', queryDate.toISOString());
     }
+    if (ownership && ownership === 'me') {
+        query.whereIn('production_management_id', user.productionManagementIds || []);
+    }
 
     if (sort && sort.length) {
         query.orderBy(...sort);
@@ -67,11 +72,13 @@ const getPaginatedList = async ({
     filters,
     sort,
     pagination,
+    user
 }) => {
     const query = getFilteredQuery(
         client,
         filtersSanitizer(filters, filterableFields),
-        sortSanitizer(sort, sortableFields)
+        sortSanitizer(sort, sortableFields),
+        user
     );
     const [perPage, currentPage] = paginationSanitizer(pagination);
 
