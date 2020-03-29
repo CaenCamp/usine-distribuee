@@ -2,16 +2,11 @@ const {
     filtersSanitizer,
     formatPaginationContentRange,
     paginationSanitizer,
-    sortSanitizer,
+    sortSanitizer
 } = require('../toolbox/sanitizers');
 
-const filterableFields = [
-    'role'
-];
-const sortableFields = [
-    'created_at',
-    'last_name',
-];
+const filterableFields = ['role'];
+const sortableFields = ['created_at', 'last_name'];
 
 const getOneByEmail = ({ client, email }) => {
     return client
@@ -27,8 +22,7 @@ const getOneByEmail = ({ client, email }) => {
 };
 
 const getOne = ({ client, id }) => {
-    return getOneQuery(client, id)
-        .catch(error => ({ error }));
+    return getOneQuery(client, id).catch(error => ({ error }));
 };
 
 const getFilteredQuery = (client, filters, sort) => {
@@ -47,12 +41,7 @@ const getFilteredQuery = (client, filters, sort) => {
     return query;
 };
 
-const getPaginatedList = async ({
-    client,
-    filters,
-    sort,
-    pagination,
-}) => {
+const getPaginatedList = async ({ client, filters, sort, pagination }) => {
     const query = getFilteredQuery(
         client,
         filtersSanitizer(filters, filterableFields),
@@ -67,7 +56,7 @@ const getPaginatedList = async ({
             contentRange: formatPaginationContentRange(
                 'users',
                 result.pagination
-            ),
+            )
         }));
 };
 
@@ -88,21 +77,19 @@ const updateOne = async ({ client, id, data }) => {
 
                     const linksToCreate = productionManagementIds.reduce(
                         (acc, productionManagementId) => {
-                            acc.push(
-                                client('production_management_user')
-                                    .transacting(trx)
-                                    .insert({
-                                        userAccountId: id,
-                                        productionManagementId,
-                                    })
-                            );
+                            acc.push({
+                                userAccountId: id,
+                                productionManagementId
+                            });
 
                             return acc;
                         },
                         []
                     );
 
-                    return Promise.all(linksToCreate);
+                    return client('production_management_user')
+                        .transacting(trx)
+                        .insert(linksToCreate);
                 })
                 .then(trx.commit)
                 .catch(trx.rollback);
@@ -111,8 +98,7 @@ const updateOne = async ({ client, id, data }) => {
         return { error };
     }
 
-    return getOneQuery(client, id)
-        .catch(error => ({ error }));
+    return getOneQuery(client, id).catch(error => ({ error }));
 };
 
 const getOneQuery = (client, id) => {
@@ -137,26 +123,24 @@ const insertOne = async ({ client, data }) => {
                 .transacting(trx)
                 .returning('id')
                 .insert(userData)
-                .then(([userAccountId]) => {
+                .then(async ([userAccountId]) => {
                     const linksToCreate = productionManagementIds.reduce(
                         (acc, productionManagementId) => {
-                            acc.push(
-                                client('production_management_user')
-                                    .transacting(trx)
-                                    .insert({
-                                        userAccountId,
-                                        productionManagementId,
-                                    })
-                            );
+                            acc.push({
+                                userAccountId,
+                                productionManagementId
+                            });
 
                             return acc;
                         },
                         []
                     );
 
-                    return Promise.all(linksToCreate).then(
-                        () => userAccountId
-                    );
+                    await client('production_management_user')
+                        .transacting(trx)
+                        .insert(linksToCreate);
+
+                    return userAccountId;
                 })
                 .then(trx.commit)
                 .catch(trx.rollback);
@@ -181,5 +165,5 @@ module.exports = {
     getOne,
     getPaginatedList,
     insertOne,
-    updateOne,
+    updateOne
 };
