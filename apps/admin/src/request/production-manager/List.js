@@ -19,6 +19,7 @@ import {
 
 import { requesterType } from './index';
 import RequestShow from '../dispatcher/Show';
+import StatusActions from './StatusActions';
 
 const UserFilter = props => (
     <Filter {...props}>
@@ -35,12 +36,14 @@ const RequestPagination = props => (
 );
 
 const tabs = [
-    { id: "me", name: "Mes commandes" },
-    { id: "all", name: "Toutes les commandes" },
+    { id: "MANAGEMENT_TODO", name: "A fabriquer" },
+    { id: "MANAGEMENT_BUILDING", name: "En fabrication" },
+    { id: "MANAGEMENT_BUILT", name: "A livrer" },
+    { id: "MANAGEMENT_DELIVERED", name: "Livré" },
 ];
 
 const RequestDatagrid = props => (
-    <Datagrid {...props} expand={<RequestShow />}>
+    <Datagrid {...props} expand={<RequestShow renderActions={(record) => <StatusActions record={record} />} />} rowClick="expand">
         <TextField source="requesterName" label="Organisation" />
         <NumberField source="maskSmallSizeQuantity" label="Masques Standards" />
         <NumberField source="maskLargeSizeQuantity" label="Masques Longs" />
@@ -52,16 +55,16 @@ const RequestDatagrid = props => (
 const TabbedList = (props) => {
     const handleChange = (event, value) => {
         const { setFilters, filterValues } = props;
-        setFilters({ ...filterValues, ownership: value });
+        setFilters({ ...filterValues, status: value });
     };
 
     return (
         <>
-            <AppBar position="relative" color="transparent">
+            <AppBar position="relative" color="transparent" elevation={0} >
                 <Tabs
                     variant="fullWidth"
                     centered
-                    value={props.filterValues.ownership}
+                    value={props.filterValues.status}
                     indicatorColor="primary"
                     onChange={handleChange}
                 >
@@ -86,12 +89,15 @@ export default (props) => (
     <List
         {...props}
         filters={<UserFilter />}
-        filterDefaultValues={{ ownership: 'me' }}
+        filterDefaultValues={{
+            ownership: 'me',
+            status: 'MANAGEMENT_TODO',
+        }}
         sort={{ field: "createdAt", order: "ASC" }}
         exporter={false}
         pagination={<RequestPagination />}
         bulkActionButtons={false}
-        title="Liste des commandes"
+        title="Liste des demandes de fabrications"
     >
         <TabbedList {...props} />
     </List>
