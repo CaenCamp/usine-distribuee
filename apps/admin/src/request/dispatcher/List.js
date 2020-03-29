@@ -41,7 +41,7 @@ const tabs = [
 ];
 
 const RequestDatagrid = props => (
-    <Datagrid {...props} expand={<RequestShow />}>
+    <Datagrid {...props} expand={<RequestShow />} rowClick="expand">
         <TextField source="requesterName" label="Organisation" />
         <NumberField source="maskSmallSizeQuantity" label="Masques Standards" />
         <NumberField source="maskLargeSizeQuantity" label="Masques Longs" />
@@ -76,9 +76,7 @@ const TabbedList = (props) => {
                 </Tabs>
             </AppBar>
             <Divider />
-            <div>
-                <RequestDatagrid {...props} />
-            </div>
+            <RequestDatagrid {...props} />
         </>
     )
 }
