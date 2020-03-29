@@ -42,10 +42,14 @@ const sendRequestConfirmation = ({
         ]
     });
     request.catch(err => {
-        signale.error("Mailjet error: " + err.statusCode);
+        signale.error("Mailjet error: ", {
+            statusCode: err.statusCode,
+            message: err.message,
+            stack: err.stack,
+        });
     });
 };
 
 module.exports = {
-  sendRequestConfirmation,
+    sendRequestConfirmation,
 };
