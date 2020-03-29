@@ -29,7 +29,13 @@ const getOne = ({ client, id }) => {
 
 const getFilteredQuery = (client, filters, sort) => {
     const query = client
-        .select('*')
+        .select(
+            'user_account.*',
+            client.raw(`(SELECT array_to_json(array_agg(
+                production_management_id
+            ))
+            FROM production_management_user WHERE production_management_user.user_account_id = user_account.id) as production_management_ids`)
+        )
         .from('user_account')
         .where(filters)
         .orderBy(...sort);
@@ -70,7 +76,13 @@ const updateOne = ({ client, id, data }) => {
 
 const getOneQuery = (client, id) => {
     return client
-        .first('*')
+        .first(
+            'user_account.*',
+            client.raw(`(SELECT array_to_json(array_agg(
+                production_management_id
+            ))
+            FROM production_management_user WHERE production_management_user.user_account_id = user_account.id) as production_management_ids`)
+        )
         .from('user_account')
         .where({ id });
 };
