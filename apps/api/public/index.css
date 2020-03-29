@@ -17,26 +17,57 @@ html, body {
     margin-top: 3rem;
 }
 
+.panel h1 {
+    margin: 0;
+    font-size: 42px;
+}
+
 .panel-heading h4 {
     margin-top: 0;
     margin-bottom: 0;
 }
 
-.address-box {
-    display: flex;
+.form-group.radio {
+    padding-left: 20px;
 }
-.address-box .postal-code {
-    flex: 1 0 0;
+.form-group.radio label {
+    display: block;
 }
-.address-box .city {
-    flex: 4 0 0;
-    padding-left: 3rem;
+
+/* do not display the text input if the radio request type "other" isn't checked */
+input[type="radio"]:not(:checked) + input[type="text"] {
+    display: none;
+}
+
+@supports (display: flex) {
+    @media (min-width: 700px) {
+        .address-box {
+            display: flex;
+        }
+        .address-box .postal-code {
+            flex: 1 0 0;
+        }
+        .address-box .city {
+            flex: 4 0 0;
+            padding-left: 3rem;
+        }
+    }
 }
 
 .submit {
     text-align: right;
 }
 
+footer .footer-logo {
+    height: auto;
+}
 footer .nav-item {
     color: #e6e9ed;
+}
+
+textarea {
+    width: 100%;
+    max-width: 100%;
+    min-width: 100%;
+    min-height: 100px;
 }
