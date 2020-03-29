@@ -34,17 +34,17 @@ router.get("/:id", async ctx => {
 });
 
 router.put("/:id", async ctx => {
-    const { email, role, firstName, lastName, phone } = ctx.request.body;
+    const { newPassword, ...updatedData } = ctx.request.body;
 
-    const user = await updateOne(ctx.state.db, ctx.params.id, {
-        email,
-        role,
-        firstName,
-        lastName,
-        phone
-    });
+    if (newPassword && newPassword.trim().length) {
+        const salt = bcrypt.genSaltSync(10);
+        updatedData.password = bcrypt.hashSync(newPassword, salt);
+    }
 
-    ctx.body = user;
+    await updateOne(ctx.state.db, ctx.params.id, updatedData);
+    const updatedUser = await getOneById(ctx.state.db, ctx.params.id);
+
+    ctx.body = updatedUser;
 });
 
 router.delete('/:id', async ctx => {

@@ -46,6 +46,7 @@ app.use(bodyParser());
 app.use(error(formatError));
 app.use(compress());
 
+app.use(serve(path.resolve(__dirname, '../public')));
 app.use(mount('/', front));
 app.use(mount('/admin', serve(path.resolve(__dirname, '../admin'))));
 
