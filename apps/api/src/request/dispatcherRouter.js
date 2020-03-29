@@ -5,9 +5,7 @@ const {
     getPaginatedList,
 } = require('./repository');
 
-const router = new Router({
-    prefix: '/api/requests',
-});
+const router = new Router();
 
 router.get('/', async ctx => {
     const { requests, contentRange } = await getPaginatedList({

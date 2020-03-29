@@ -26,5 +26,5 @@ export default {
     // edit: Edit,
     // create: Create,
     icon: RequestIcon,
-    options: { label: "Les commandes" }
+    options: { label: "Dispatch" }
 };
