@@ -68,10 +68,48 @@ const updateOne = ({ client, id, data }) => {
         .update(data, ['*']);
 };
 
-const insertOne = ({ client, data }) => {
+const getOneQuery = (client, id) => {
     return client
-        .table('user_account')
-        .insert(data, ['*']);
+        .first('*')
+        .from('user_account')
+        .where({ id });
+};
+
+const insertOne = async ({ client, data }) => {
+    const { productionManagementIds, ...userData } = data;
+
+    return client
+        .transaction(trx => {
+            client('user_account')
+                .transacting(trx)
+                .returning('id')
+                .insert(userData)
+                .then(([userAccountId]) => {
+                    const linksToCreate = productionManagementIds.reduce(
+                        (acc, productionManagementId) => {
+                            acc.push(
+                                client('production_management_user')
+                                    .transacting(trx)
+                                    .insert({
+                                        userAccountId,
+                                        productionManagementId,
+                                    })
+                            );
+
+                            return acc;
+                        },
+                        []
+                    );
+
+                    return Promise.all(linksToCreate).then(
+                        () => userAccountId
+                    );
+                })
+                .then(trx.commit)
+                .catch(trx.rollback);
+        })
+        .then(userAccountId => getOneQuery(client, userAccountId))
+        .catch(error => ({ error }));
 };
 
 const deleteOne = ({ client, id }) => {

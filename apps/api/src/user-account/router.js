@@ -71,31 +71,18 @@ router.delete('/:id', async ctx => {
 });
 
 router.post("/", async ctx => {
-    const {
-        email,
-        role,
-        firstName,
-        lastName,
-        phone,
-        password
-    } = ctx.request.body;
-
     const salt = bcrypt.genSaltSync(10);
-    const hashedPassword = bcrypt.hashSync(password, salt);
+    const hashedPassword = bcrypt.hashSync(ctx.request.body.password, salt);
 
     const user = await insertOne({
         client: ctx.state.db,
         data: {
-            email,
-            role,
-            firstName,
-            lastName,
-            phone,
-            password: hashedPassword
+            ...ctx.request.body,
+            password: hashedPassword,
         }
     });
 
-    ctx.body = user[0];
+    ctx.body = user;
 });
 
 
