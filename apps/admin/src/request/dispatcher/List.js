@@ -25,7 +25,7 @@ const UserFilter = props => (
     <Filter {...props}>
         <SelectInput
             source="requester_type"
-            label="Type de professionnel"
+            label="Type de numéro professionnel"
             choices={requesterType}
             style={{ minWidth: 250 }}
         />
@@ -44,6 +44,7 @@ const tabs = [
 
 const RequestDatagrid = props => (
     <Datagrid {...props} expand={<RequestShow renderActions={(record) => record.status === 'DISPATCH_TODO' && <DispatchActions record={record} />} />} rowClick="expand">
+        <TextField source="publicNumber" label="#" />
         <TextField source="requesterName" label="Organisation" />
         <NumberField source="maskSmallSizeQuantity" label="Masques Standards" />
         <NumberField source="maskLargeSizeQuantity" label="Masques Longs" />
