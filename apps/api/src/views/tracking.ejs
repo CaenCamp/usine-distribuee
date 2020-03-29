@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        <meta charset="utf-8" />
+        <meta
+            name="viewport"
+            content="width=device-width,minimum-scale=1,initial-scale=1"
+        />
+        <title>
+            Usine Partagée | Dispositif Régional - Référencement des besoins
+        </title>
+        <meta
+            name="description"
+            content="Ce formulaire est destiné aux professionnels de santé. Son objectif est de référencer les besoins en matière d'écrans faciaux liés au COVID-19. Sous réserve d'un accord définitif et formalisé, la Région Normandie prendra en charge tous les frais de l'opération. Ce cas échéant, les masques seront donc gratuits."
+        />
+        <link rel="stylesheet" href="/bootstrap/bootstrap.min.css" />
+        <link rel="stylesheet" href="/bootflat/css/bootflat.min.css" />
+        <link rel="stylesheet" href="/index.css" />
+        <link
+            href="https://fonts.googleapis.com/css?family=Montserrat&display=swap"
+            rel="stylesheet"
+        />
+    </head>
+
+    <body>
+        <header>
+            <nav class="navbar navbar-inverse" role="navigation">
+                <div class="container-fluid">
+                    <div class="navbar-header">
+                        <a class="navbar-brand" href="/">Usine Partagée</a>
+                    </div>
+                    <div
+                        class="collapse navbar-collapse"
+                        id="bs-example-navbar-collapse-6"
+                    >
+                        <p class="navbar-text">
+                            Dispositif Régional - Référencement des besoins
+                        </p>
+                        <p class="navbar-right logo">
+                            <img
+                                src="/img/logo.png"
+                                alt=""
+                                title="Une opération coordonnée par la Région Normandie et Le Dôme"
+                                height="50"
+                            />
+                        </p>
+                    </div>
+                </div>
+            </nav>
+        </header>
+
+        <div class="content-container">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <h1>Usine Partagée</h1>
+                    <h3>Référencement des besoins</h3>
+                    <h6>
+                        Une opération coordonnée par la
+                        <a href="https://www.normandie.fr/">Région Normandie</a>
+                        et <a href="http://ledome.info/">Le Dôme</a>
+                    </h6>
+                    <p style="margin-top: 3rem;">
+                        Suivi de la demande n°<%= commandNumber %>
+                    </p>
+                    <% if (request.status==='DISPATCH_REJECTED') { %>
+                    <p class="help-block">Demande rejetée</p>
+                    <% } else { %>
+                    <ul class="status">
+                        <li class="<% if (statusIndex >= 0) { %>done<% } %>">
+                            Prise en compte
+                        </li>
+                        <% if (request.status==='DISPATCH_PENDING') { %>
+                        <li>Demande d'information</li>
+                        <% } %>
+                        <li class="<% if (statusIndex >= 2) { %>done<% } %>">
+                            En fabrication
+                        </li>
+                        <li class="<% if (statusIndex >= 4) { %>done<% } %>">
+                            Fabriqué
+                        </li>
+                        <li class="<% if (statusIndex >= 5) { %>done<% } %>">
+                            Livré
+                        </li>
+                    </ul>
+                    <% } %>
+                </div>
+            </div>
+        </div>
+
+        <footer class="footer">
+            <div class="container">
+                <div class="clearfix">
+                    <div class="footer-logo">
+                        <a href="https://www.caen.camp/">
+                            <img src="/img/caencamp.png" alt="" width="120" />
+                        </a>
+                    </div>
+                    <dl class="footer-nav">
+                        <dt class="nav-title">PRODUCTION</dt>
+                        <dd class="nav-item">
+                            <a href="https://www.caen.camp/">CaenCamp</a>
+                        </dd>
+                        <dd class="nav-item">
+                            <a href="https://github.com/CaenCamp">GitHub</a>
+                        </dd>
+                        <dd class="nav-item">
+                            <a href="https://twitter.com/caencamp">Twitter</a>
+                        </dd>
+                    </dl>
+                    <dl class="footer-nav">
+                        <dt class="nav-title">VIE PRIVEE</dt>
+                        <dd class="nav-item">Aucun cookie</dd>
+                        <dd class="nav-item">
+                            Aucune donnée n'est récoltée, ni stockée
+                        </dd>
+                    </dl>
+                    <dl class="footer-nav">
+                        <dt class="nav-title">HEBERGEMENT</dt>
+                        <dd class="nav-item">
+                            <a href="https://www.clever-cloud.com"
+                                >Clever Cloud SAS</a
+                            >
+                        </dd>
+                        <dd class="nav-item">3 rue de l'Allier</dd>
+                        <dd class="nav-item">44000 NANTES</dd>
+                        <dd class="nav-item">+33 2 85 52 07 69</dd>
+                    </dl>
+                </div>
+                <div class="footer-copyright text-center">
+                    Les sources de ce site internet sont disponibles à l'adresse
+                    <a href="https://github.com/CaenCamp/usine-distribuee"
+                        >github.com/CaenCamp/usine-distribuee</a
+                    >
+                </div>
+            </div>
+        </footer>
+    </body>
+</html>

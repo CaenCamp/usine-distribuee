@@ -6,7 +6,7 @@ const views = require('koa-views');
 const signale = require('signale');
 
 const dbMiddleware = require('./dbMiddleware');
-const { insertOne } = require('./request/repository');
+const { insertOne, getOne } = require('./request/repository');
 
 const app = new Koa();
 const router = new Router();
@@ -106,6 +106,21 @@ router.post('/', async (ctx) => {
 
     return ctx.render('index.ejs');
 })
+
+const requestStatuses = [
+    'DISPATCH_TODO', 'DISPATCH_PENDING', 'MANAGEMENT_TODO', 'MANAGEMENT_BUILDING', 'MANAGEMENT_BUILT', 'MANAGEMENT_DELIVERED',
+];
+
+router.get('/tracking/:id', async (ctx) => {
+    const request = await getOne({ client : ctx.state.db, id :ctx.params.id });
+
+    // TODO: get one
+    ctx.state.commandNumber = request.id;
+    ctx.state.request = request;
+    ctx.state.statusIndex = requestStatuses.indexOf(request.status);
+
+    return ctx.render('tracking.ejs');
+});
 
 app
     .use(views(path.resolve(__dirname, './views'), { extension: 'ejs' }))
