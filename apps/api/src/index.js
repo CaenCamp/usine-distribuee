@@ -18,8 +18,7 @@ const front = require('./front');
 
 const userAccountRouter = require("./user-account/router");
 const productionManagementRouter = require('./production-management/router');
-const dispatcherRequestRouter = require("./request/dispatcherRouter");
-const productionManagementRequestRouter = require("./request/productionManagementRouter");
+const requestRouter = require("./request/router");
 
 
 const app = new Koa();
@@ -65,8 +64,8 @@ app.use(authenticationMiddleware);
 
 app.use(mount("/api/user-accounts", userAccountRouter.routes()));
 app.use(mount("/api/production-managements", productionManagementRouter.routes()));
-app.use(mount("/api/dispatcher-requests", dispatcherRequestRouter.routes()));
-app.use(mount("/api/production-manager-requests", productionManagementRequestRouter.routes()));
+app.use(mount("/api/dispatcher-requests", requestRouter.routes()));
+app.use(mount("/api/production-manager-requests", requestRouter.routes()));
 
 app.listen(config.port, () =>
     global.console.log(`API started on port ${config.port}`)
