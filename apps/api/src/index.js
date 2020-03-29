@@ -27,8 +27,9 @@ const app = new Koa();
 // See https://github.com/zadzbw/koa2-cors for configuration
 app.use(
     cors({
-        origin: "*",
-        allowHeaders: ["Origin, Content-Type, Accept"],
+        credentials: true,
+        origin: config.env === 'development' ? "http://localhost:8002" : null,
+        allowHeaders: ["Origin, Content-Type, Accept, Authorization, Cookie"],
         exposeHeaders: ["Content-Range"]
     })
 );
@@ -60,7 +61,7 @@ app
     .use(authenticationRouter.routes())
     .use(authenticationRouter.allowedMethods());
 
-// app.use(authenticationMiddleware);
+app.use(authenticationMiddleware);
 
 app.use(mount("/api/user-accounts", userAccountRouter.routes()));
 app.use(mount("/api/production-managements", productionManagementRouter.routes()));

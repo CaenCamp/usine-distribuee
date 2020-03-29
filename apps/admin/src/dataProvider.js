@@ -118,4 +118,14 @@ const dataProvider = (apiUrl, httpClient = fetchUtils.fetchJson) => ({
         ).then(responses => ({ data: responses.map(({ json }) => json.id) })),
 });
 
-export default dataProvider(`${process.env.REACT_APP_API_URL || ''}/api`);
+const httpClient = (url, options = {}) => {
+    if (!options.headers) {
+        options.headers = new Headers({ Accept: 'application/json' });
+    }
+    const token = localStorage.getItem('token');
+    options.headers.set('Authorization', token);
+    options.credentials = process.env.REACT_APP_HTTP_CREDENTIALS || 'same-origin';
+    return fetchUtils.fetchJson(url, options);
+};
+
+export default dataProvider(`${process.env.REACT_APP_API_URL || ''}/api`, httpClient);
