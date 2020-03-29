@@ -19,6 +19,7 @@ import {
 
 import { requesterType } from './index';
 import RequestShow from './Show';
+import DispatchActions from './DispatchActions';
 
 const UserFilter = props => (
     <Filter {...props}>
@@ -41,7 +42,7 @@ const tabs = [
 ];
 
 const RequestDatagrid = props => (
-    <Datagrid {...props} expand={<RequestShow />} rowClick="expand">
+    <Datagrid {...props} expand={<RequestShow renderActions={() => <DispatchActions />} />} rowClick="expand">
         <TextField source="requesterName" label="Organisation" />
         <NumberField source="maskSmallSizeQuantity" label="Masques Standards" />
         <NumberField source="maskLargeSizeQuantity" label="Masques Longs" />
