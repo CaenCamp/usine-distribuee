@@ -17,7 +17,7 @@ import {
     Tab,
 } from '@material-ui/core';
 
-import { requestStatus, requesterType } from './index';
+import { requesterType } from './index';
 import RequestShow from './Show';
 
 const UserFilter = props => (

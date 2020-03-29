@@ -10,15 +10,13 @@ export default {
     dispatcher: {
         ...buildFullAccessFor([
             "dispatcher-requests",
-            "production-managements",
-            "user-accounts"
         ]),
         "production-manager-requests": {
             enabled: true,
             list: true,
             show: true,
             create: false,
-            edit: false
+            edit: true
         }
     },
     production_manager: buildFullAccessFor(["production-manager-requests"]),
