@@ -14,7 +14,7 @@ import {
     Divider,
     Tabs,
     AppBar,
-    Tab,
+    Tab
 } from '@material-ui/core';
 
 import { requesterType } from './index';
@@ -24,9 +24,10 @@ import DispatchActions from './DispatchActions';
 const UserFilter = props => (
     <Filter {...props}>
         <SelectInput
-            source="requesterType"
+            source="requester_type"
             label="Type de professionnel"
             choices={requesterType}
+            style={{ minWidth: 250 }}
         />
     </Filter>
 );
@@ -42,7 +43,7 @@ const tabs = [
 ];
 
 const RequestDatagrid = props => (
-    <Datagrid {...props} expand={<RequestShow renderActions={(record) => <DispatchActions record={record} />} />} rowClick="expand">
+    <Datagrid {...props} expand={<RequestShow renderActions={(record) => record.status === 'DISPATCH_TODO' && <DispatchActions record={record} />} />} rowClick="expand">
         <TextField source="requesterName" label="Organisation" />
         <NumberField source="maskSmallSizeQuantity" label="Masques Standards" />
         <NumberField source="maskLargeSizeQuantity" label="Masques Longs" />
@@ -59,7 +60,7 @@ const TabbedList = (props) => {
 
     return (
         <>
-            <AppBar position="relative" color="transparent">
+            <AppBar position="relative" color="transparent" elevation={0}>
                 <Tabs
                     variant="fullWidth"
                     centered
