@@ -15,10 +15,12 @@ router.post("/authenticate", async ctx => {
 
     if (!user) {
         ctx.throw("Invalid credentials.", 401);
+        return;
     }
 
     if (!bcrypt.compareSync(password, user.password)) {
         ctx.throw("Invalid credentials.", 401);
+        return;
     }
 
     const token = jwt.sign(

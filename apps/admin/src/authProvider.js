@@ -14,7 +14,8 @@ export default (type, params) => {
       {
         method: "POST",
         body: JSON.stringify({ email: username, password }),
-        headers: new Headers({ "Content-Type": "application/json" })
+        headers: new Headers({ "Content-Type": "application/json" }),
+        credentials: process.env.REACT_APP_HTTP_CREDENTIALS || 'same-origin'
       }
     );
     return fetch(request)
