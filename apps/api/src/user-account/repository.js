@@ -70,26 +70,32 @@ const updateOne = async ({ client, id, data }) => {
                 .where({ id })
                 .update(userData)
                 .then(async () => {
-                    await client('production_management_user')
-                        .transacting(trx)
-                        .del()
-                        .where({ userAccountId: id });
+                    if (
+                        productionManagementIds &&
+                        productionManagementIds.length
+                    ) {
+                        await client('production_management_user')
+                            .transacting(trx)
+                            .del()
+                            .where({ userAccountId: id });
 
-                    const linksToCreate = productionManagementIds.reduce(
-                        (acc, productionManagementId) => {
-                            acc.push({
-                                userAccountId: id,
-                                productionManagementId
-                            });
+                        const linksToCreate = productionManagementIds.reduce(
+                            (acc, productionManagementId) => {
+                                acc.push({
+                                    userAccountId: id,
+                                    productionManagementId
+                                });
 
-                            return acc;
-                        },
-                        []
-                    );
+                                return acc;
+                            },
+                            []
+                        );
 
-                    return client('production_management_user')
-                        .transacting(trx)
-                        .insert(linksToCreate);
+                        await client('production_management_user')
+                            .transacting(trx)
+                            .insert(linksToCreate);
+                    }
+                    return true;
                 })
                 .then(trx.commit)
                 .catch(trx.rollback);
@@ -124,21 +130,26 @@ const insertOne = async ({ client, data }) => {
                 .returning('id')
                 .insert(userData)
                 .then(async ([userAccountId]) => {
-                    const linksToCreate = productionManagementIds.reduce(
-                        (acc, productionManagementId) => {
-                            acc.push({
-                                userAccountId,
-                                productionManagementId
-                            });
+                    if (
+                        productionManagementIds &&
+                        productionManagementIds.length
+                    ) {
+                        const linksToCreate = productionManagementIds.reduce(
+                            (acc, productionManagementId) => {
+                                acc.push({
+                                    userAccountId,
+                                    productionManagementId
+                                });
 
-                            return acc;
-                        },
-                        []
-                    );
+                                return acc;
+                            },
+                            []
+                        );
 
-                    await client('production_management_user')
-                        .transacting(trx)
-                        .insert(linksToCreate);
+                        await client('production_management_user')
+                            .transacting(trx)
+                            .insert(linksToCreate);
+                    }
 
                     return userAccountId;
                 })

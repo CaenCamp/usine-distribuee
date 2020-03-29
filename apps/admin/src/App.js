@@ -13,7 +13,7 @@ import productionManager from "./request/production-manager";
 const App = () => (
     <Admin authProvider={authProvider} dataProvider={dataProvider}>
         {permissions => [
-            <ResourceWithPermissions
+            permissions['dispatcher-requests'] && permissions['dispatcher-requests'].enabled && <ResourceWithPermissions
                 permissions={permissions}
                 name="dispatcher-requests"
                 {...dispatcher}
@@ -33,7 +33,7 @@ const App = () => (
                 name="user-accounts"
                 {...userAccount}
             />
-        ]}
+        ].filter(Boolean)}
     </Admin>
 );
 
