@@ -40,7 +40,6 @@ const tabs = [
     { id: "MANAGEMENT_BUILDING", name: "En fabrication" },
     { id: "MANAGEMENT_BUILT", name: "A livrer" },
     { id: "MANAGEMENT_DELIVERED", name: "Livré" },
-    { id: "MANAGEMENT_ALL", name: "Autres demande du réseau" },
 ];
 
 const RequestDatagrid = props => (
@@ -56,7 +55,7 @@ const RequestDatagrid = props => (
 const TabbedList = (props) => {
     const handleChange = (event, value) => {
         const { setFilters, filterValues } = props;
-        setFilters({ ...filterValues, status: value, ownership: value === 'MANAGEMENT_ALL' ? 'all' : 'me' });
+        setFilters({ ...filterValues, status: value });
     };
 
     return (
@@ -65,7 +64,7 @@ const TabbedList = (props) => {
                 <Tabs
                     variant="fullWidth"
                     centered
-                    value={Array.isArray(props.filterValues.status) ? 'MANAGEMENT_' : props.filterValues.status}
+                    value={props.filterValues.status}
                     indicatorColor="primary"
                     onChange={handleChange}
                 >
