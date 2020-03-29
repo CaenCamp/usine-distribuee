@@ -79,16 +79,11 @@ const updateOne = async ({ client, id, data }) => {
                             .del()
                             .where({ userAccountId: id });
 
-                        const linksToCreate = productionManagementIds.reduce(
-                            (acc, productionManagementId) => {
-                                acc.push({
-                                    userAccountId: id,
-                                    productionManagementId
-                                });
-
-                                return acc;
-                            },
-                            []
+                        const linksToCreate = productionManagementIds.map(
+                            productionManagementId => ({
+                                userAccountId: id,
+                                productionManagementId
+                            })
                         );
 
                         await client('production_management_user')
@@ -134,16 +129,11 @@ const insertOne = async ({ client, data }) => {
                         productionManagementIds &&
                         productionManagementIds.length
                     ) {
-                        const linksToCreate = productionManagementIds.reduce(
-                            (acc, productionManagementId) => {
-                                acc.push({
-                                    userAccountId,
-                                    productionManagementId
-                                });
-
-                                return acc;
-                            },
-                            []
+                        const linksToCreate = productionManagementIds.map(
+                            productionManagementId => ({
+                                userAccountId,
+                                productionManagementId
+                            })
                         );
 
                         await client('production_management_user')
