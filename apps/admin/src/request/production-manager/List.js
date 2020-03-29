@@ -19,7 +19,7 @@ import {
 
 import { requesterType } from './index';
 import RequestShow from '../dispatcher/Show';
-import DispatchActions from '../dispatcher/DispatchActions';
+import DispatchActions from './DispatchActions';
 
 const UserFilter = props => (
     <Filter {...props}>
