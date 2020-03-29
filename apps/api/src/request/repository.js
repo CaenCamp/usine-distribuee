@@ -86,19 +86,40 @@ const getPaginatedList = async ({
         }));
 };
 
-const insertOne = ({ client, data }) => client.insert(data).into(table);
-
-const getOne = async ({ client, id }) => {
-    return client
+const getOneByIdQuery = (client, id) => {
+    const query = client
         .first('*')
-        .from(table)
-        .where({ id })
+        .from('request')
+        .where({ id });
+
+    return query;
+};
+
+const insertOne = async ({ client, data }) => {
+    return client('request')
+        .returning('id')
+        .insert(data)
+        .then(([id]) => id)
+        .then(id => getOneByIdQuery(client, id))
         .catch(error => ({ error }));
 };
 
+const updateOne = async ({ client, id, data }) => {
+    return client('request')
+        .where({ id: id })
+        .update(data)
+        .then(() => getOneByIdQuery(client, id))
+        .catch(error => ({ error }));
+};
+
+const getOne = async ({ client, id }) => {
+    return getOneByIdQuery(client, id)
+        .catch(error => ({ error }));
+};
 
 module.exports = {
     getPaginatedList,
     insertOne,
+    updateOne,
     getOne,
 }
