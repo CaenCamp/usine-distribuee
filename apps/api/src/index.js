@@ -10,6 +10,7 @@ const compress = require('koa-compress');
 
 const config = require('./config');
 const dbMiddleware = require('./dbMiddleware');
+const httpsMiddleware = require('./httpsMiddleware');
 
 const authenticationRouter = require('./authentication/router');
 const authenticationMiddleware = require('./authentication/middleware');
@@ -47,6 +48,7 @@ const formatError = error => {
     };
 };
 
+app.use(httpsMiddleware);
 app.use(bodyParser());
 app.use(error(formatError));
 app.use(compress());
