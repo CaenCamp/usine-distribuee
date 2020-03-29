@@ -1,10 +1,18 @@
 html, body {
     background-color: rgb(240, 235, 248) !important;
+    font-family: Verdana, Arial, Helvetica, sans-serif;
+}
+
+h1, h2, h3, h3, h5 {
+    font-family: 'Montserrat', sans-serif !important;
 }
 
 .navbar {
     border-top-left-radius: 0 !important;
     border-top-right-radius: 0 !important;
+}
+.navbar .logo {
+    margin-bottom: 0;
 }
 
 .content-container {
