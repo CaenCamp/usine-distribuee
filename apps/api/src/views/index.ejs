@@ -189,7 +189,7 @@
                     <h4>COMMANDE</h4>
                 </div>
                 <div class="panel-body">
-                    <p>Minimum 5 masques et maximum 150 masques demande</p>
+                    <p>Minimum 5 masques et maximum 150 masques demandés</p>
 
                     <div class="form-group <% if (errors.mask_small_size_quantity) { %>has-error<% } %>">
                         <label for="mask_small_size_quantity">Quantité souhaitée modèle standard (24cm)</label>
@@ -227,7 +227,7 @@
                     </p>
 
                     <div class="form-group">
-                        <label for="forecast_quantity">Combien de masque ?</label>
+                        <label for="forecast_quantity">Combien de masques ?</label>
                         <input type="number" id="forecast_quantity" name="forecast_quantity"
                             class="form-control stepper-input" min="0" value="<%= request.forecast_quantity || 0 %>"
                             required />
