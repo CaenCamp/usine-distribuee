@@ -6,6 +6,8 @@ import {
   AUTH_GET_PERMISSIONS
 } from "react-admin";
 
+import permissions from './permissions'
+
 export default (type, params) => {
   if (type === AUTH_LOGIN) {
     const { username, password } = params;
@@ -43,7 +45,7 @@ export default (type, params) => {
   }
   if (type === AUTH_GET_PERMISSIONS) {
     const role = localStorage.getItem("role");
-    return role ? Promise.resolve(role) : Promise.reject();
+    return role ? Promise.resolve(permissions[role]) : Promise.reject();
   }
   return Promise.reject("Unknown method");
 };
