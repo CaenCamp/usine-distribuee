@@ -85,7 +85,7 @@ export default ({ renderActions, ...props }) => {
                     <Table>
                         <TableHead>
                             <TableRow>
-                                <TableCell>Matériel comandé</TableCell>
+                                <TableCell>Matériel demandé</TableCell>
                                 <TableCell align="right">Quantité</TableCell>
                             </TableRow>
                         </TableHead>
