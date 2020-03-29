@@ -6,8 +6,8 @@ import dataProvider from "./dataProvider";
 
 import productionManagement from "./production-management";
 import userAccount from './user-account';
-import dispatcher from './dispatcher';
-import productionManager from './production-manager';
+import dispatcher from './request/dispatcher';
+import productionManager from './request/production-manager';
 
 const App = () => (
     <Admin authProvider={authProvider} dataProvider={dataProvider}>

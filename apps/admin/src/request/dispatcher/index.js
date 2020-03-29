@@ -1,8 +1,6 @@
 import RequestIcon from "@material-ui/icons/CallSplit";
 
 import List from "./List";
-// import Edit from "./Edit";
-// import Create from "./Create";
 
 export const requestStatus = [
     { id: "DISPATCH_TODO", name: "A dispatcher" },
@@ -23,8 +21,6 @@ export const requesterType = [
 
 export default {
     list: List,
-    // edit: Edit,
-    // create: Create,
     icon: RequestIcon,
     options: { label: "Dispatch" }
 };
