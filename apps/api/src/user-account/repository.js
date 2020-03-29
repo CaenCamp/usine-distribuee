@@ -16,7 +16,13 @@ const sortableFields = [
 const getOneByEmail = ({ client, email }) => {
     return client
         .table('user_account')
-        .first('*')
+        .first(
+            'user_account.*',
+            client.raw(`(SELECT array_to_json(array_agg(
+                production_management_id
+            ))
+            FROM production_management_user WHERE production_management_user.user_account_id = user_account.id) as production_management_ids`)
+        )
         .where('email', email);
 };
 

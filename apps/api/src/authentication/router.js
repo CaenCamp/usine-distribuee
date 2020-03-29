@@ -52,7 +52,8 @@ router.post("/authenticate", async ctx => {
     ctx.body = {
         token: token,
         role: user.role,
-        email: user.email
+        email: user.email,
+        productionManagementIds: user.productionManagementIds,
     };
 });
 
