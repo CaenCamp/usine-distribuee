@@ -10,9 +10,10 @@ import userAccount from "./user-account";
 import dispatcher from "./request/dispatcher";
 import productionManager from "./request/production-manager";
 import request from "./request/request";
+import { Dashboard } from "./dashboard";
 
 const App = () => (
-    <Admin authProvider={authProvider} dataProvider={dataProvider}>
+    <Admin authProvider={authProvider} dataProvider={dataProvider} dashboard={Dashboard}>
         {permissions => [
             permissions['dispatcher-requests'] && permissions['dispatcher-requests'].enabled && <ResourceWithPermissions
                 permissions={permissions}

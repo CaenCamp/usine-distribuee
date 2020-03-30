@@ -2,6 +2,7 @@ import { buildFullAccessFor } from "ra-auth-acl";
 
 export default {
     admin: buildFullAccessFor([
+        "stats",
         "requests",
         "dispatcher-requests",
         "production-manager-requests",
@@ -25,6 +26,13 @@ export default {
             show: true,
             create: false,
             edit: false
+        },
+        "stats": {
+            enabled: true,
+            list: true,
+            show: false,
+            create: false,
+            edit: false
         }
     },
     production_manager: {
@@ -35,6 +43,13 @@ export default {
             show: true,
             create: false,
             edit: false
+        },
+        "stats": {
+            enabled: true,
+            list: true,
+            show: false,
+            create: false,
+            edit: false
         }
     },
     guest: {
@@ -42,6 +57,13 @@ export default {
             enabled: true,
             list: true,
             show: true,
+            create: false,
+            edit: false
+        },
+        "stats": {
+            enabled: true,
+            list: true,
+            show: false,
             create: false,
             edit: false
         }

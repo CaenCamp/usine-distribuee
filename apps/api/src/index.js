@@ -20,7 +20,7 @@ const front = require('./front');
 const userAccountRouter = require("./user-account/router");
 const productionManagementRouter = require('./production-management/router');
 const requestRouter = require("./request/router");
-
+const statRouter = require("./stat/router");
 
 const app = new Koa();
 
@@ -73,6 +73,7 @@ app.use(mount("/api/production-managements", productionManagementRouter.routes()
 app.use(mount("/api/dispatcher-requests", requestRouter.routes()));
 app.use(mount("/api/requests", requestRouter.routes()));
 app.use(mount("/api/production-manager-requests", requestRouter.routes()));
+app.use(mount("/api/stats", statRouter.routes()));
 
 app.listen(config.port, () =>
     global.console.log(`API started on port ${config.port}`)
