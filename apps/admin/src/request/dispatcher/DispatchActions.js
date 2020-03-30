@@ -138,7 +138,7 @@ const DispatchActions = ({ record }) => {
             <Grid container className={classes.container}>
                 <Grid item xs={12} justify="flex-end" alignItems="flex-start" container>
                     <Button variant="outlined" disabled={disabled} onClick={toDispatch}>
-                        Remettre à disptacher
+                        Remettre à dispatcher
                     </Button>
                 </Grid>
             </Grid>
