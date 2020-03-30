@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1" />
     <title>Usine Partagée | Dispositif Régional - Référencement des besoins</title>
     <meta name="description"
-        content="Ce formulaire est destiné aux professionnels de santé. Son objectif est de référencer les besoins en matière d'écrans faciaux liés au COVID-19. Sous réserve d'un accord définitif et formalisé, la Région Normandie prendra en charge tous les frais de l'opération. Ce cas échéant, les masques seront donc gratuits." />
+        content="Ce formulaire est destiné aux professionnels de santé. Son objectif est de référencer les besoins en matière d'écrans faciaux liés au COVID-19. Sous réserve d'un accord définitif et formalisé, la Région Normandie prendra en charge tous les frais de l'opération. Ce cas échéant, les visières / écrans faciaux seront donc gratuits." />
     <link rel="stylesheet" href="/bootstrap/bootstrap.min.css" />
     <link rel="stylesheet" href="/bootflat/css/bootflat.min.css" />
     <link rel="stylesheet" href="/index.css" />
@@ -62,14 +62,15 @@
                 <h6>Une opération coordonnée par la <a href="https://www.normandie.fr/">Région Normandie</a> et <a
                         href="http://ledome.info/">Le Dôme</a></h6>
                 <p style="margin-top: 3rem;">
-                    Ce formulaire est destiné aux professionnels de santé.
+                    <strong>Ce formulaire est destiné aux professionnels de santé.</strong>
                 </p>
                 <p>
-                    Son objectif est de référencer les besoins en matière d'écrans faciaux liés au COVID-19.
+                    Son objectif est de référencer les besoins en matière de visières / écrans faciaux liés au COVID-19.
                     <br />
                     La <a href="https://www.normandie.fr/">Région Normandie</a> prendra en charge les frais de
-                    l'opération. Les masques seront donc gratuits.
+                    l'opération. Les écrans faciaux seront donc gratuits.
                 </p>
+                <p><em>N.B. : Vous pouvez référencer vos demandes, mais nous traitons en priorité celles des services hospitaliers.</em></p>
             </div>
         </div>
 
@@ -189,7 +190,7 @@
                     <h4>MATERIEL</h4>
                 </div>
                 <div class="panel-body">
-                    <p>Minimum 5 masques et maximum 150 masques demandés</p>
+                    <p>Minimum 5 visières et maximum 150 visières en tout</p>
 
                     <div class="form-group <% if (errors.mask_small_size_quantity) { %>has-error<% } %>">
                         <label for="mask_small_size_quantity">Quantité souhaitée modèle standard (24cm)</label>
@@ -219,7 +220,7 @@
                 </div>
                 <div class="panel-body">
                     <p>
-                        Afin d'anticiper au mieux la production de masque dans les prochaines semaines, pensez-vous
+                        Afin d'anticiper au mieux la production de visières dans les prochaines semaines, pensez-vous
                         devoir
                         passer une nouvelle demande dans les temps à venir ?
                         <br />
@@ -227,7 +228,7 @@
                     </p>
 
                     <div class="form-group">
-                        <label for="forecast_quantity">Combien de masques ?</label>
+                        <label for="forecast_quantity">Combien de visières ?</label>
                         <input type="number" id="forecast_quantity" name="forecast_quantity"
                             class="form-control stepper-input" min="0" value="<%= request.forecast_quantity || 0 %>"
                             required />
