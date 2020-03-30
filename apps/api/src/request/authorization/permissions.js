@@ -1,5 +1,8 @@
-const ownProductionManagement = (user, from, to) => {
-    return user.productionManagementIds.includes(from.productionManagementId);
+const ownProductionManagement = (user, from) => {
+    return (
+        user.role === "admin" ||
+        user.productionManagementIds.includes(from.productionManagementId)
+    );
 };
 
 const production_manager = {
@@ -43,6 +46,7 @@ const dispatcher = {
     DISPATCH_PENDING: {
         DISPATCH_PENDING: true,
         DISPATCH_TODO: true,
+        DISPATCH_REJECTED: true,
         MANAGEMENT_TODO: true
     },
     ...production_manager
