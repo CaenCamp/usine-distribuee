@@ -11,6 +11,7 @@ export default {
     dispatcher: {
         ...buildFullAccessFor([
             "dispatcher-requests",
+            "requests",
         ]),
         "production-manager-requests": {
             enabled: true,
@@ -19,31 +20,12 @@ export default {
             create: false,
             edit: true
         },
-        "requests": {
-            enabled: true,
-            list: true,
-            show: true,
-            create: false,
-            edit: false
-        }
     },
-    production_manager: {
-        ...buildFullAccessFor(["production-manager-requests"]),
-        "requests": {
-            enabled: true,
-            list: true,
-            show: true,
-            create: false,
-            edit: false
-        }
-    },
-    guest: {
-        "requests": {
-            enabled: true,
-            list: true,
-            show: true,
-            create: false,
-            edit: false
-        }
-    }
+    production_manager: buildFullAccessFor([
+        "production-manager-requests",
+        "requests",
+    ]),
+    guest: buildFullAccessFor([
+        "requests",
+    ]),
 };

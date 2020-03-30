@@ -16,6 +16,7 @@ import {
     AppBar,
     Tab
 } from '@material-ui/core';
+import { PrintButton } from '../PrintButton';
 
 import { requesterType } from './index';
 import RequestShow from './Show';
@@ -50,6 +51,7 @@ const RequestDatagrid = props => (
         <NumberField source="maskLargeSizeQuantity" label="Masques Longs" />
         <FunctionField label="Localité" render={({ deliveryPostalCode, deliveryCity }) => `${deliveryPostalCode} ${deliveryCity}`} />
         <DateField source="createdAt" label="Passé le" showTime />
+        <PrintButton />
     </Datagrid>
 )
 

@@ -11,3 +11,8 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+@media print {
+    .MuiDrawer-docked { display: none !important; }
+    header { display: none !important; }
+}

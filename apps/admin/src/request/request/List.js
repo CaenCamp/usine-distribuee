@@ -59,7 +59,7 @@ const RequestPagination = props => (
 const RequestDatagrid = props => (
     <Datagrid {...props} expand={<RequestShow />} rowClick="expand">
         <TextField source="requesterName" label="Organisation" />
-        <FunctionField source="status" label="Statut" render={({status}) => REQUEST_STATUS.find(s => s.id === `${status}`).name} />
+        <FunctionField source="status" label="Statut" render={({ status }) => REQUEST_STATUS.find(s => s.id === `${status}`).name} />
         <ReferenceField label="Pôle de gestion" source="production_management_id" reference="production-managements">
             <TextField source="name" />
         </ReferenceField>
