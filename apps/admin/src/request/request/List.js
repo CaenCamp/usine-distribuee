@@ -3,6 +3,8 @@ import {
     Datagrid,
     DateField,
     ReferenceField,
+    SingleFieldList,
+    ChipField,
     Filter,
     List,
     Pagination,
@@ -60,7 +62,12 @@ const RequestDatagrid = props => (
     <Datagrid {...props} expand={<RequestShow />} rowClick="expand">
         <TextField source="requesterName" label="Organisation" />
         <FunctionField source="status" label="Statut" render={({status}) => REQUEST_STATUS.find(s => s.id === `${status}`).name} />
-        <ReferenceField label="Pôle de gestion" source="production_management_id" reference="production-managements">
+        <ReferenceField
+            label="Pôle de gestion"
+            reference="production-managements"
+            source="productionManagementId"
+            link={false}
+        >
             <TextField source="name" />
         </ReferenceField>
         <NumberField source="maskSmallSizeQuantity" label="Masques Standards" />
