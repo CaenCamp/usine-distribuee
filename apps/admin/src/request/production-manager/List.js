@@ -40,7 +40,6 @@ const RequestPagination = props => (
 const tabs = [
     { id: "MANAGEMENT_TODO", name: "A fabriquer" },
     { id: "MANAGEMENT_BUILDING", name: "En fabrication" },
-    { id: "MANAGEMENT_BUILT", name: "A livrer" },
     { id: "MANAGEMENT_DELIVERED", name: "Livré" },
 ];
 

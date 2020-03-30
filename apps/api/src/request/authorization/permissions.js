@@ -9,25 +9,16 @@ const production_manager = {
     MANAGEMENT_TODO: {
         MANAGEMENT_TODO: ownProductionManagement,
         MANAGEMENT_BUILDING: ownProductionManagement,
-        MANAGEMENT_BUILT: ownProductionManagement,
         MANAGEMENT_DELIVERED: ownProductionManagement
     },
     MANAGEMENT_BUILDING: {
         MANAGEMENT_TODO: ownProductionManagement,
         MANAGEMENT_BUILDING: ownProductionManagement,
-        MANAGEMENT_BUILT: ownProductionManagement,
-        MANAGEMENT_DELIVERED: ownProductionManagement
-    },
-    MANAGEMENT_BUILT: {
-        MANAGEMENT_TODO: ownProductionManagement,
-        MANAGEMENT_BUILDING: ownProductionManagement,
-        MANAGEMENT_BUILT: ownProductionManagement,
         MANAGEMENT_DELIVERED: ownProductionManagement
     },
     MANAGEMENT_DELIVERED: {
         MANAGEMENT_TODO: ownProductionManagement,
         MANAGEMENT_BUILDING: ownProductionManagement,
-        MANAGEMENT_BUILT: ownProductionManagement,
         MANAGEMENT_DELIVERED: ownProductionManagement
     }
 };
@@ -62,7 +53,6 @@ module.exports = {
             DISPATCH_PENDING: true,
             MANAGEMENT_TODO: true,
             MANAGEMENT_BUILDING: true,
-            MANAGEMENT_BUILT: true,
             MANAGEMENT_DELIVERED: true
         },
         DISPATCH_REJECTED: {
@@ -71,7 +61,6 @@ module.exports = {
             DISPATCH_PENDING: true,
             MANAGEMENT_TODO: true,
             MANAGEMENT_BUILDING: true,
-            MANAGEMENT_BUILT: true,
             MANAGEMENT_DELIVERED: true
         },
         DISPATCH_PENDING: {
@@ -80,7 +69,6 @@ module.exports = {
             DISPATCH_PENDING: true,
             MANAGEMENT_TODO: true,
             MANAGEMENT_BUILDING: true,
-            MANAGEMENT_BUILT: true,
             MANAGEMENT_DELIVERED: true
         },
         MANAGEMENT_TODO: {
@@ -89,7 +77,6 @@ module.exports = {
             DISPATCH_PENDING: true,
             MANAGEMENT_TODO: true,
             MANAGEMENT_BUILDING: true,
-            MANAGEMENT_BUILT: true,
             MANAGEMENT_DELIVERED: true
         },
         MANAGEMENT_BUILDING: {
@@ -98,16 +85,6 @@ module.exports = {
             DISPATCH_PENDING: true,
             MANAGEMENT_TODO: true,
             MANAGEMENT_BUILDING: true,
-            MANAGEMENT_BUILT: true,
-            MANAGEMENT_DELIVERED: true
-        },
-        MANAGEMENT_BUILT: {
-            DISPATCH_TODO: true,
-            DISPATCH_REJECTED: true,
-            DISPATCH_PENDING: true,
-            MANAGEMENT_TODO: true,
-            MANAGEMENT_BUILDING: true,
-            MANAGEMENT_BUILT: true,
             MANAGEMENT_DELIVERED: true
         },
         MANAGEMENT_DELIVERED: {
@@ -116,7 +93,6 @@ module.exports = {
             DISPATCH_PENDING: true,
             MANAGEMENT_TODO: true,
             MANAGEMENT_BUILDING: true,
-            MANAGEMENT_BUILT: true,
             MANAGEMENT_DELIVERED: true
         }
     }
