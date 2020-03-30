@@ -116,6 +116,13 @@ const Dashboard = () => {
                     <RequestKPI {...requested_shade_qty_props} />
                     <RequestKPI {...in_production_shade_qty_props} />
                     <RequestKPI {...delivered_shade_qty_props} />
+                    <Button 
+                        variant="contained" 
+                        color="primary"
+                        href="#/requests"
+                    >
+                        Voir la liste des demandes
+                    </Button>
             </div>
         </div>
     ) : isSmall ? (
@@ -126,6 +133,13 @@ const Dashboard = () => {
                 <RequestKPI {...requested_shade_qty_props} />
                 <RequestKPI {...in_production_shade_qty_props} />
                 <RequestKPI {...delivered_shade_qty_props} />
+                <Button 
+                    variant="contained" 
+                    color="primary"
+                    href="#/requests"
+                >
+                    Voir la liste des demandes
+                </Button>
             </div>
         </div>
     ) : (
