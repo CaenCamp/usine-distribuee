@@ -94,6 +94,7 @@ export default (props) => (
         sort={{ field: "createdAt", order: "ASC" }}
         exporter={false}
         pagination={<RequestPagination />}
+        perPage={25}
         bulkActionButtons={false}
         title="Liste des commandes"
     >

@@ -20,18 +20,6 @@ import jsonExport from 'jsonexport/dist';
 import { requesterType, requestStatus as REQUEST_STATUS } from './index';
 import RequestShow from './Show';
 
-// const exporter = requests => {
-//     const requestsForExport = requests.map(request => {
-//         const { requesterName, RequesterType, ...requestForExport } = request; // omit backlinks and author
-//         // requestForExport.author_name = request.author.name; // add a field
-//         return requestForExport;
-//     });
-//     jsonExport(requestsForExport, {
-//         headers: ['demandeur', 'type'] // order fields in the export
-//     }, (err, csv) => {
-//         downloadCSV(csv, 'requests'); // download as 'posts.csv` file
-//     });
-// };
 const exporter = (requests, fetchRelatedRecords) => {
     fetchRelatedRecords(requests, 'productionManagementId', 'production-managements').then(managements => {
         const data = requests.map(request => ({
@@ -117,6 +105,7 @@ export default (props) => (
         sort={{ field: "createdAt", order: "ASC" }}
         exporter={exporter}
         pagination={<RequestPagination />}
+        perPage={25}
         bulkActionButtons={false}
         title="Liste des demandes"
     >
