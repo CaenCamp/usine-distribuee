@@ -13,6 +13,13 @@ export default {
         ...buildFullAccessFor([
             "dispatcher-requests",
         ]),
+        "requests": {
+            enabled: true,
+            list: true,
+            show: true,
+            create: false,
+            edit: false
+        },
         "production-manager-requests": {
             enabled: true,
             list: true,
@@ -20,10 +27,10 @@ export default {
             create: false,
             edit: true
         },
-        "requests": {
+        "production-managements": {
             enabled: true,
-            list: true,
-            show: true,
+            list: false,
+            show: false,
             create: false,
             edit: false
         },
@@ -36,11 +43,20 @@ export default {
         }
     },
     production_manager: {
-        ...buildFullAccessFor(["production-manager-requests"]),
+        ...buildFullAccessFor([
+            "production-manager-requests",
+        ]),
         "requests": {
             enabled: true,
             list: true,
             show: true,
+            create: false,
+            edit: false
+        },
+        "production-managements": {
+            enabled: true,
+            list: false,
+            show: false,
             create: false,
             edit: false
         },
@@ -57,6 +73,13 @@ export default {
             enabled: true,
             list: true,
             show: true,
+            create: false,
+            edit: false
+        },
+        "production-managements": {
+            enabled: true,
+            list: false,
+            show: false,
             create: false,
             edit: false
         },

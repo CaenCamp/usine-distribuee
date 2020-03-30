@@ -13,7 +13,12 @@ import request from "./request/request";
 import { Dashboard } from "./dashboard";
 
 const App = () => (
-    <Admin authProvider={authProvider} dataProvider={dataProvider} dashboard={Dashboard}>
+    <Admin
+        authProvider={authProvider}
+        dataProvider={dataProvider}
+        i18nProvider={i18nProvider}
+        dashboard={Dashboard}
+    >
         {permissions => [
             permissions['dispatcher-requests'] && permissions['dispatcher-requests'].enabled && <ResourceWithPermissions
                 permissions={permissions}
