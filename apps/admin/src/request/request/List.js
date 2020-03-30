@@ -107,7 +107,7 @@ export default (props) => (
         pagination={<RequestPagination />}
         perPage={25}
         bulkActionButtons={false}
-        title="Liste des demandes"
+        title="Toutes les demandes"
     >
         <RequestDatagrid {...props} />
     </List>

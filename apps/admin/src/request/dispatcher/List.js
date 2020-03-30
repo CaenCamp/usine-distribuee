@@ -98,7 +98,7 @@ export default (props) => (
         pagination={<RequestPagination />}
         perPage={25}
         bulkActionButtons={false}
-        title="Liste des commandes"
+        title="Liste des demandes à traiter"
     >
         <TabbedList {...props} />
     </List>
