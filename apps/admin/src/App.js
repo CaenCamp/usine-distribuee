@@ -9,6 +9,7 @@ import productionManagement from "./production-management";
 import userAccount from "./user-account";
 import dispatcher from "./request/dispatcher";
 import productionManager from "./request/production-manager";
+import request from "./request/request";
 
 const App = () => (
     <Admin authProvider={authProvider} dataProvider={dataProvider}>
@@ -22,6 +23,11 @@ const App = () => (
                 permissions={permissions}
                 name="production-manager-requests"
                 {...productionManager}
+            />,
+            <ResourceWithPermissions 
+                permissions={permissions}
+                name="requests" 
+                {...request} 
             />,
             <ResourceWithPermissions
                 permissions={permissions}

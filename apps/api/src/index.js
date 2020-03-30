@@ -71,6 +71,7 @@ app.use(authenticationMiddleware);
 app.use(mount("/api/user-accounts", userAccountRouter.routes()));
 app.use(mount("/api/production-managements", productionManagementRouter.routes()));
 app.use(mount("/api/dispatcher-requests", requestRouter.routes()));
+app.use(mount("/api/requests", requestRouter.routes()));
 app.use(mount("/api/production-manager-requests", requestRouter.routes()));
 
 app.listen(config.port, () =>

@@ -53,7 +53,7 @@ const getFilteredQuery = (client, filters, sort, user) => {
         query.andWhere('created_at', '<', queryDate.toISOString());
     }
     if (created_at_after) {
-        const queryDate = new Date(created_at_before);
+        const queryDate = new Date(created_at_after);
         query.andWhere('created_at', '>', queryDate.toISOString());
     }
     if (ownership && ownership === 'me') {
