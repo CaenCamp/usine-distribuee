@@ -8878,7 +8878,7 @@ ra-core@^3.3.3:
     recompose "~0.26.0"
     reselect "~3.0.0"
 
-ra-i18n-polyglot@^3.3.3:
+ra-i18n-polyglot@3.3.3, ra-i18n-polyglot@^3.3.3:
   version "3.3.3"
   resolved "https://registry.yarnpkg.com/ra-i18n-polyglot/-/ra-i18n-polyglot-3.3.3.tgz#52cad332a71c6cda26fd02be1372e03ee1bc8b27"
   integrity sha512-dV00IZ5/gLLhTAbcmKeb4F5BsDE1anQMYRR1y6DeZobW4uMDjIX23HPUPGUGi4Cj6Na3M+j+lXqKsjpuQu6ZVg==
@@ -8890,6 +8890,11 @@ ra-language-english@^3.2.0:
   version "3.2.0"
   resolved "https://registry.yarnpkg.com/ra-language-english/-/ra-language-english-3.2.0.tgz#2ca13b767d834b43fefd128f48e452449f812b61"
   integrity sha512-/XmwYWoQoB4MBkkzBCbg/ykCuRGjHQOHLk2ik6n1aM10AWHxiiJNyRw2aoLzH7Vc5rcp4BBJQCuhT+DgfYIJ2Q==
+
+ra-language-french@3.2.0:
+  version "3.2.0"
+  resolved "https://registry.yarnpkg.com/ra-language-french/-/ra-language-french-3.2.0.tgz#d75b7399143343d91a7e87b4bd4996454091700c"
+  integrity sha512-qgG8/iG6iVzM5snCrt9zKJVODIqZCKk6Up6eCrxRS8JbrolbCh6s+cspLweITgZwUc0md7XB6x/zIvRrEMMSTQ==
 
 ra-ui-materialui@^3.3.3:
   version "3.3.3"
