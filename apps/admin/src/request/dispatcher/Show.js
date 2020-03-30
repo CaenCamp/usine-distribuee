@@ -153,14 +153,14 @@ export default ({ renderActions, ...props }) => {
                 >
                     {record.id}{" "}
                     <Tooltip title="Copier dans le presse-papier">
-                    <IconButton
-                        aria-label="Copier dans le presse-papier"
-                        color="textSecondary"
-                        size="small"
-                        onClick={handleCopyToClipboard(record.id)}
-                    >
-                        <FileCopyIcon fontSize="small" />
-                    </IconButton>
+                        <IconButton
+                            aria-label="Copier dans le presse-papier"
+                            color="textSecondary"
+                            size="small"
+                            onClick={handleCopyToClipboard(record.id)}
+                        >
+                            <FileCopyIcon fontSize="small" />
+                        </IconButton>
                     </Tooltip>
                 </Typography>
             </CardContent>
