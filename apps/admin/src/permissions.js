@@ -20,12 +20,37 @@ export default {
             create: false,
             edit: true
         },
+        "production-managements": {
+            enabled: true,
+            list: false,
+            show: false,
+            create: false,
+            edit: false
+        },
     },
-    production_manager: buildFullAccessFor([
-        "production-manager-requests",
-        "requests",
-    ]),
-    guest: buildFullAccessFor([
-        "requests",
-    ]),
+    production_manager: {
+        ...buildFullAccessFor([
+            "production-manager-requests",
+            "requests",
+        ]),
+        "production-managements": {
+            enabled: true,
+            list: false,
+            show: false,
+            create: false,
+            edit: false
+        },
+    },
+    guest: {
+        ...buildFullAccessFor([
+            "requests",
+        ]),
+        "production-managements": {
+            enabled: true,
+            list: false,
+            show: false,
+            create: false,
+            edit: false
+        },
+    },
 };

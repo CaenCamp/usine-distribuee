@@ -20,19 +20,33 @@ import RequestShow from './Show';
 
 const UserFilter = props => (
     <Filter {...props}>
+        <ReferenceInput
+            label="Pôle de gestion"
+            source="production_management_id"
+            reference="production-managements"
+            alwaysOn
+        >
+            <SelectInput optionText="name" />
+        </ReferenceInput>
+        <SelectInput
+            source="status"
+            label="Statut"
+            choices={REQUEST_STATUS}
+            style={{ minWidth: 250 }}
+            alwaysOn
+        />
         <SelectInput
             source="requester_type"
             label="Type de professionnel"
             choices={requesterType}
             style={{ minWidth: 250 }}
+            alwaysOn
         />
-        <ReferenceInput label="Pôle de gestion" source="production_management_id" reference="production-managements">
-            <SelectInput optionText="name" />
-        </ReferenceInput>
         <TextInput
             source="delivery_postal_code"
             label="Code postal"
             style={{ minWidth: 250 }}
+            alwaysOn
         />
         <TextInput
             source="delivery_city"
@@ -60,7 +74,7 @@ const RequestDatagrid = props => (
     <Datagrid {...props} expand={<RequestShow />} rowClick="expand">
         <TextField source="requesterName" label="Organisation" />
         <FunctionField source="status" label="Statut" render={({ status }) => REQUEST_STATUS.find(s => s.id === `${status}`).name} />
-        <ReferenceField label="Pôle de gestion" source="production_management_id" reference="production-managements">
+        <ReferenceField label="Pôle de gestion" source="productionManagementId" reference="production-managements">
             <TextField source="name" />
         </ReferenceField>
         <NumberField source="maskSmallSizeQuantity" label="Masques Standards" />
