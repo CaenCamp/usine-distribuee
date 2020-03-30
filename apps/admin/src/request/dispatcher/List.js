@@ -9,6 +9,7 @@ import {
     TextField,
     NumberField,
     FunctionField,
+    EditButton,
 } from "react-admin";
 import {
     Divider,
@@ -51,6 +52,7 @@ const RequestDatagrid = props => (
         <NumberField source="maskLargeSizeQuantity" label="Masques Longs" />
         <FunctionField label="Localité" render={({ deliveryPostalCode, deliveryCity }) => `${deliveryPostalCode} ${deliveryCity}`} />
         <DateField source="createdAt" label="Passé le" showTime />
+        <EditButton />
         <PrintButton />
     </Datagrid>
 )
