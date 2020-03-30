@@ -6,7 +6,7 @@ const {
 } = require('../toolbox/sanitizers');
 
 const filterableFields = ['role'];
-const sortableFields = ['created_at', 'last_name'];
+const sortableFields = ['createdAt', 'lastName'];
 
 const getOneByEmail = ({ client, email }) => {
     return client

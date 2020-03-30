@@ -12,6 +12,7 @@ export default {
     dispatcher: {
         ...buildFullAccessFor([
             "dispatcher-requests",
+            "requests",
         ]),
         "requests": {
             enabled: true,
@@ -40,7 +41,7 @@ export default {
             show: false,
             create: false,
             edit: false
-        }
+        },
     },
     production_manager: {
         ...buildFullAccessFor([
@@ -48,8 +49,8 @@ export default {
         ]),
         "requests": {
             enabled: true,
-            list: true,
-            show: true,
+            list: false,
+            show: false,
             create: false,
             edit: false
         },
@@ -69,10 +70,13 @@ export default {
         }
     },
     guest: {
-        "requests": {
+        ...buildFullAccessFor([
+            "requests",
+        ]),
+        "production-managements": {
             enabled: true,
-            list: true,
-            show: true,
+            list: false,
+            show: false,
             create: false,
             edit: false
         },

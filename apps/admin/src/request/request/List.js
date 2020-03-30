@@ -15,39 +15,67 @@ import {
     TextField,
     NumberField,
     FunctionField,
+    downloadCSV,
 } from "react-admin";
+import jsonExport from 'jsonexport/dist';
 
 import { requesterType, requestStatus as REQUEST_STATUS } from './index';
 import RequestShow from './Show';
 
+const exporter = (requests, fetchRelatedRecords) => {
+    fetchRelatedRecords(requests, 'productionManagementId', 'production-managements').then(managements => {
+        const data = requests.map(request => ({
+            ...request,
+            pole_de_gestion: request.productionManagementId ? managements[request.productionManagementId].name : 'non affecté',
+        }));
+        jsonExport(data, {}, (err, csv) => {
+            downloadCSV(csv, 'requests');
+        });
+    });
+};
+
 const UserFilter = props => (
     <Filter {...props}>
-        <SelectInput
-            source="requester_type"
-            label="Type de professionnel"
-            choices={requesterType}
-            style={{ minWidth: 250 }}
-        />
-        <ReferenceInput label="Pôle de gestion" source="production_management_id" reference="production-managements">
+        <ReferenceInput
+            label="Pôle de gestion"
+            source="productionManagementId"
+            reference="production-managements"
+            alwaysOn
+        >
             <SelectInput optionText="name" />
         </ReferenceInput>
-        <TextInput
-            source="delivery_postal_code"
-            label="Code postal"
+        <SelectInput
+            source="status"
+            label="Statut"
+            choices={REQUEST_STATUS}
             style={{ minWidth: 250 }}
+            alwaysOn
+        />
+        <SelectInput
+            source="requesterType"
+            label="Type de numéro professionnel"
+            choices={requesterType}
+            style={{ minWidth: 250 }}
+            alwaysOn
         />
         <TextInput
-            source="delivery_city"
+            source="deliveryPostalCode"
+            label="Code postal"
+            style={{ minWidth: 250 }}
+            alwaysOn
+        />
+        <TextInput
+            source="deliveryCity"
             label="Ville"
             style={{ minWidth: 250 }}
         />
         <DateInput
-            source="created_at_after"
+            source="createdAtAfter"
             label="Passée depuis le"
             style={{ minWidth: 250 }}
         />
         <DateInput
-            source="created_at_before"
+            source="createdAtBefore"
             label="Passée avant le"
             style={{ minWidth: 250 }}
         />
@@ -61,7 +89,7 @@ const RequestPagination = props => (
 const RequestDatagrid = props => (
     <Datagrid {...props} expand={<RequestShow />} rowClick="expand">
         <TextField source="requesterName" label="Organisation" />
-        <FunctionField source="status" label="Statut" render={({status}) => REQUEST_STATUS.find(s => s.id === `${status}`).name} />
+        <FunctionField source="status" label="Statut" render={({ status }) => REQUEST_STATUS.find(s => s.id === `${status}`).name} />
         <ReferenceField label="Pôle de gestion" source="productionManagementId" reference="production-managements">
             <TextField source="name" />
         </ReferenceField>
@@ -77,8 +105,9 @@ export default (props) => (
         {...props}
         filters={<UserFilter />}
         sort={{ field: "createdAt", order: "ASC" }}
-        exporter={false}
+        exporter={exporter}
         pagination={<RequestPagination />}
+        perPage={25}
         bulkActionButtons={false}
         title="Liste des demandes"
     >

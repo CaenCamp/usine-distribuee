@@ -1,6 +1,8 @@
 import React from "react";
 import { Admin } from "react-admin";
 import { ResourceWithPermissions } from "ra-auth-acl";
+import polyglotI18nProvider from 'ra-i18n-polyglot';
+import frenchMessages from 'ra-language-french';
 
 import authProvider from "./authProvider";
 import dataProvider from "./dataProvider";
@@ -11,6 +13,8 @@ import dispatcher from "./request/dispatcher";
 import productionManager from "./request/production-manager";
 import request from "./request/request";
 import { Dashboard } from "./dashboard";
+
+const i18nProvider = polyglotI18nProvider(() => frenchMessages, 'fr');
 
 const App = () => (
     <Admin
@@ -30,10 +34,10 @@ const App = () => (
                 name="production-manager-requests"
                 {...productionManager}
             />,
-            <ResourceWithPermissions 
+            <ResourceWithPermissions
                 permissions={permissions}
-                name="requests" 
-                {...request} 
+                name="requests"
+                {...request}
             />,
             <ResourceWithPermissions
                 permissions={permissions}
