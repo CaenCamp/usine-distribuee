@@ -51,7 +51,7 @@ const UserFilter = props => (
         />
         <SelectInput
             source="requesterType"
-            label="Type de professionnel"
+            label="Type de numéro professionnel"
             choices={requesterType}
             style={{ minWidth: 250 }}
             alwaysOn
