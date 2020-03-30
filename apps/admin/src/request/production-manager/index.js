@@ -2,6 +2,7 @@ import RequestIcon from "@material-ui/icons/Build";
 
 import List from "./List";
 import Show from '../PrintableShow';
+import Edit from '../Edit';
 
 export const requestStatus = [
     { id: "MANAGEMENT_TODO", name: "Fabrication demandée" },
@@ -20,6 +21,7 @@ export const requesterType = [
 export default {
     list: List,
     show: Show,
+    edit: Edit,
     icon: RequestIcon,
     options: { label: "Fabrication" }
 };
