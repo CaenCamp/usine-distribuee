@@ -20,7 +20,7 @@ import {
 import { PrintButton } from '../PrintButton';
 
 import { requesterType } from './index';
-import RequestShow from '../dispatcher/Show';
+import RequestShow from './ShowWithDelivryTracking';
 import StatusActions from './StatusActions';
 
 const UserFilter = props => (
@@ -39,12 +39,16 @@ const RequestPagination = props => (
 
 const tabs = [
     { id: "MANAGEMENT_TODO", name: "A fabriquer" },
-    { id: "MANAGEMENT_BUILDING", name: "En fabrication" },
+    { id: "MANAGEMENT_BUILDING", name: "En fabrication / livraison" },
     { id: "MANAGEMENT_DELIVERED", name: "Livré" },
 ];
 
 const RequestDatagrid = props => (
-    <Datagrid {...props} expand={<RequestShow renderActions={(record) => <StatusActions record={record} />} />} rowClick="expand">
+    <Datagrid
+        {...props}
+        expand={<RequestShow renderActions={(record) => <StatusActions record={record} />} />}
+        rowClick="expand"
+    >
         <TextField source="publicNumber" label="#" />
         <TextField source="requesterName" label="Organisation" />
         <NumberField source="maskSmallSizeQuantity" label="Masques Standards" />
