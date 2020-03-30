@@ -36,7 +36,7 @@ const UserFilter = props => (
     <Filter {...props}>
         <ReferenceInput
             label="Pôle de gestion"
-            source="production_management_id"
+            source="productionManagementId"
             reference="production-managements"
             alwaysOn
         >
@@ -50,30 +50,30 @@ const UserFilter = props => (
             alwaysOn
         />
         <SelectInput
-            source="requester_type"
-            label="Type de professionnel"
+            source="requesterType"
+            label="Type de numéro professionnel"
             choices={requesterType}
             style={{ minWidth: 250 }}
             alwaysOn
         />
         <TextInput
-            source="delivery_postal_code"
+            source="deliveryPostalCode"
             label="Code postal"
             style={{ minWidth: 250 }}
             alwaysOn
         />
         <TextInput
-            source="delivery_city"
+            source="deliveryCity"
             label="Ville"
             style={{ minWidth: 250 }}
         />
         <DateInput
-            source="created_at_after"
+            source="createdAtAfter"
             label="Passée depuis le"
             style={{ minWidth: 250 }}
         />
         <DateInput
-            source="created_at_before"
+            source="createdAtBefore"
             label="Passée avant le"
             style={{ minWidth: 250 }}
         />
