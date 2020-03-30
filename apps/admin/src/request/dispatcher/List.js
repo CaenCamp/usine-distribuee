@@ -43,7 +43,7 @@ const tabs = [
 ];
 
 const RequestDatagrid = props => (
-    <Datagrid {...props} expand={<RequestShow renderActions={(record) => record.status === 'DISPATCH_TODO' && <DispatchActions record={record} />} />} rowClick="expand">
+    <Datagrid {...props} expand={<RequestShow renderActions={(record) => <DispatchActions record={record} />} />} rowClick="expand">
         <TextField source="publicNumber" label="#" />
         <TextField source="requesterName" label="Organisation" />
         <NumberField source="maskSmallSizeQuantity" label="Masques Standards" />
