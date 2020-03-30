@@ -12,6 +12,7 @@ import userAccount from "./user-account";
 import dispatcher from "./request/dispatcher";
 import productionManager from "./request/production-manager";
 import request from "./request/request";
+import { Dashboard } from "./dashboard";
 
 const i18nProvider = polyglotI18nProvider(() => frenchMessages, 'fr');
 
@@ -20,6 +21,7 @@ const App = () => (
         authProvider={authProvider}
         dataProvider={dataProvider}
         i18nProvider={i18nProvider}
+        dashboard={Dashboard}
     >
         {permissions => [
             permissions['dispatcher-requests'] && permissions['dispatcher-requests'].enabled && <ResourceWithPermissions

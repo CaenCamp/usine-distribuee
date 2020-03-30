@@ -2,6 +2,7 @@ import { buildFullAccessFor } from "ra-auth-acl";
 
 export default {
     admin: buildFullAccessFor([
+        "stats",
         "requests",
         "dispatcher-requests",
         "production-manager-requests",
@@ -13,6 +14,13 @@ export default {
             "dispatcher-requests",
             "requests",
         ]),
+        "requests": {
+            enabled: true,
+            list: true,
+            show: true,
+            create: false,
+            edit: false
+        },
         "production-manager-requests": {
             enabled: true,
             list: true,
@@ -27,12 +35,25 @@ export default {
             create: false,
             edit: false
         },
+        "stats": {
+            enabled: true,
+            list: true,
+            show: false,
+            create: false,
+            edit: false
+        },
     },
     production_manager: {
         ...buildFullAccessFor([
             "production-manager-requests",
-            "requests",
         ]),
+        "requests": {
+            enabled: true,
+            list: false,
+            show: false,
+            create: false,
+            edit: false
+        },
         "production-managements": {
             enabled: true,
             list: false,
@@ -40,6 +61,13 @@ export default {
             create: false,
             edit: false
         },
+        "stats": {
+            enabled: true,
+            list: true,
+            show: false,
+            create: false,
+            edit: false
+        }
     },
     guest: {
         ...buildFullAccessFor([
@@ -52,5 +80,19 @@ export default {
             create: false,
             edit: false
         },
-    },
+        "production-managements": {
+            enabled: true,
+            list: false,
+            show: false,
+            create: false,
+            edit: false
+        },
+        "stats": {
+            enabled: true,
+            list: true,
+            show: false,
+            create: false,
+            edit: false
+        }
+    }
 };

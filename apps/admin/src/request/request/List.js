@@ -3,6 +3,8 @@ import {
     Datagrid,
     DateField,
     ReferenceField,
+    SingleFieldList,
+    ChipField,
     Filter,
     List,
     Pagination,
