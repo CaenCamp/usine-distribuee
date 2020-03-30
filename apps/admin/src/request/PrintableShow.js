@@ -36,7 +36,8 @@ export default ({ renderActions, ...props }) => {
         <Card className={classes.root}>
             <CardContent>
                 <Typography color="textSecondary" gutterBottom>
-                    {record.id}
+                    Numéro de commande : #{record.publicNumber}<br />
+                    Identifiant interne : {record.id}
                 </Typography>
                 <Grid container>
                     <Grid item xs={6}>
