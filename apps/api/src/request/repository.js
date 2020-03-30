@@ -6,13 +6,13 @@ const {
 } = require('../toolbox/sanitizers');
 
 const filterableFields = [
-    'requester_type',
-    'delivery_postal_code',
-    'delivery_city',
-    'production_management_id',
+    'requesterType',
+    'deliveryPostalCode',
+    'deliveryCity',
+    'productionManagementId',
     'status',
-    'created_at_before',
-    'created_at_after',
+    'createdAtBefore',
+    'createdAtAfter',
     'ownership',
 ];
 const sortableFields = [

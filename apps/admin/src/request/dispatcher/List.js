@@ -25,7 +25,7 @@ import DispatchActions from './DispatchActions';
 const UserFilter = props => (
     <Filter {...props}>
         <SelectInput
-            source="requester_type"
+            source="requesterType"
             label="Type de numéro professionnel"
             choices={requesterType}
             style={{ minWidth: 250 }}
