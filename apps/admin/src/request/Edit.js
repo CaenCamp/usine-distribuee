@@ -7,6 +7,7 @@ import {
     TextInput,
     Toolbar,
     SaveButton,
+    ListButton,
 } from "react-admin";
 
 import { requestStatus } from './request';
@@ -22,8 +23,9 @@ const RequestEditToolbar = props => (
         <SaveButton
             label="Sauver"
             redirect="list"
-            submitOnEnter={true}
+            submitOnEnter={false}
         />
+        <ListButton label="Annuler et revenir à la liste" />
     </Toolbar>
 );
 
@@ -31,7 +33,7 @@ const RequestEditActions = () => null;
 
 export default props => (
     <Edit title={<Title />} actions={<RequestEditActions />} {...props}>
-        <TabbedForm toolbar={<RequestEditToolbar />} redirect="list">
+        <TabbedForm toolbar={<RequestEditToolbar />}>
             <FormTab label="Commanditaire">
                 <TextInput source="requesterName" label="Nom de la structure" fullWidth />
                 <TextInput source="requesterType" label="Type de structure" fullWidth />
