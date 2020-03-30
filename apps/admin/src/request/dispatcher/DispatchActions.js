@@ -100,7 +100,7 @@ const DispatchActions = ({ record }) => {
                 </Grid>}
                 {record.status === 'DISPATCH_PENDING' && <Grid item xs={3}>
                     <Button variant="contained" color="secondary" disabled={disabled} onClick={toDispatch}>
-                        A disptacher
+                        A dispatcher
                     </Button>
                 </Grid>}
                 <Grid item xs={2}>
