@@ -43,7 +43,7 @@ const getFilteredQuery = (client, filters, sort, user) => {
         .where(restFilters);
 
     if (delivery_postal_code) {
-        query.andWhere('delivery_postal_code', 'LIKE', `%${delivery_postal_code}`);
+        query.andWhere('delivery_postal_code', 'LIKE', `%${delivery_postal_code}%`);
     }
     if (delivery_city) {
         query.andWhere('delivery_city', 'LIKE', `%${delivery_city}%`);
