@@ -26,15 +26,12 @@ const initContextState = ctx => {
     ctx.state.stats = {};
 };
 
-const getStats = async ctx => {
-    if (!ctx.state.stats) {
-        ctx.state.stats = {};
-    }
+const getStats = async dbClient => {
     const { globalStats } = await getGlobalStats({
-        client: ctx.state.db
+        client: dbClient
     });
     if (globalStats && globalStats.length) {
-        ctx.state.stats = globalStats[0];
+        return globalStats[0];
     } else {
         throw new Error("Unable to get stats from db");
     }
@@ -50,7 +47,7 @@ const renderCachedHomepage = async ctx => {
 
     initContextState(ctx);
     try {
-        await getStats(ctx);
+        ctx.state.stats = await getStats(ctx.state.db);
     } catch (error) {
         signale.error(error);
     }
@@ -124,11 +121,6 @@ const validate = ({
 
 router.post("/", async ctx => {
     initContextState(ctx);
-    try {
-        await getStats(ctx);
-    } catch (error) {
-        signale.error(error);
-    }
 
     if (!ctx.request.body) {
         ctx.status = 400;
@@ -163,7 +155,11 @@ router.post("/", async ctx => {
         ctx.state.internalError = true;
         ctx.state.request = request;
     }
-
+    try {
+        ctx.state.stats = await getStats(ctx.state.db);
+    } catch (error) {
+        signale.error(error);
+    }
     return ctx.render("index.ejs");
 });
 
