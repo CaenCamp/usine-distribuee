@@ -18,7 +18,8 @@
         "migrate:up": "knex migrate:up",
         "migrate:down": "knex migrate:down",
         "migrate:list": "knex migrate:list",
-        "migrate:create": "knex migrate:make"
+        "migrate:create": "knex migrate:make",
+        "cypress:open": "cypress open"
     },
     "dependencies": {
         "bcrypt": "4.0.1",
@@ -49,6 +50,7 @@
         "signale": "1.4.0"
     },
     "devDependencies": {
+        "cypress": "4.3.0",
         "eslint": "6.8.0",
         "eslint-config-prettier": "6.10.0",
         "eslint-plugin-prettier": "3.1.2",
