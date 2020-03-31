@@ -78,7 +78,7 @@ create-admin: ## Create a new administrator user_account in database
 lint: ## Apply Eslint on code base
 	yarn lint
 
-form: ## Apply Prettier on code base
+format: ## Apply Prettier on code base
 	yarn format
 
 # =====================================================================
