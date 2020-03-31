@@ -1,6 +1,6 @@
-const get = require('lodash.get');
+const get = require("lodash.get");
 
-const permissions = require('./permissions');
+const permissions = require("./permissions");
 
 const isFunction = value =>
     value &&
@@ -9,19 +9,23 @@ const isFunction = value =>
         value instanceof Function);
 
 const isAuthorized = (user, from, to) => {
+    let authTo = to;
+    if (!authTo.status) {
+        authTo.status = from.status;
+    }
     const validator = get(
         permissions,
-        `${user.role}.${from.status}.${to.status}`
+        `${user.role}.${from.status}.${authTo.status}`
     );
     if (!validator) {
         return false;
     }
     if (isFunction(validator)) {
-        return validator(user, from, to);
+        return validator(user, from, authTo);
     }
     return !!validator;
-}
+};
 
 module.exports = {
-    isAuthorized,
+    isAuthorized
 };
