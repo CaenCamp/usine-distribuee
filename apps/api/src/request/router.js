@@ -3,7 +3,7 @@ const Router = require("koa-router");
 const { parseJsonQueryParameter } = require("../toolbox/sanitizers");
 const { getPaginatedList, getOne, updateOne } = require("./repository");
 const { isAuthorized } = require("./authorization");
-const { isFullyDelivered, hasDeliveryStarted } = require("./delivery");
+const { extractQuantitiesFromDeliveries } = require("./delivery");
 
 const router = new Router();
 
@@ -61,10 +61,22 @@ router.put("/:id", async ctx => {
         throw error;
     }
 
-    if (isFullyDelivered(updatedData)) {
-        updatedData.status = "MANAGEMENT_DELIVERED";
-    } else if (hasDeliveryStarted(updatedData)) {
-        updatedData.status = "MANAGEMENT_BUILDING";
+    if (
+        request.status === 'MANAGEMENT_BUILDING' &&
+        updatedData.deliveryTracking
+    ) {
+        const quantitiesDelivered = extractQuantitiesFromDeliveries(
+            updatedData.deliveryTracking
+        );
+        updatedData.maskSmallSizeDeliveredQuantity = quantitiesDelivered.small;
+        updatedData.maskLargeSizeDeliveredQuantity = quantitiesDelivered.large;
+
+        if (
+            quantitiesDelivered.small >= request.maskSmallSizeQuantity &&
+            quantitiesDelivered.large >= request.maskLargeSizeQuantity
+        ) {
+            updatedData.status = 'MANAGEMENT_DELIVERED'
+        }
     }
 
     const updatedRequest = await updateOne({
