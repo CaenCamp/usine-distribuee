@@ -90,7 +90,7 @@ const RequestDatagrid = props => (
     <Datagrid {...props} expand={<RequestShow />} rowClick="expand">
         <TextField source="requesterName" label="Organisation" />
         <FunctionField source="status" label="Statut" render={({ status }) => REQUEST_STATUS.find(s => s.id === `${status}`).name} />
-        <ReferenceField label="Pôle de gestion" source="productionManagementId" reference="production-managements">
+        <ReferenceField label="Pôle de gestion" source="productionManagementId" reference="production-managements" link={false} >
             <TextField source="name" />
         </ReferenceField>
         <NumberField source="maskSmallSizeQuantity" label="Masques Standards" />
