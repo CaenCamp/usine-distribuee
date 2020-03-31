@@ -30,10 +30,10 @@ const table = 'request';
 
 const getFilteredQuery = (client, filters, sort, user) => {
     const {
-        delivery_postal_code,
-        delivery_city,
-        created_at_before,
-        created_at_after,
+        deliveryPostalCode,
+        deliveryCity,
+        createdAtBefore,
+        createdAtAfter,
         ownership,
         ...restFilters
     } = filters;
@@ -42,18 +42,18 @@ const getFilteredQuery = (client, filters, sort, user) => {
         .from(table)
         .where(restFilters);
 
-    if (delivery_postal_code) {
-        query.andWhere('delivery_postal_code', 'LIKE', `%${delivery_postal_code}%`);
+    if (deliveryPostalCode) {
+        query.andWhere('delivery_postal_code', 'LIKE', `%${deliveryPostalCode}%`);
     }
-    if (delivery_city) {
-        query.andWhere('delivery_city', 'LIKE', `%${delivery_city}%`);
+    if (deliveryCity) {
+        query.andWhere('delivery_city', 'LIKE', `%${deliveryCity}%`);
     }
-    if (created_at_before) {
-        const queryDate = new Date(created_at_before);
+    if (createdAtBefore) {
+        const queryDate = new Date(createdAtBefore);
         query.andWhere('created_at', '<', queryDate.toISOString());
     }
-    if (created_at_after) {
-        const queryDate = new Date(created_at_after);
+    if (createdAtAfter) {
+        const queryDate = new Date(createdAtAfter);
         query.andWhere('created_at', '>', queryDate.toISOString());
     }
     if (ownership && ownership === 'me') {
