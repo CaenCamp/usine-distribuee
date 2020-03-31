@@ -22,6 +22,7 @@ import { PrintButton } from '../PrintButton';
 import { requesterType } from './index';
 import RequestShow from './ShowWithDeliveryTracking';
 import StatusActions from './StatusActions';
+import { DeliveryPercentage } from '../DeliveryPercentage';
 
 const UserFilter = props => (
     <Filter {...props}>
@@ -55,6 +56,7 @@ const RequestDatagrid = props => (
         <NumberField source="maskLargeSizeQuantity" label="Masques Longs" />
         <FunctionField label="Localité" render={({ deliveryPostalCode, deliveryCity }) => `${deliveryPostalCode} ${deliveryCity}`} />
         <DateField source="createdAt" label="Passé le" showTime />
+        <DeliveryPercentage label="Commandes livrées" />
         <EditButton />
         <PrintButton />
     </Datagrid>
