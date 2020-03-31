@@ -1,7 +1,7 @@
 const products = ["maskSmallSize", "maskLargeSize"];
 
 const sumDelivered = (request, product) =>
-    (request.delivery_tracking || []).reduce(
+    (request.deliveryTracking || []).reduce(
         (total, delivery) => total + delivery[`${product}Delivered`],
         0
     );
@@ -12,7 +12,7 @@ const isProductFullyDelivered = (request, product) =>
 const isFullyDelivered = request => products.every(isProductFullyDelivered);
 
 const hasDeliveryStarted = request =>
-    request.delivery_tracking && !!request.delivery_tracking.length;
+    request.deliveryTracking && !!request.deliveryTracking.length;
 
 module.exports = {
     isFullyDelivered,
