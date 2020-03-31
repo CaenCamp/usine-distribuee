@@ -35,10 +35,8 @@ const DispatchActions = ({ record }) => {
             upValues.newLabel = 'Passer en fabrication';
             break;
         case 'MANAGEMENT_BUILDING':
-            downValues.newStatus = 'MANAGEMENT_TODO';
-            downValues.newLabel = 'Remettre en attente'
-            upValues.newStatus = 'MANAGEMENT_DELIVERED';
-            upValues.newLabel = 'Fabrication livrée';
+            downValues.newStatus = !record.deliveryTracking ? 'MANAGEMENT_TODO' : null;
+            downValues.newLabel = !record.deliveryTracking ? 'Remettre en attente' : null;
             break;
         case 'MANAGEMENT_DELIVERED':
             downValues.newStatus = 'MANAGEMENT_BUILDING';

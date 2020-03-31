@@ -33,19 +33,30 @@ export default ({ renderActions, ...props }) => {
         return null;
     }
 
+    if (record.status === 'MANAGEMENT_BUILDING') {
+        return (
+            <Grid container>
+                <Grid item xs={5}>
+                    <Card className={classes.root} ref={ref}>
+                        <CardContent>
+                            <ShowMainContent record={record} />
+                            {renderActions && renderActions(record, props)}
+                        </CardContent>
+                    </Card>
+                </Grid>
+                <Grid item xs={7}>
+                    <DeliveryTracking record={record} />
+                </Grid>
+            </Grid>
+        );
+    }
+
     return (
-        <Grid container>
-            <Grid item xs={5}>
-                <Card className={classes.root} ref={ref}>
-                    <CardContent>
-                        <ShowMainContent record={record} />
-                        {renderActions && renderActions(record, props)}
-                    </CardContent>
-                </Card>
-            </Grid>
-            <Grid item xs={7}>
-                <DeliveryTracking record={record} />
-            </Grid>
-        </Grid>
+        <Card className={classes.root} ref={ref}>
+            <CardContent>
+                <ShowMainContent record={record} />
+                {renderActions && renderActions(record, props)}
+            </CardContent>
+        </Card>
     );
 };

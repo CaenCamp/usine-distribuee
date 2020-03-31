@@ -20,7 +20,7 @@ import {
 import { PrintButton } from '../PrintButton';
 
 import { requesterType } from './index';
-import RequestShow from './ShowWithDelivryTracking';
+import RequestShow from './ShowWithDeliveryTracking';
 import StatusActions from './StatusActions';
 
 const UserFilter = props => (
