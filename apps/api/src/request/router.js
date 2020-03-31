@@ -3,7 +3,7 @@ const Router = require("koa-router");
 const { parseJsonQueryParameter } = require("../toolbox/sanitizers");
 const { getPaginatedList, getOne, updateOne } = require("./repository");
 const { isAuthorized } = require("./authorization");
-const { isFullyDelivered } = require("./delivery");
+const { isFullyDelivered, hasDeliveryStarted } = require("./delivery");
 
 const router = new Router();
 
@@ -55,7 +55,7 @@ router.put("/:id", async ctx => {
     });
 
     if (!isAuthorized(user, request, updatedData)) {
-        const error = new Error("Forbidden.");
+        const error = new Error("Forbidden");
         error.status = 403;
 
         throw error;
