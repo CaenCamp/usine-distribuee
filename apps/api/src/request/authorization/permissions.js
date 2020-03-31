@@ -1,9 +1,14 @@
+const { hasDeliveryStarted, isFullyDelivered } = require("../delivery");
+
 const ownProductionManagement = (user, from) => {
     return (
         user.role === "admin" ||
         user.productionManagementIds.includes(from.productionManagementId)
     );
 };
+
+const and = (...conditions) => (...args) =>
+    conditions.every(condition => condition(...args));
 
 const production_manager = {
     MANAGEMENT_TODO: {
@@ -12,13 +17,22 @@ const production_manager = {
         MANAGEMENT_DELIVERED: ownProductionManagement
     },
     MANAGEMENT_BUILDING: {
-        MANAGEMENT_TODO: ownProductionManagement,
+        MANAGEMENT_TODO: and(
+            ownProductionManagement,
+            (user, from) => !hasDeliveryStarted(from)
+        ),
         MANAGEMENT_BUILDING: ownProductionManagement,
         MANAGEMENT_DELIVERED: ownProductionManagement
     },
     MANAGEMENT_DELIVERED: {
-        MANAGEMENT_TODO: ownProductionManagement,
-        MANAGEMENT_BUILDING: ownProductionManagement,
+        MANAGEMENT_TODO: and(
+            ownProductionManagement,
+            (user, from) => !hasDeliveryStarted(from)
+        ),
+        MANAGEMENT_BUILDING: and(
+            ownProductionManagement,
+            (user, from) => !isFullyDelivered(from)
+        ),
         MANAGEMENT_DELIVERED: ownProductionManagement
     }
 };

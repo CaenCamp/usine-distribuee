@@ -3,6 +3,7 @@ const Router = require("koa-router");
 const { parseJsonQueryParameter } = require("../toolbox/sanitizers");
 const { getPaginatedList, getOne, updateOne } = require("./repository");
 const { isAuthorized } = require("./authorization");
+const { isFullyDelivered } = require("./delivery");
 
 const router = new Router();
 
@@ -19,10 +20,10 @@ router.get("/", async ctx => {
     ctx.body = requests;
 });
 
-router.get('/:id', async ctx => {
+router.get("/:id", async ctx => {
     const request = await getOne({
         client: ctx.state.db,
-        id: ctx.params.id,
+        id: ctx.params.id
     });
 
     if (request.error) {
@@ -46,11 +47,11 @@ router.get('/:id', async ctx => {
 
 router.put("/:id", async ctx => {
     const user = ctx.state.user;
-    const updatedData = ctx.request.body;
+    let updatedData = ctx.request.body;
 
     const request = await getOne({
         client: ctx.state.db,
-        id: ctx.params.id,
+        id: ctx.params.id
     });
 
     if (!isAuthorized(user, request, updatedData)) {
@@ -58,6 +59,12 @@ router.put("/:id", async ctx => {
         error.status = 403;
 
         throw error;
+    }
+
+    if (isFullyDelivered(updatedData)) {
+        updatedData.status = "MANAGEMENT_DELIVERED";
+    } else if (hasDeliveryStarted(updatedData)) {
+        updatedData.status = "MANAGEMENT_BUILDING";
     }
 
     const updatedRequest = await updateOne({
