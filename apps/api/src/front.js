@@ -9,6 +9,8 @@ const dbMiddleware = require("./dbMiddleware");
 const { insertOne, getOne } = require("./request/repository");
 const { sendRequestConfirmation } = require("./toolbox/mailjet");
 
+const { getGlobalStats } = require("./stat/repository");
+
 const app = new Koa();
 const router = new Router();
 
@@ -21,6 +23,21 @@ const initContextState = ctx => {
     ctx.state.internalError = false;
     ctx.state.request = {};
     ctx.state.success = false;
+    ctx.state.stats = {};
+};
+
+const getStats = async ctx => {
+    if ("undefined" === typeof ctx.state.stats) {
+        ctx.state.stats = {};
+    }
+    const { globalStats } = await getGlobalStats({
+        client: ctx.state.db
+    });
+    if ("undefined" !== globalStats && "undefined" !== globalStats[0]) {
+        ctx.state.stats = globalStats[0];
+    } else {
+        throw new Error("Unable to get stats from db");
+    }
 };
 
 const renderCachedHomepage = async ctx => {
@@ -32,6 +49,11 @@ const renderCachedHomepage = async ctx => {
     }
 
     initContextState(ctx);
+    try {
+        await getStats(ctx);
+    } catch (error) {
+        signale.error(error);
+    }
     return ctx.render("index.ejs");
 };
 
@@ -102,6 +124,11 @@ const validate = ({
 
 router.post("/", async ctx => {
     initContextState(ctx);
+    try {
+        await getStats(ctx);
+    } catch (error) {
+        signale.error(error);
+    }
 
     if (!ctx.request.body) {
         ctx.status = 400;
