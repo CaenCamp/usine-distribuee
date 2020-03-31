@@ -33,7 +33,7 @@ const getStats = async ctx => {
     const { globalStats } = await getGlobalStats({
         client: ctx.state.db
     });
-    if ("undefined" !== globalStats && "undefined" !== globalStats[0]) {
+    if (globalStats && globalStats.length) {
         ctx.state.stats = globalStats[0];
     } else {
         throw new Error("Unable to get stats from db");
