@@ -27,7 +27,7 @@ const initContextState = ctx => {
 };
 
 const getStats = async ctx => {
-    if ("undefined" === typeof ctx.state.stats) {
+    if (!ctx.state.stats) {
         ctx.state.stats = {};
     }
     const { globalStats } = await getGlobalStats({
