@@ -9,7 +9,7 @@ const sumDelivered = (request, product) =>
 const isProductFullyDelivered = (request, product) =>
     request[`${product}Quantity`] === sumDelivered(request, product);
 
-const isFullyDelivered = (request) => products.every(isProductFullyDelivered);
+const isFullyDelivered = () => products.every(isProductFullyDelivered);
 
 const hasDeliveryStarted = (request) =>
     request.deliveryTracking && !!request.deliveryTracking.length;

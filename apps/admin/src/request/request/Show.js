@@ -11,7 +11,7 @@ const useStyles = makeStyles({
     root: { maxWidth: 800, margin: 'auto' }
 });
 
-export default ({ renderActions, ...props }) => {
+export default (props) => {
     const { record } = useShowController(props);
     const classes = useStyles();
     const ref = React.createRef();

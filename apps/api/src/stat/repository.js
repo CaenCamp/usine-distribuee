@@ -1,5 +1,3 @@
-const { formatPaginationContentRange } = require('../toolbox/sanitizers');
-
 const getGlobalStats = ({ client }) => {
     const query = client.select(`*`).from('global_stats');
 

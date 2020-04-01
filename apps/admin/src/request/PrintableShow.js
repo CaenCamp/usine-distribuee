@@ -20,7 +20,7 @@ const useStyles = makeStyles({
     root: { maxWidth: 1200, margin: '1em 10%' }
 });
 
-export default ({ renderActions, ...props }) => {
+export default (props) => {
     const { record } = useShowController(props);
     const classes = useStyles();
 
