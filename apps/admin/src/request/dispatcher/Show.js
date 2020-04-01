@@ -109,6 +109,7 @@ export const ShowMainContent = ({ record }) => {
                                 </TableCell>
                             <TableCell align="right">
                                 {record.maskSmallSizeQuantity}
+                                {record.maskSmallSizeDeliveredQuantity ? ` (livrés: ${record.maskSmallSizeDeliveredQuantity})` : ''}
                             </TableCell>
                         </TableRow>
                         <TableRow>
@@ -117,6 +118,7 @@ export const ShowMainContent = ({ record }) => {
                                 </TableCell>
                             <TableCell align="right">
                                 {record.maskLargeSizeQuantity}
+                                {record.maskLargeSizeDeliveredQuantity ? ` (livrés: ${record.maskLargeSizeDeliveredQuantity})` : ''}
                             </TableCell>
                         </TableRow>
                     </TableBody>

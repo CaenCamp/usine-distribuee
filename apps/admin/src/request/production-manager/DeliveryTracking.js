@@ -201,7 +201,7 @@ export default ({ record }) => {
                         </Grid>
                         <Grid item xs={5}>
                             <TextField
-                                label="Numéro BL"
+                                label="N° de bon de livraison"
                                 id="deliveryNumber"
                                 value={formValues.number}
                                 fullWidth
@@ -224,7 +224,7 @@ export default ({ record }) => {
                         <Grid item xs={11}>
                             <TextField
                                 id="standard-full-width"
-                                label="Livreur"
+                                label="Nom du livreur"
                                 fullWidth
                                 margin="normal"
                                 value={formValues.responsible}
