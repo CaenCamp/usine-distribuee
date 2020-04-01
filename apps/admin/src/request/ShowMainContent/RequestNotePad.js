@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
@@ -13,7 +14,12 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import formatDate from 'date-fns/format';
 import Paper from '@material-ui/core/Paper';
-import { useMutation } from 'react-admin';
+import {
+    useMutation,
+    CRUD_GET_ONE_SUCCESS,
+    GET_ONE,
+    FETCH_END
+} from 'react-admin';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -34,8 +40,7 @@ export const RequestNotePad = ({ record, show }) => {
     const classes = useStyles();
     const [mutate, { loading }] = useMutation();
     const [comment, setComment] = useState('');
-
-    console.log(record);
+    const dispatch = useDispatch();
 
     const handleSendComment = () => {
         if (comment.trim() === '') {
@@ -57,7 +62,21 @@ export const RequestNotePad = ({ record, show }) => {
             },
             {
                 onSuccess: () => {
-                    // refresh();
+                    dispatch({
+                        type: CRUD_GET_ONE_SUCCESS,
+                        payload: {
+                            ...record,
+                            productionManagementComments: [
+                                ...(record.productionManagementComments || []),
+                                { comment }
+                            ]
+                        },
+                        meta: {
+                            resource: 'dispatch-resource',
+                            fetchResponse: GET_ONE,
+                            fetchStatus: FETCH_END
+                        }
+                    });
                     setComment('');
                 }
             }
