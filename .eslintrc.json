@@ -9,9 +9,7 @@
         "sourceType": "module",
         "ecmaVersion": 2020
     },
-    "plugins": [
-        "prettier"
-    ],
+    "plugins": ["prettier"],
     "extends": [
         "eslint:recommended",
         "prettier",
