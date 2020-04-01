@@ -21,6 +21,7 @@ import jsonExport from 'jsonexport/dist';
 
 import { requesterType, requestStatus as REQUEST_STATUS } from './index';
 import RequestShow from './Show';
+import { DeliveryPercentage } from '../DeliveryPercentage';
 
 const exporter = (requests, fetchRelatedRecords) => {
     fetchRelatedRecords(requests, 'productionManagementId', 'production-managements').then(managements => {
@@ -97,6 +98,7 @@ const RequestDatagrid = props => (
         <NumberField source="maskLargeSizeQuantity" label="Masques Longs" />
         <FunctionField label="Localité" render={({ deliveryPostalCode, deliveryCity }) => `${deliveryPostalCode} ${deliveryCity}`} />
         <DateField source="createdAt" label="Passé le" showTime />
+        <DeliveryPercentage label="Livraison" />
     </Datagrid>
 )
 

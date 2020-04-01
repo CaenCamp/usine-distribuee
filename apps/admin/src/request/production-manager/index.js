@@ -7,7 +7,6 @@ import Edit from '../Edit';
 export const requestStatus = [
     { id: "MANAGEMENT_TODO", name: "Fabrication demandée" },
     { id: "MANAGEMENT_BUILDING", name: "En fabrication" },
-    { id: "MANAGEMENT_BUILT", name: "Fabriqué" },
     { id: "MANAGEMENT_DELIVERED", name: "Livré" },
 ];
 

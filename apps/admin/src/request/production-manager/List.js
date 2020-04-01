@@ -20,8 +20,9 @@ import {
 import { PrintButton } from '../PrintButton';
 
 import { requesterType } from './index';
-import RequestShow from '../dispatcher/Show';
+import RequestShow from './ShowWithDeliveryTracking';
 import StatusActions from './StatusActions';
+import { DeliveryPercentage } from '../DeliveryPercentage';
 
 const UserFilter = props => (
     <Filter {...props}>
@@ -39,19 +40,23 @@ const RequestPagination = props => (
 
 const tabs = [
     { id: "MANAGEMENT_TODO", name: "A fabriquer" },
-    { id: "MANAGEMENT_BUILDING", name: "En fabrication" },
-    { id: "MANAGEMENT_BUILT", name: "A livrer" },
+    { id: "MANAGEMENT_BUILDING", name: "En fabrication / livraison" },
     { id: "MANAGEMENT_DELIVERED", name: "Livré" },
 ];
 
 const RequestDatagrid = props => (
-    <Datagrid {...props} expand={<RequestShow renderActions={(record) => <StatusActions record={record} />} />} rowClick="expand">
+    <Datagrid
+        {...props}
+        expand={<RequestShow renderActions={(record) => <StatusActions record={record} />} />}
+        rowClick="expand"
+    >
         <TextField source="publicNumber" label="#" />
         <TextField source="requesterName" label="Organisation" />
         <NumberField source="maskSmallSizeQuantity" label="Masques Standards" />
         <NumberField source="maskLargeSizeQuantity" label="Masques Longs" />
         <FunctionField label="Localité" render={({ deliveryPostalCode, deliveryCity }) => `${deliveryPostalCode} ${deliveryCity}`} />
         <DateField source="createdAt" label="Passé le" showTime />
+        <DeliveryPercentage label="Commandes livrées" />
         <EditButton />
         <PrintButton />
     </Datagrid>

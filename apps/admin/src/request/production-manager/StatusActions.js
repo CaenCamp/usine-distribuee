@@ -35,20 +35,12 @@ const DispatchActions = ({ record }) => {
             upValues.newLabel = 'Passer en fabrication';
             break;
         case 'MANAGEMENT_BUILDING':
-            upValues.newStatus = 'MANAGEMENT_BUILT';
-            upValues.newLabel = 'Passer en livraison';
-            downValues.newStatus = 'MANAGEMENT_TODO';
-            downValues.newLabel = 'Remettre en attente'
-            break;
-        case 'MANAGEMENT_BUILT':
-            upValues.newStatus = 'MANAGEMENT_DELIVERED';
-            upValues.newLabel = 'Fabrication livrée';
-            downValues.newStatus = 'MANAGEMENT_BUILDING';
-            downValues.newLabel = 'Remettre en fabrication'
+            downValues.newStatus = !record.deliveryTracking ? 'MANAGEMENT_TODO' : null;
+            downValues.newLabel = !record.deliveryTracking ? 'Remettre en attente' : null;
             break;
         case 'MANAGEMENT_DELIVERED':
-            downValues.newStatus = 'MANAGEMENT_BUILT';
-            downValues.newLabel = 'Remettre en livraison'
+            downValues.newStatus = 'MANAGEMENT_BUILDING';
+            downValues.newLabel = 'Remettre en fabrication'
             break;
         default:
             break;

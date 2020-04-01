@@ -168,7 +168,6 @@ const requestStatuses = [
     "DISPATCH_PENDING",
     "MANAGEMENT_TODO",
     "MANAGEMENT_BUILDING",
-    "MANAGEMENT_BUILT",
     "MANAGEMENT_DELIVERED"
 ];
 

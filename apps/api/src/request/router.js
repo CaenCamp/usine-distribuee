@@ -3,6 +3,7 @@ const Router = require("koa-router");
 const { parseJsonQueryParameter } = require("../toolbox/sanitizers");
 const { getPaginatedList, getOne, updateOne } = require("./repository");
 const { isAuthorized } = require("./authorization");
+const { extractQuantitiesFromDeliveries } = require("./delivery");
 
 const router = new Router();
 
@@ -19,10 +20,10 @@ router.get("/", async ctx => {
     ctx.body = requests;
 });
 
-router.get('/:id', async ctx => {
+router.get("/:id", async ctx => {
     const request = await getOne({
         client: ctx.state.db,
-        id: ctx.params.id,
+        id: ctx.params.id
     });
 
     if (request.error) {
@@ -46,18 +47,36 @@ router.get('/:id', async ctx => {
 
 router.put("/:id", async ctx => {
     const user = ctx.state.user;
-    const updatedData = ctx.request.body;
+    let updatedData = ctx.request.body;
 
     const request = await getOne({
         client: ctx.state.db,
-        id: ctx.params.id,
+        id: ctx.params.id
     });
 
     if (!isAuthorized(user, request, updatedData)) {
-        const error = new Error("Forbidden.");
+        const error = new Error("Forbidden");
         error.status = 403;
 
         throw error;
+    }
+
+    if (
+        request.status === 'MANAGEMENT_BUILDING' &&
+        updatedData.deliveryTracking
+    ) {
+        const quantitiesDelivered = extractQuantitiesFromDeliveries(
+            updatedData.deliveryTracking
+        );
+        updatedData.maskSmallSizeDeliveredQuantity = quantitiesDelivered.small;
+        updatedData.maskLargeSizeDeliveredQuantity = quantitiesDelivered.large;
+
+        if (
+            quantitiesDelivered.small >= request.maskSmallSizeQuantity &&
+            quantitiesDelivered.large >= request.maskLargeSizeQuantity
+        ) {
+            updatedData.status = 'MANAGEMENT_DELIVERED'
+        }
     }
 
     const updatedRequest = await updateOne({
