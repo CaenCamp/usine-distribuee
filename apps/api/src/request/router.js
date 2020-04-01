@@ -80,7 +80,11 @@ router.put('/:id', async (ctx) => {
         }
     }
 
-    if (updatedData.productionManagementComments) {
+    if (
+        updatedData.productionManagementComments &&
+        Array.isArray(updatedData.productionManagementComments) &&
+        updatedData.status === request.status
+    ) {
         const cleanedComments = prepareCommentsForSave(
             updatedData.productionManagementComments,
             user

@@ -36,7 +36,14 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-export const RequestNotePad = ({ record, show }) => {
+const sortComment = (a, b) => {
+    if (a.id > b.id) return -1;
+    if (b.id > a.id) return 1;
+
+    return 0;
+};
+
+export const RequestNotePad = ({ record, show, resource }) => {
     const classes = useStyles();
     const [mutate, { loading }] = useMutation();
     const [comment, setComment] = useState('');
@@ -49,7 +56,7 @@ export const RequestNotePad = ({ record, show }) => {
         mutate(
             {
                 type: 'update',
-                resource: 'dispatcher-requests',
+                resource,
                 payload: {
                     id: record.id,
                     data: {
@@ -72,7 +79,7 @@ export const RequestNotePad = ({ record, show }) => {
                             ]
                         },
                         meta: {
-                            resource: 'dispatch-resource',
+                            resource: 'it-should-not-be-the-right-resource',
                             fetchResponse: GET_ONE,
                             fetchStatus: FETCH_END
                         }
@@ -140,30 +147,31 @@ export const RequestNotePad = ({ record, show }) => {
                                     </TableRow>
                                 </TableHead>
                                 <TableBody>
-                                    {(
-                                        record.productionManagementComments ||
-                                        []
-                                    ).map((row) => (
-                                        <TableRow key={row.id}>
-                                            <TableCell
-                                                component="th"
-                                                scope="row"
-                                            >
-                                                {formatDate(
-                                                    new Date(row.date),
-                                                    'dd/MM/yyyy HH:mm'
-                                                )}
-                                            </TableCell>
-                                            <TableCell>{row.role}</TableCell>
-                                            <TableCell align="right">
-                                                {row.email}
-                                            </TableCell>
-                                            <TableCell align="right">
-                                                {row.comment}
-                                                <br />
-                                            </TableCell>
-                                        </TableRow>
-                                    ))}
+                                    {(record.productionManagementComments || [])
+                                        .sort(sortComment)
+                                        .map((row) => (
+                                            <TableRow key={row.id}>
+                                                <TableCell
+                                                    component="th"
+                                                    scope="row"
+                                                >
+                                                    {formatDate(
+                                                        new Date(row.date),
+                                                        'dd/MM/yyyy HH:mm'
+                                                    )}
+                                                </TableCell>
+                                                <TableCell>
+                                                    {row.role}
+                                                </TableCell>
+                                                <TableCell align="right">
+                                                    {row.email}
+                                                </TableCell>
+                                                <TableCell align="right">
+                                                    {row.comment}
+                                                    <br />
+                                                </TableCell>
+                                            </TableRow>
+                                        ))}
                                 </TableBody>
                             </Table>
                         </TableContainer>

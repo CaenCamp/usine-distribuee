@@ -47,7 +47,10 @@ export default ({ renderActions, ...props }) => {
     return (
         <Card className={classes.root} ref={ref}>
             <CardContent>
-                <ShowMainContent record={record} />
+                <ShowMainContent
+                    record={record}
+                    resource="dispatcher-requests"
+                />
                 {renderActions && renderActions(record, props)}
                 <Typography
                     color="textSecondary"

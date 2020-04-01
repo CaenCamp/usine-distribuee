@@ -15,7 +15,7 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-export const ShowMainContent = ({ record }) => {
+export const ShowMainContent = ({ record, resource }) => {
     const classes = useStyles();
     const [tabIndex, setTabIndex] = useState(0);
 
@@ -40,7 +40,7 @@ export const ShowMainContent = ({ record }) => {
                     indicatorColor="primary"
                 >
                     <Tab label="Résumé de la commande" />
-                    <Tab label={commentsLabel} />
+                    {resource && <Tab label={commentsLabel} />}
                 </Tabs>
             </AppBar>
             <RequestResume
@@ -48,7 +48,13 @@ export const ShowMainContent = ({ record }) => {
                 numberType={numberType}
                 show={tabIndex === 0}
             />
-            <RequestNotePad record={record} show={tabIndex === 1} />
+            {resource && (
+                <RequestNotePad
+                    record={record}
+                    show={tabIndex === 1}
+                    resource={resource}
+                />
+            )}
         </div>
     );
 };
