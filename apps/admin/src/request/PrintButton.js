@@ -1,7 +1,7 @@
-import React from "react";
-import { ShowButton } from "react-admin";
+import React from 'react';
+import { ShowButton } from 'react-admin';
 
-import PrintIcon from "@material-ui/icons/Print";
+import PrintIcon from '@material-ui/icons/Print';
 
 export const PrintButton = props => (
     <ShowButton
@@ -10,4 +10,4 @@ export const PrintButton = props => (
         label="Version imprimable"
         icon={<PrintIcon />}
     />
-)
+);

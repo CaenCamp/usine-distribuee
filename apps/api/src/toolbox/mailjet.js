@@ -1,7 +1,7 @@
-const config = require("../config");
-const signale = require("signale");
+const config = require('../config');
+const signale = require('signale');
 
-const mailjet = require("node-mailjet").connect(
+const mailjet = require('node-mailjet').connect(
     config.mailjet.publicKey,
     config.mailjet.privateKey
 );
@@ -12,18 +12,18 @@ const sendRequestConfirmation = ({
     maskRequestId,
     publicNumber
 }) => {
-    if (config.env === "development") {
+    if (config.env === 'development') {
         signale.info(
             `Envoi d'un mail de tracking à "${nameTo}<${emailTo}>". Demande #${publicNumber} (${maskRequestId})`
         );
         return;
     }
-    const request = mailjet.post("send", { version: "v3.1" }).request({
+    const request = mailjet.post('send', { version: 'v3.1' }).request({
         Messages: [
             {
                 From: {
-                    Email: "contact@usinepartagee.fr",
-                    Name: "Usine partagée Normandie"
+                    Email: 'contact@usinepartagee.fr',
+                    Name: 'Usine partagée Normandie'
                 },
                 To: [
                     {
@@ -33,7 +33,7 @@ const sendRequestConfirmation = ({
                 ],
                 TemplateID: config.mailjet.maskRequestConfirmTemplateId,
                 TemplateLanguage: true,
-                Subject: "Demande de masques enregistrée",
+                Subject: 'Demande de masques enregistrée',
                 Variables: {
                     id_request: maskRequestId,
                     public_number: publicNumber
@@ -42,14 +42,14 @@ const sendRequestConfirmation = ({
         ]
     });
     request.catch(err => {
-        signale.error("Mailjet error: ", {
+        signale.error('Mailjet error: ', {
             statusCode: err.statusCode,
             message: err.message,
-            stack: err.stack,
+            stack: err.stack
         });
     });
 };
 
 module.exports = {
-    sendRequestConfirmation,
+    sendRequestConfirmation
 };

@@ -35,7 +35,7 @@ const filtersSanitizer = (filters, filterableFields) => {
 const sortSanitizer = (sort, sortableFields) => {
     const sortTwoFirstParameters = [
         sort ? sort[0] || null : null,
-        sort ? sort[1] || null : null,
+        sort ? sort[1] || null : null
     ];
     if (
         !sortTwoFirstParameters ||
@@ -60,7 +60,7 @@ const sortSanitizer = (sort, sortableFields) => {
 const paginationSanitizer = pagination => {
     const sortTwoFirstParameters = [
         pagination ? parseInt(pagination[0]) || null : null,
-        pagination ? parseInt(pagination[1]) || null : null,
+        pagination ? parseInt(pagination[1]) || null : null
     ];
 
     if (
@@ -109,5 +109,5 @@ module.exports = {
     formatPaginationContentRange,
     paginationSanitizer,
     parseJsonQueryParameter,
-    sortSanitizer,
+    sortSanitizer
 };

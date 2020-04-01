@@ -1,25 +1,25 @@
 {
-	"parser": "babel-eslint",
-	"env": {
-		"browser": true,
-		"node": true,
-		"es2020": true
-	},
-	"parserOptions": {
-		"sourceType": "module",
-		"ecmaVersion": 2020
-	},
-	"plugins": ["prettier"],
-	"extends": [
-		"eslint:recommended",
-		"prettier",
-		"plugin:prettier/recommended",
-		"plugin:testing-library/recommended",
-		"plugin:jest/recommended",
-		"plugin:jest/style"
-	],
-	"rules": {
-		"prefer-expect-assertions": 0,
-		"prettier/prettier": "error"
-	}
+    "parser": "babel-eslint",
+    "env": {
+        "browser": true,
+        "node": true,
+        "es2020": true
+    },
+    "parserOptions": {
+        "sourceType": "module",
+        "ecmaVersion": 2020
+    },
+    "plugins": ["prettier"],
+    "extends": [
+        "eslint:recommended",
+        "prettier",
+        "plugin:prettier/recommended",
+        "plugin:testing-library/recommended",
+        "plugin:jest/recommended",
+        "plugin:jest/style"
+    ],
+    "rules": {
+        "prefer-expect-assertions": 0,
+        "prettier/prettier": "error"
+    }
 }

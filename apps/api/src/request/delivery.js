@@ -1,4 +1,4 @@
-const products = ["maskSmallSize", "maskLargeSize"];
+const products = ['maskSmallSize', 'maskLargeSize'];
 
 const sumDelivered = (request, product) =>
     (request.deliveryTracking || []).reduce(

@@ -1,4 +1,4 @@
-exports.up = async function (knex) {
+exports.up = async function(knex) {
     return knex.raw(`
         CREATE VIEW global_stats AS
             SELECT
@@ -13,6 +13,6 @@ exports.up = async function (knex) {
     `);
 };
 
-exports.down = async function (knex) {
+exports.down = async function(knex) {
     return knex.raw('DROP VIEW IF EXISTS global_stats');
 };

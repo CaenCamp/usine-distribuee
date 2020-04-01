@@ -1,9 +1,5 @@
-import React from "react";
-import {
-    Edit,
-    TextInput,
-    SimpleForm,
-} from "react-admin";
+import React from 'react';
+import { Edit, TextInput, SimpleForm } from 'react-admin';
 
 const ProductionManagementTitle = ({ record }) =>
     record ? `Edition de du pôle de gestion "${record.name}"` : null;
@@ -19,11 +15,7 @@ export const ProductionManagementEdit = props => {
                     label="Description"
                     fullWidth
                 />
-                <TextInput
-                    source="email"
-                    label="Email de contact"
-                    fullWidth
-                />
+                <TextInput source="email" label="Email de contact" fullWidth />
                 <TextInput
                     source="phone"
                     label="Téléphone de contact"

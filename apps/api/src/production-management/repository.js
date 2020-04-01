@@ -2,13 +2,11 @@ const {
     filtersSanitizer,
     formatPaginationContentRange,
     paginationSanitizer,
-    sortSanitizer,
+    sortSanitizer
 } = require('../toolbox/sanitizers');
 
 const filterableFields = [];
-const sortableFields = [
-    'name',
-];
+const sortableFields = ['name'];
 
 const getFilteredQuery = (client, filters = {}, sort) => {
     const query = client
@@ -20,12 +18,7 @@ const getFilteredQuery = (client, filters = {}, sort) => {
     return query;
 };
 
-const getPaginatedList = async ({
-    client,
-    filters,
-    sort,
-    pagination,
-}) => {
+const getPaginatedList = async ({ client, filters, sort, pagination }) => {
     const query = getFilteredQuery(
         client,
         filtersSanitizer(filters, filterableFields),
@@ -40,7 +33,7 @@ const getPaginatedList = async ({
             contentRange: formatPaginationContentRange(
                 'production-managements',
                 result.pagination
-            ),
+            )
         }));
 };
 
@@ -63,8 +56,9 @@ const insertOne = async ({ client, data }) => {
 };
 
 const getOne = async ({ client, productionManagementId }) => {
-    return getOneByIdQuery(client, productionManagementId)
-        .catch(error => ({ error }));
+    return getOneByIdQuery(client, productionManagementId).catch(error => ({
+        error
+    }));
 };
 
 const updateOne = async ({ client, productionManagementId, data }) => {
@@ -85,11 +79,10 @@ const removeOne = async ({ client, productionManagementId }) => {
         .catch(error => ({ error }));
 };
 
-
 module.exports = {
     insertOne,
     removeOne,
     getOne,
     getPaginatedList,
-    updateOne,
+    updateOne
 };

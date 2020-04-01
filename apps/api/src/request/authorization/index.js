@@ -1,11 +1,11 @@
-const get = require("lodash.get");
+const get = require('lodash.get');
 
-const permissions = require("./permissions");
+const permissions = require('./permissions');
 
 const isFunction = value =>
     value &&
-    (Object.prototype.toString.call(value) === "[object Function]" ||
-        "function" === typeof value ||
+    (Object.prototype.toString.call(value) === '[object Function]' ||
+        'function' === typeof value ||
         value instanceof Function);
 
 const isAuthorized = (user, from, to) => {

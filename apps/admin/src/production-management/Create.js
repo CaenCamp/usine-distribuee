@@ -1,10 +1,5 @@
-import React from "react";
-import {
-    Create,
-    TextInput,
-    SimpleForm,
-    required
-} from "react-admin";
+import React from 'react';
+import { Create, TextInput, SimpleForm, required } from 'react-admin';
 
 export const ProductionManagementCreate = props => {
     return (
@@ -22,11 +17,7 @@ export const ProductionManagementCreate = props => {
                     label="Description"
                     fullWidth
                 />
-                <TextInput
-                    source="email"
-                    label="Email de contact"
-                    fullWidth
-                />
+                <TextInput source="email" label="Email de contact" fullWidth />
                 <TextInput
                     source="phone"
                     label="Téléphone de contact"

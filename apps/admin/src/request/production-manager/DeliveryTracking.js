@@ -1,38 +1,38 @@
-import "date-fns";
-import React, { useReducer, useState } from "react";
-import { useMutation, useRefresh } from "react-admin";
+import 'date-fns';
+import React, { useReducer, useState } from 'react';
+import { useMutation, useRefresh } from 'react-admin';
 
-import Card from "@material-ui/core/Card";
-import CardContent from "@material-ui/core/CardContent";
-import Typography from "@material-ui/core/Typography";
-import Table from "@material-ui/core/Table";
-import TableBody from "@material-ui/core/TableBody";
-import TableCell from "@material-ui/core/TableCell";
-import TableContainer from "@material-ui/core/TableContainer";
-import TableHead from "@material-ui/core/TableHead";
-import TableRow from "@material-ui/core/TableRow";
-import Paper from "@material-ui/core/Paper";
-import TextField from "@material-ui/core/TextField";
-import Grid from "@material-ui/core/Grid";
-import DateFnsUtils from "@date-io/date-fns";
-import formatDate from "date-fns/format";
+import Card from '@material-ui/core/Card';
+import CardContent from '@material-ui/core/CardContent';
+import Typography from '@material-ui/core/Typography';
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableContainer from '@material-ui/core/TableContainer';
+import TableHead from '@material-ui/core/TableHead';
+import TableRow from '@material-ui/core/TableRow';
+import Paper from '@material-ui/core/Paper';
+import TextField from '@material-ui/core/TextField';
+import Grid from '@material-ui/core/Grid';
+import DateFnsUtils from '@date-io/date-fns';
+import formatDate from 'date-fns/format';
 import {
     MuiPickersUtilsProvider,
-    KeyboardDatePicker,
-} from "@material-ui/pickers";
-import Button from "@material-ui/core/Button";
-import { makeStyles } from "@material-ui/core/styles";
+    KeyboardDatePicker
+} from '@material-ui/pickers';
+import Button from '@material-ui/core/Button';
+import { makeStyles } from '@material-ui/core/styles';
 
-const useStyles = makeStyles((theme) => ({
-    root: { maxWidth: 650, margin: "auto" },
+const useStyles = makeStyles(theme => ({
+    root: { maxWidth: 650, margin: 'auto' },
     table: {
-        minWidth: 600,
+        minWidth: 600
     },
     textField: {
         marginLeft: theme.spacing(1),
         marginRight: theme.spacing(1),
-        width: "25ch",
-    },
+        width: '25ch'
+    }
 }));
 
 const defaultFormValues = {
@@ -40,13 +40,13 @@ const defaultFormValues = {
     date: new Date(),
     responsible: null,
     maskSmallSizeDelivered: 0,
-    maskLargeSizeDelivered: 0,
+    maskLargeSizeDelivered: 0
 };
 
 const reducer = (state, { field, value }) => {
     return {
         ...state,
-        [field]: value,
+        [field]: value
     };
 };
 
@@ -59,7 +59,7 @@ export default ({ record }) => {
     const [formError, setFormError] = useState({});
 
     const resetFormValues = () => {
-        Object.keys(defaultFormValues).forEach((key) => {
+        Object.keys(defaultFormValues).forEach(key => {
             setFormValues({ field: key, value: defaultFormValues[key] });
         });
         setFormError({});
@@ -68,16 +68,16 @@ export default ({ record }) => {
     const validateForm = values => {
         const checkError = {};
         if (!values.date) {
-            checkError.date = "Vous devez indiquer une date";
+            checkError.date = 'Vous devez indiquer une date';
         }
         if (!values.number) {
-            checkError.number = "Vous devez indiquer une date";
+            checkError.number = 'Vous devez indiquer une date';
         }
         if (!values.responsible) {
-            checkError.responsible = "Vous devez indiquer qui est le livreur";
+            checkError.responsible = 'Vous devez indiquer qui est le livreur';
         }
         if (!values.maskSmallSizeDelivered && !values.maskLargeSizeDelivered) {
-            checkError.quantity = "Vous devez indiquer ou moins une quantité.";
+            checkError.quantity = 'Vous devez indiquer ou moins une quantité.';
         }
 
         return checkError;
@@ -91,23 +91,23 @@ export default ({ record }) => {
         }
         mutate(
             {
-                type: "update",
-                resource: "dispatcher-requests",
+                type: 'update',
+                resource: 'dispatcher-requests',
                 payload: {
                     id: record.id,
                     data: {
                         deliveryTracking: [
                             ...(record.deliveryTracking || []),
-                            formValues,
-                        ],
-                    },
-                },
+                            formValues
+                        ]
+                    }
+                }
             },
             {
                 onSuccess: () => {
                     refresh();
                     resetFormValues();
-                },
+                }
             }
         );
     };
@@ -142,7 +142,7 @@ export default ({ record }) => {
                                 </TableRow>
                             </TableHead>
                             <TableBody>
-                                {(record.deliveryTracking || []).map((row) => (
+                                {(record.deliveryTracking || []).map(row => (
                                     <TableRow key={row.name}>
                                         <TableCell component="th" scope="row">
                                             {row.number}
@@ -150,15 +150,19 @@ export default ({ record }) => {
                                         <TableCell>
                                             {formatDate(
                                                 new Date(row.date),
-                                                "dd/MM/yyyy HH:mm"
+                                                'dd/MM/yyyy HH:mm'
                                             )}
                                         </TableCell>
                                         <TableCell align="right">
                                             {row.responsible}
                                         </TableCell>
                                         <TableCell align="right">
-                                            {row.maskSmallSizeDelivered} modèle standard<br />
-                                            {row.maskLargeSizeDelivered} modèle long<br />
+                                            {row.maskSmallSizeDelivered} modèle
+                                            standard
+                                            <br />
+                                            {row.maskLargeSizeDelivered} modèle
+                                            long
+                                            <br />
                                         </TableCell>
                                     </TableRow>
                                 ))}
@@ -182,14 +186,14 @@ export default ({ record }) => {
                                         label="Date"
                                         value={formValues.date}
                                         fullWidth
-                                        onChange={(value) =>
+                                        onChange={value =>
                                             setFormValues({
-                                                field: "date",
-                                                value,
+                                                field: 'date',
+                                                value
                                             })
                                         }
                                         KeyboardButtonProps={{
-                                            "aria-label": "change date",
+                                            'aria-label': 'change date'
                                         }}
                                         required
                                         number
@@ -205,16 +209,16 @@ export default ({ record }) => {
                                 id="deliveryNumber"
                                 value={formValues.number}
                                 fullWidth
-                                onChange={(event) => {
+                                onChange={event => {
                                     setFormValues({
-                                        field: "number",
-                                        value: event.currentTarget.value,
+                                        field: 'number',
+                                        value: event.currentTarget.value
                                     });
                                     setFormError({});
                                 }}
                                 margin="normal"
                                 InputLabelProps={{
-                                    shrink: true,
+                                    shrink: true
                                 }}
                                 required
                                 helperText={formError.number}
@@ -228,15 +232,15 @@ export default ({ record }) => {
                                 fullWidth
                                 margin="normal"
                                 value={formValues.responsible}
-                                onChange={(event) => {
+                                onChange={event => {
                                     setFormValues({
-                                        field: "responsible",
-                                        value: event.currentTarget.value,
+                                        field: 'responsible',
+                                        value: event.currentTarget.value
                                     });
                                     setFormError({});
                                 }}
                                 InputLabelProps={{
-                                    shrink: true,
+                                    shrink: true
                                 }}
                                 required
                                 helperText={formError.responsible}
@@ -244,7 +248,10 @@ export default ({ record }) => {
                             />
                         </Grid>
                     </Grid>
-                    <Typography variant="subtitle1" style={{ marginTop: '1em' }}>
+                    <Typography
+                        variant="subtitle1"
+                        style={{ marginTop: '1em' }}
+                    >
                         Nombre de visières livrées
                     </Typography>
                     <Grid container justify="space-between">
@@ -254,13 +261,13 @@ export default ({ record }) => {
                                 id="smallMask"
                                 defaultValue={0}
                                 value={formValues.maskSmallSizeDelivered}
-                                onChange={(event) => {
+                                onChange={event => {
                                     setFormValues({
-                                        field: "maskSmallSizeDelivered",
+                                        field: 'maskSmallSizeDelivered',
                                         value: parseInt(
                                             event.currentTarget.value,
                                             10
-                                        ),
+                                        )
                                     });
                                     setFormError({});
                                 }}
@@ -278,13 +285,13 @@ export default ({ record }) => {
                                 id="largeMask"
                                 defaultValue={0}
                                 value={formValues.maskLargeSizeDelivered}
-                                onChange={(event) => {
+                                onChange={event => {
                                     setFormValues({
-                                        field: "maskLargeSizeDelivered",
+                                        field: 'maskLargeSizeDelivered',
                                         value: parseInt(
                                             event.currentTarget.value,
                                             10
-                                        ),
+                                        )
                                     });
                                     setFormError({});
                                 }}
@@ -298,12 +305,14 @@ export default ({ record }) => {
                         </Grid>
                     </Grid>
                     <Button
-                        style={{ marginTop: "2rem" }}
+                        style={{ marginTop: '2rem' }}
                         color="primary"
                         variant="contained"
                         disabled={
                             loading ||
-                            (formValues.maskSmallSizeDelivered + formValues.maskLargeSizeDelivered) < 1 ||
+                            formValues.maskSmallSizeDelivered +
+                                formValues.maskLargeSizeDelivered <
+                                1 ||
                             Object.keys(formError).length
                         }
                         onClick={handleDeliverClick}

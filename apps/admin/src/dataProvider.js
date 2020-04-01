@@ -1,7 +1,6 @@
 import { stringify } from 'query-string';
 import { fetchUtils } from 'ra-core';
 
-
 const dataProvider = (apiUrl, httpClient = fetchUtils.fetchJson) => ({
     getList: (resource, params) => {
         const { page, perPage } = params.pagination;
@@ -27,19 +26,19 @@ const dataProvider = (apiUrl, httpClient = fetchUtils.fetchJson) => ({
                         .split('/')
                         .pop(),
                     10
-                ),
+                )
             };
         });
     },
 
     getOne: (resource, params) =>
         httpClient(`${apiUrl}/${resource}/${params.id}`).then(({ json }) => ({
-            data: json,
+            data: json
         })),
 
     getMany: (resource, params) => {
         const query = {
-            filter: JSON.stringify({ id: params.ids }),
+            filter: JSON.stringify({ id: params.ids })
         };
         const url = `${apiUrl}/${resource}?${stringify(query)}`;
         return httpClient(url).then(({ json }) => ({ data: json }));
@@ -52,9 +51,9 @@ const dataProvider = (apiUrl, httpClient = fetchUtils.fetchJson) => ({
             sort: JSON.stringify([field, order]),
             filter: JSON.stringify({
                 ...params.filter,
-                [params.target]: params.id,
+                [params.target]: params.id
             }),
-            pagination: JSON.stringify([perPage, page]),
+            pagination: JSON.stringify([perPage, page])
         };
         const url = `${apiUrl}/${resource}?${stringify(query)}`;
 
@@ -72,7 +71,7 @@ const dataProvider = (apiUrl, httpClient = fetchUtils.fetchJson) => ({
                         .split('/')
                         .pop(),
                     10
-                ),
+                )
             };
         });
     },
@@ -80,7 +79,7 @@ const dataProvider = (apiUrl, httpClient = fetchUtils.fetchJson) => ({
     update: (resource, params) =>
         httpClient(`${apiUrl}/${resource}/${params.id}`, {
             method: 'PUT',
-            body: JSON.stringify(params.data),
+            body: JSON.stringify(params.data)
         }).then(({ json }) => ({ data: json })),
 
     // simple-rest doesn't handle provide an updateMany route, so we fallback to calling update n times instead
@@ -89,7 +88,7 @@ const dataProvider = (apiUrl, httpClient = fetchUtils.fetchJson) => ({
             params.ids.map(id =>
                 httpClient(`${apiUrl}/${resource}/${id}`, {
                     method: 'PUT',
-                    body: JSON.stringify(params.data),
+                    body: JSON.stringify(params.data)
                 })
             )
         ).then(responses => ({ data: responses.map(({ json }) => json.id) })),
@@ -97,14 +96,14 @@ const dataProvider = (apiUrl, httpClient = fetchUtils.fetchJson) => ({
     create: (resource, params) =>
         httpClient(`${apiUrl}/${resource}`, {
             method: 'POST',
-            body: JSON.stringify(params.data),
+            body: JSON.stringify(params.data)
         }).then(({ json }) => ({
-            data: { ...params.data, id: json.id },
+            data: { ...params.data, id: json.id }
         })),
 
     delete: (resource, params) =>
         httpClient(`${apiUrl}/${resource}/${params.id}`, {
-            method: 'DELETE',
+            method: 'DELETE'
         }).then(({ json }) => ({ data: json })),
 
     // simple-rest doesn't handle filters on DELETE route, so we fallback to calling DELETE n times instead
@@ -112,10 +111,10 @@ const dataProvider = (apiUrl, httpClient = fetchUtils.fetchJson) => ({
         Promise.all(
             params.ids.map(id =>
                 httpClient(`${apiUrl}/${resource}/${id}`, {
-                    method: 'DELETE',
+                    method: 'DELETE'
                 })
             )
-        ).then(responses => ({ data: responses.map(({ json }) => json.id) })),
+        ).then(responses => ({ data: responses.map(({ json }) => json.id) }))
 });
 
 const httpClient = (url, options = {}) => {
@@ -124,8 +123,12 @@ const httpClient = (url, options = {}) => {
     }
     const token = localStorage.getItem('token');
     options.headers.set('Authorization', token);
-    options.credentials = process.env.REACT_APP_HTTP_CREDENTIALS || 'same-origin';
+    options.credentials =
+        process.env.REACT_APP_HTTP_CREDENTIALS || 'same-origin';
     return fetchUtils.fetchJson(url, options);
 };
 
-export default dataProvider(`${process.env.REACT_APP_API_URL || ''}/api`, httpClient);
+export default dataProvider(
+    `${process.env.REACT_APP_API_URL || ''}/api`,
+    httpClient
+);

@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 import {
     Datagrid,
     DateField,
@@ -9,14 +9,9 @@ import {
     TextField,
     NumberField,
     FunctionField,
-    EditButton,
-} from "react-admin";
-import {
-    Divider,
-    Tabs,
-    AppBar,
-    Tab
-} from '@material-ui/core';
+    EditButton
+} from 'react-admin';
+import { Divider, Tabs, AppBar, Tab } from '@material-ui/core';
 import { PrintButton } from '../PrintButton';
 
 import { requesterType } from './index';
@@ -39,25 +34,38 @@ const RequestPagination = props => (
 );
 
 const tabs = [
-    { id: "DISPATCH_TODO", name: "A dispatcher" },
-    { id: "DISPATCH_PENDING", name: "En attente" },
-    { id: "DISPATCH_REJECTED", name: "Rejeté" },
+    { id: 'DISPATCH_TODO', name: 'A dispatcher' },
+    { id: 'DISPATCH_PENDING', name: 'En attente' },
+    { id: 'DISPATCH_REJECTED', name: 'Rejeté' }
 ];
 
 const RequestDatagrid = props => (
-    <Datagrid {...props} expand={<RequestShow renderActions={(record) => <DispatchActions record={record} />} />} rowClick="expand">
+    <Datagrid
+        {...props}
+        expand={
+            <RequestShow
+                renderActions={record => <DispatchActions record={record} />}
+            />
+        }
+        rowClick="expand"
+    >
         <TextField source="publicNumber" label="#" />
         <TextField source="requesterName" label="Organisation" />
         <NumberField source="maskSmallSizeQuantity" label="Masques Standards" />
         <NumberField source="maskLargeSizeQuantity" label="Masques Longs" />
-        <FunctionField label="Localité" render={({ deliveryPostalCode, deliveryCity }) => `${deliveryPostalCode} ${deliveryCity}`} />
+        <FunctionField
+            label="Localité"
+            render={({ deliveryPostalCode, deliveryCity }) =>
+                `${deliveryPostalCode} ${deliveryCity}`
+            }
+        />
         <DateField source="createdAt" label="Passé le" showTime />
         <EditButton />
         <PrintButton />
     </Datagrid>
-)
+);
 
-const TabbedList = (props) => {
+const TabbedList = props => {
     const handleChange = (event, value) => {
         const { setFilters, filterValues } = props;
         setFilters({ ...filterValues, status: value });
@@ -85,15 +93,15 @@ const TabbedList = (props) => {
             <Divider />
             <RequestDatagrid {...props} />
         </>
-    )
-}
+    );
+};
 
-export default (props) => (
+export default props => (
     <List
         {...props}
         filters={<UserFilter />}
         filterDefaultValues={{ status: 'DISPATCH_TODO' }}
-        sort={{ field: "createdAt", order: "ASC" }}
+        sort={{ field: 'createdAt', order: 'ASC' }}
         exporter={false}
         pagination={<RequestPagination />}
         perPage={25}

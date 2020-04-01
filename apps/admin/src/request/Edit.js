@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 import {
     Edit,
     NumberInput,
@@ -9,12 +9,12 @@ import {
     SaveButton,
     ListButton,
     SelectInput
-} from "react-admin";
+} from 'react-admin';
 
-import { requestStatus, requesterType } from "./request";
+import { requestStatus, requesterType } from './request';
 
 const Title = ({ record }) => {
-    const publicNumber = `${record.publicNumber}`.padStart(5, "0");
+    const publicNumber = `${record.publicNumber}`.padStart(5, '0');
     return record
         ? `Edition de la demande #${publicNumber} (${
               requestStatus.find(status => status.id === record.status).name

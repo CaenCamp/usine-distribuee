@@ -1,10 +1,8 @@
-import React from "react";
+import React from 'react';
 import {
     Datagrid,
     DateField,
     ReferenceField,
-    SingleFieldList,
-    ChipField,
     Filter,
     List,
     Pagination,
@@ -15,8 +13,8 @@ import {
     TextField,
     NumberField,
     FunctionField,
-    downloadCSV,
-} from "react-admin";
+    downloadCSV
+} from 'react-admin';
 import jsonExport from 'jsonexport/dist';
 
 import { requesterType, requestStatus as REQUEST_STATUS } from './index';
@@ -24,10 +22,16 @@ import RequestShow from './Show';
 import { DeliveryPercentage } from '../DeliveryPercentage';
 
 const exporter = (requests, fetchRelatedRecords) => {
-    fetchRelatedRecords(requests, 'productionManagementId', 'production-managements').then(managements => {
+    fetchRelatedRecords(
+        requests,
+        'productionManagementId',
+        'production-managements'
+    ).then(managements => {
         const data = requests.map(request => ({
             ...request,
-            pole_de_gestion: request.productionManagementId ? managements[request.productionManagementId].name : 'non affecté',
+            pole_de_gestion: request.productionManagementId
+                ? managements[request.productionManagementId].name
+                : 'non affecté'
         }));
         jsonExport(data, {}, (err, csv) => {
             downloadCSV(csv, 'requests');
@@ -90,23 +94,39 @@ const RequestPagination = props => (
 const RequestDatagrid = props => (
     <Datagrid {...props} expand={<RequestShow />} rowClick="expand">
         <TextField source="requesterName" label="Organisation" />
-        <FunctionField source="status" label="Statut" render={({ status }) => REQUEST_STATUS.find(s => s.id === `${status}`).name} />
-        <ReferenceField label="Pôle de gestion" source="productionManagementId" reference="production-managements" link={false} >
+        <FunctionField
+            source="status"
+            label="Statut"
+            render={({ status }) =>
+                REQUEST_STATUS.find(s => s.id === `${status}`).name
+            }
+        />
+        <ReferenceField
+            label="Pôle de gestion"
+            source="productionManagementId"
+            reference="production-managements"
+            link={false}
+        >
             <TextField source="name" />
         </ReferenceField>
         <NumberField source="maskSmallSizeQuantity" label="Masques Standards" />
         <NumberField source="maskLargeSizeQuantity" label="Masques Longs" />
-        <FunctionField label="Localité" render={({ deliveryPostalCode, deliveryCity }) => `${deliveryPostalCode} ${deliveryCity}`} />
+        <FunctionField
+            label="Localité"
+            render={({ deliveryPostalCode, deliveryCity }) =>
+                `${deliveryPostalCode} ${deliveryCity}`
+            }
+        />
         <DateField source="createdAt" label="Passé le" showTime />
         <DeliveryPercentage label="Livraison" />
     </Datagrid>
-)
+);
 
-export default (props) => (
+export default props => (
     <List
         {...props}
         filters={<UserFilter />}
-        sort={{ field: "createdAt", order: "ASC" }}
+        sort={{ field: 'createdAt', order: 'ASC' }}
         exporter={exporter}
         pagination={<RequestPagination />}
         perPage={25}

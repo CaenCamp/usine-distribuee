@@ -1,22 +1,22 @@
-const fs = require("fs");
-const path = require("path");
-const Koa = require("koa");
-const Router = require("koa-router");
-const views = require("koa-views");
-const signale = require("signale");
+const fs = require('fs');
+const path = require('path');
+const Koa = require('koa');
+const Router = require('koa-router');
+const views = require('koa-views');
+const signale = require('signale');
 
-const dbMiddleware = require("./dbMiddleware");
-const { insertOne, getOne } = require("./request/repository");
-const { sendRequestConfirmation } = require("./toolbox/mailjet");
+const dbMiddleware = require('./dbMiddleware');
+const { insertOne, getOne } = require('./request/repository');
+const { sendRequestConfirmation } = require('./toolbox/mailjet');
 
-const { getGlobalStats } = require("./stat/repository");
+const { getGlobalStats } = require('./stat/repository');
 
 const app = new Koa();
 const router = new Router();
 
 app.use(dbMiddleware);
 
-const { mtime } = fs.statSync(path.resolve(__dirname, "./views/index.ejs"));
+const { mtime } = fs.statSync(path.resolve(__dirname, './views/index.ejs'));
 
 const initContextState = ctx => {
     ctx.state.errors = {};
@@ -33,12 +33,12 @@ const getStats = async dbClient => {
     if (globalStats && globalStats.length) {
         return globalStats[0];
     } else {
-        throw new Error("Unable to get stats from db");
+        throw new Error('Unable to get stats from db');
     }
 };
 
 const renderCachedHomepage = async ctx => {
-    ctx.set("ETag", `"${mtime.getTime().toString()}"`);
+    ctx.set('ETag', `"${mtime.getTime().toString()}"`);
 
     if (ctx.fresh) {
         ctx.status = 304;
@@ -51,10 +51,10 @@ const renderCachedHomepage = async ctx => {
     } catch (error) {
         signale.error(error);
     }
-    return ctx.render("index.ejs");
+    return ctx.render('index.ejs');
 };
 
-router.get("/", renderCachedHomepage);
+router.get('/', renderCachedHomepage);
 
 const parseRequest = ({
     mask_small_size_quantity,
@@ -80,46 +80,46 @@ const validate = ({
 
     if (!requester_type) {
         errors.requester_type =
-            "Veuillez choisir un type de numéro professionnel de santé";
+            'Veuillez choisir un type de numéro professionnel de santé';
     }
 
     if (
-        requester_type === "other" &&
+        requester_type === 'other' &&
         !requester_other_type &&
-        requester_other_type.trim() === ""
+        requester_other_type.trim() === ''
     ) {
         errors.requester_type =
-            "Veuillez préciser le type de numéro de professionnel de santé";
+            'Veuillez préciser le type de numéro de professionnel de santé';
     }
 
     if (!mask_small_size_quantity && !mask_large_size_quantity) {
         errors.mask_small_size_quantity =
-            "La commande doit comporter au moins 5 masques pour être valide";
+            'La commande doit comporter au moins 5 masques pour être valide';
         errors.mask_large_size_quantity =
-            "La commande doit comporter au moins 5 masques pour être valide";
+            'La commande doit comporter au moins 5 masques pour être valide';
     }
 
     if (mask_small_size_quantity && mask_small_size_quantity < 5) {
         errors.mask_small_size_quantity =
-            "La commande doit comporter au moins 5 masques pour être valide";
+            'La commande doit comporter au moins 5 masques pour être valide';
     }
 
     if (mask_large_size_quantity && mask_large_size_quantity < 5) {
         errors.mask_large_size_quantity =
-            "La commande doit comporter au moins 5 masques pour être valide";
+            'La commande doit comporter au moins 5 masques pour être valide';
     }
 
     if (mask_small_size_quantity + mask_large_size_quantity > 150) {
         errors.mask_small_size_quantity =
-            "La commande doit comporter au maximum 150 masques pour être valide";
+            'La commande doit comporter au maximum 150 masques pour être valide';
         errors.mask_large_size_quantity =
-            "La commande doit comporter au maximum 150 masques pour être valide";
+            'La commande doit comporter au maximum 150 masques pour être valide';
     }
 
     return errors;
 };
 
-router.post("/", async ctx => {
+router.post('/', async ctx => {
     initContextState(ctx);
 
     if (!ctx.request.body) {
@@ -134,7 +134,7 @@ router.post("/", async ctx => {
         ctx.status = 400;
         ctx.state.errors = errors;
         ctx.state.request = request;
-        return ctx.render("index.ejs");
+        return ctx.render('index.ejs');
     }
 
     try {
@@ -146,7 +146,7 @@ router.post("/", async ctx => {
             emailTo: newRequest.contactEmail,
             nameTo: newRequest.contactName,
             maskRequestId: newRequest.id,
-            publicNumber: `${newRequest.publicNumber}`.padStart(5, "0")
+            publicNumber: `${newRequest.publicNumber}`.padStart(5, '0')
         });
         ctx.state.success = true;
     } catch (error) {
@@ -160,28 +160,28 @@ router.post("/", async ctx => {
     } catch (error) {
         signale.error(error);
     }
-    return ctx.render("index.ejs");
+    return ctx.render('index.ejs');
 });
 
 const requestStatuses = [
-    "DISPATCH_TODO",
-    "DISPATCH_PENDING",
-    "MANAGEMENT_TODO",
-    "MANAGEMENT_BUILDING",
-    "MANAGEMENT_DELIVERED"
+    'DISPATCH_TODO',
+    'DISPATCH_PENDING',
+    'MANAGEMENT_TODO',
+    'MANAGEMENT_BUILDING',
+    'MANAGEMENT_DELIVERED'
 ];
 
-router.get("/track/:id", async ctx => {
+router.get('/track/:id', async ctx => {
     const request = await getOne({ client: ctx.state.db, id: ctx.params.id });
 
-    ctx.state.commandNumber = `${request.publicNumber}`.padStart(5, "0");
+    ctx.state.commandNumber = `${request.publicNumber}`.padStart(5, '0');
     ctx.state.request = request;
     ctx.state.statusIndex = requestStatuses.indexOf(request.status);
 
-    return ctx.render("tracking.ejs");
+    return ctx.render('tracking.ejs');
 });
 
-app.use(views(path.resolve(__dirname, "./views"), { extension: "ejs" }))
+app.use(views(path.resolve(__dirname, './views'), { extension: 'ejs' }))
     .use(router.routes())
     .use(router.allowedMethods());
 

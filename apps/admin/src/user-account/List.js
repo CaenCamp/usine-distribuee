@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 import {
     Datagrid,
     DateField,
@@ -11,19 +11,14 @@ import {
     TextField,
     ChipField,
     ReferenceArrayField,
-    SingleFieldList,
-} from "react-admin";
+    SingleFieldList
+} from 'react-admin';
 
 import { userRoles } from './index';
 
 const UserFilter = props => (
     <Filter {...props}>
-        <SelectInput
-            source="role"
-            label="Role"
-            choices={userRoles}
-            alwaysOn
-        />
+        <SelectInput source="role" label="Role" choices={userRoles} alwaysOn />
     </Filter>
 );
 
@@ -32,20 +27,20 @@ const UserPagination = props => (
 );
 
 const User = ({ record }) => {
-    return record.first_name || record.last_name ?
-        `${record.first_name} (${record.last_name})` :
-        'Non renseigné';
+    return record.first_name || record.last_name
+        ? `${record.first_name} (${record.last_name})`
+        : 'Non renseigné';
 };
 
 const Role = ({ record }) => {
     return userRoles.find(role => role.id === record.role).name;
 };
 
-export default (props) => (
+export default props => (
     <List
         {...props}
         filters={<UserFilter />}
-        sort={{ field: "createdAt", order: "ASC" }}
+        sort={{ field: 'createdAt', order: 'ASC' }}
         exporter={false}
         pagination={<UserPagination />}
         bulkActionButtons={false}

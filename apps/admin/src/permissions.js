@@ -1,67 +1,62 @@
-import { buildFullAccessFor } from "ra-auth-acl";
+import { buildFullAccessFor } from 'ra-auth-acl';
 
 export default {
     admin: buildFullAccessFor([
-        "stats",
-        "requests",
-        "dispatcher-requests",
-        "production-manager-requests",
-        "production-managements",
-        "user-accounts"
+        'stats',
+        'requests',
+        'dispatcher-requests',
+        'production-manager-requests',
+        'production-managements',
+        'user-accounts'
     ]),
     dispatcher: {
-        ...buildFullAccessFor([
-            "dispatcher-requests",
-            "requests",
-        ]),
-        "requests": {
+        ...buildFullAccessFor(['dispatcher-requests', 'requests']),
+        requests: {
             enabled: true,
             list: true,
             show: true,
             create: false,
             edit: false
         },
-        "production-manager-requests": {
+        'production-manager-requests': {
             enabled: true,
             list: true,
             show: true,
             create: false,
             edit: true
         },
-        "production-managements": {
+        'production-managements': {
             enabled: true,
             list: false,
             show: false,
             create: false,
             edit: false
         },
-        "stats": {
+        stats: {
             enabled: true,
             list: true,
             show: false,
             create: false,
             edit: false
-        },
+        }
     },
     production_manager: {
-        ...buildFullAccessFor([
-            "production-manager-requests",
-        ]),
-        "requests": {
+        ...buildFullAccessFor(['production-manager-requests']),
+        requests: {
             enabled: true,
             list: false,
             show: false,
             create: false,
             edit: false
         },
-        "production-managements": {
+        'production-managements': {
             enabled: true,
             list: false,
             show: false,
             create: false,
             edit: false
         },
-        "stats": {
+        stats: {
             enabled: true,
             list: true,
             show: false,
@@ -70,24 +65,15 @@ export default {
         }
     },
     guest: {
-        ...buildFullAccessFor([
-            "requests",
-        ]),
-        "production-managements": {
+        ...buildFullAccessFor(['requests']),
+        'production-managements': {
             enabled: true,
             list: false,
             show: false,
             create: false,
             edit: false
         },
-        "production-managements": {
-            enabled: true,
-            list: false,
-            show: false,
-            create: false,
-            edit: false
-        },
-        "stats": {
+        stats: {
             enabled: true,
             list: true,
             show: false,

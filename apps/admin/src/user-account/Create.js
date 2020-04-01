@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 import {
     Create,
     ReferenceArrayInput,
@@ -6,32 +6,32 @@ import {
     SelectArrayInput,
     SelectInput,
     SimpleForm,
-    TextInput,
-} from "react-admin";
-import owasp from "owasp-password-strength-test";
+    TextInput
+} from 'react-admin';
+import owasp from 'owasp-password-strength-test';
 
-import { userRoles } from "./index";
+import { userRoles } from './index';
 
-const validPassword = (value) => {
+const validPassword = value => {
     const passwordTest = owasp.test(value);
     if (passwordTest.requiredTestErrors.length) {
         return `Le mot de passe n'est pas valide : ${passwordTest.requiredTestErrors.join(
-            ", "
+            ', '
         )}`;
     }
     if (!passwordTest.strong) {
         return `Le mot de passe n'est pas assez complexe : ${passwordTest.optionalTestErrors.join(
-            ", "
+            ', '
         )}`;
     }
     return undefined;
 };
 
-const validateUserCreation = (values) => {
+const validateUserCreation = values => {
     const errors = {};
 
     if (
-        values.role === "production_manager" &&
+        values.role === 'production_manager' &&
         values.productionManagementIds &&
         !values.productionManagementIds.length
     ) {
@@ -40,7 +40,7 @@ const validateUserCreation = (values) => {
     }
 
     if (
-        values.role === "guest" &&
+        values.role === 'guest' &&
         values.productionManagementIds &&
         values.productionManagementIds.length
     ) {
@@ -51,7 +51,7 @@ const validateUserCreation = (values) => {
     return errors;
 };
 
-export default (props) => (
+export default props => (
     <Create title="Création d'un utilisateur" {...props}>
         <SimpleForm validate={validateUserCreation} redirect="list">
             <TextInput

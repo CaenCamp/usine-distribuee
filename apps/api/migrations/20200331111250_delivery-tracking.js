@@ -1,4 +1,4 @@
-exports.up = async function (knex) {
+exports.up = async function(knex) {
     await knex.raw(`
             UPDATE request
             SET status = 'MANAGEMENT_BUILDING'
@@ -18,7 +18,7 @@ exports.up = async function (knex) {
     });
 };
 
-exports.down = async function (knex) {
+exports.down = async function(knex) {
     await knex.raw(`
             ALTER TYPE status
             ADD VALUE 'MANAGEMENT_BUILT'
