@@ -6,6 +6,7 @@ export NODE_ENV ?= development
 
 DC_DEV := docker-compose -p usine-distribuee
 DOCKER_ADMIN := docker run --rm -v ${PWD}/apps/admin:/admin -u=${CURRENT_UID} -w /admin node:13.11.0
+DOCKER := docker run --rm -v ${PWD}:/application -u=${CURRENT_UID} -w /application node:13.11.0
 
 help: ## Display available commands
 	@fgrep -h "##" $(MAKEFILE_LIST) | fgrep -v fgrep | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
@@ -17,6 +18,7 @@ help: ## Display available commands
 install: ## Install all js deps
 	@${DC_DEV} run --rm --no-deps api bash -ci 'yarn'
 	@${DC_DEV} run --rm --no-deps admin bash -ci 'yarn'
+	@${DOCKER} yarn
 
 # =====================================================================
 # Operating recipies ==================================================
@@ -92,6 +94,8 @@ prepare-deploy: ## Prepare app for production
 	cp -R apps/admin/build/* apps/api/admin/
 
 clever-cloud-build: ## Post build step on Clever Cloud
+	cd apps/admin && yarn install
+	cd apps/api && yarn install
 	cd apps/admin && yarn build
 	rm -rf apps/api/admin
 	mkdir -p apps/api/admin

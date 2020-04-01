@@ -1,14 +1,14 @@
-const { hasDeliveryStarted, isFullyDelivered } = require("../delivery");
+const { hasDeliveryStarted, isFullyDelivered } = require('../delivery');
 
 const ownProductionManagement = (user, from) => {
     return (
-        user.role === "admin" ||
+        user.role === 'admin' ||
         user.productionManagementIds.includes(from.productionManagementId)
     );
 };
 
 const and = (...conditions) => (...args) =>
-    conditions.every(condition => condition(...args));
+    conditions.every((condition) => condition(...args));
 
 const production_manager = {
     MANAGEMENT_TODO: {

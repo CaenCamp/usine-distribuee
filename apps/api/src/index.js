@@ -17,10 +17,10 @@ const authenticationMiddleware = require('./authentication/middleware');
 
 const front = require('./front');
 
-const userAccountRouter = require("./user-account/router");
+const userAccountRouter = require('./user-account/router');
 const productionManagementRouter = require('./production-management/router');
-const requestRouter = require("./request/router");
-const statRouter = require("./stat/router");
+const requestRouter = require('./request/router');
+const statRouter = require('./stat/router');
 
 const app = new Koa();
 
@@ -32,12 +32,11 @@ if (config.env === 'production') {
 app.use(
     cors({
         credentials: true,
-        origin: config.env === 'development' ? "http://localhost:8002" : null,
-        allowHeaders: ["Origin, Content-Type, Accept, Authorization, Cookie"],
-        exposeHeaders: ["Content-Range"]
+        origin: config.env === 'development' ? 'http://localhost:8002' : null,
+        allowHeaders: ['Origin, Content-Type, Accept, Authorization, Cookie'],
+        exposeHeaders: ['Content-Range']
     })
 );
-
 
 /**
  * This method is used to format message return by the global error middleware
@@ -45,7 +44,7 @@ app.use(
  * @param {object} error - the catched error
  * @return {object} the content of the json error return
  */
-const formatError = error => {
+const formatError = (error) => {
     return {
         status: error.status,
         message: error.message
@@ -62,18 +61,20 @@ app.use(mount('/', front));
 app.use(mount('/admin', serve(path.resolve(__dirname, '../admin'))));
 
 app.use(dbMiddleware);
-app
-    .use(authenticationRouter.routes())
-    .use(authenticationRouter.allowedMethods());
+app.use(authenticationRouter.routes()).use(
+    authenticationRouter.allowedMethods()
+);
 
 app.use(authenticationMiddleware);
 
-app.use(mount("/api/user-accounts", userAccountRouter.routes()));
-app.use(mount("/api/production-managements", productionManagementRouter.routes()));
-app.use(mount("/api/dispatcher-requests", requestRouter.routes()));
-app.use(mount("/api/requests", requestRouter.routes()));
-app.use(mount("/api/production-manager-requests", requestRouter.routes()));
-app.use(mount("/api/stats", statRouter.routes()));
+app.use(mount('/api/user-accounts', userAccountRouter.routes()));
+app.use(
+    mount('/api/production-managements', productionManagementRouter.routes())
+);
+app.use(mount('/api/dispatcher-requests', requestRouter.routes()));
+app.use(mount('/api/requests', requestRouter.routes()));
+app.use(mount('/api/production-manager-requests', requestRouter.routes()));
+app.use(mount('/api/stats', statRouter.routes()));
 
 app.listen(config.port, () =>
     global.console.log(`API started on port ${config.port}`)

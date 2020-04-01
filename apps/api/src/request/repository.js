@@ -3,30 +3,30 @@ const {
     formatPaginationContentRange,
     paginationSanitizer,
     sortSanitizer
-} = require("../toolbox/sanitizers");
+} = require('../toolbox/sanitizers');
 
 const filterableFields = [
-    "requesterType",
-    "deliveryPostalCode",
-    "deliveryCity",
-    "productionManagementId",
-    "status",
-    "createdAtBefore",
-    "createdAtAfter",
-    "ownership"
+    'requesterType',
+    'deliveryPostalCode',
+    'deliveryCity',
+    'productionManagementId',
+    'status',
+    'createdAtBefore',
+    'createdAtAfter',
+    'ownership'
 ];
 const sortableFields = [
-    "createdAt",
-    "requesterType",
-    "deliveryPostalCode",
-    "deliveryCity",
-    "productionManagementId",
-    "status",
-    "maskSmallSizeQuantity",
-    "maskLargeSizeQuantity"
+    'createdAt',
+    'requesterType',
+    'deliveryPostalCode',
+    'deliveryCity',
+    'productionManagementId',
+    'status',
+    'maskSmallSizeQuantity',
+    'maskLargeSizeQuantity'
 ];
 
-const table = "request";
+const table = 'request';
 
 const getFilteredQuery = (client, filters, sort, user) => {
     const {
@@ -37,13 +37,14 @@ const getFilteredQuery = (client, filters, sort, user) => {
         ownership,
         ...restFilters
     } = filters;
-    const query = client
-        .select("*")
-        .from(table)
-        .where(restFilters);
+    const query = client.select('*').from(table).where(restFilters);
 
     if (deliveryPostalCode) {
-        query.andWhere('delivery_postal_code', 'LIKE', `${deliveryPostalCode}%`);
+        query.andWhere(
+            'delivery_postal_code',
+            'LIKE',
+            `${deliveryPostalCode}%`
+        );
     }
 
     if (deliveryCity) {
@@ -57,9 +58,9 @@ const getFilteredQuery = (client, filters, sort, user) => {
         const queryDate = new Date(createdAtAfter);
         query.andWhere('created_at', '>', queryDate.toISOString());
     }
-    if (ownership && ownership === "me") {
+    if (ownership && ownership === 'me') {
         query.whereIn(
-            "production_management_id",
+            'production_management_id',
             user.productionManagementIds || []
         );
     }
@@ -88,49 +89,46 @@ const getPaginatedList = async ({
 
     return query
         .paginate({ perPage, currentPage, isLengthAware: true })
-        .then(result => ({
+        .then((result) => ({
             requests: result.data,
             contentRange: formatPaginationContentRange(
-                "requests",
+                'requests',
                 result.pagination
             )
         }));
 };
 
 const getOneByIdQuery = (client, id) => {
-    const query = client
-        .first("*")
-        .from("request")
-        .where({ id });
+    const query = client.first('*').from('request').where({ id });
 
     return query;
 };
 
 const insertOne = async ({ client, data }) => {
-    return client("request")
-        .returning("id")
+    return client('request')
+        .returning('id')
         .insert({
             ...data,
             deliveryTracking: JSON.stringify(data.deliveryTracking)
         })
         .then(([id]) => id)
-        .then(id => getOneByIdQuery(client, id))
-        .catch(error => ({ error }));
+        .then((id) => getOneByIdQuery(client, id))
+        .catch((error) => ({ error }));
 };
 
 const updateOne = async ({ client, id, data }) => {
-    return client("request")
+    return client('request')
         .where({ id: id })
         .update({
             ...data,
             deliveryTracking: JSON.stringify(data.deliveryTracking)
         })
         .then(() => getOneByIdQuery(client, id))
-        .catch(error => ({ error }));
+        .catch((error) => ({ error }));
 };
 
 const getOne = async ({ client, id }) => {
-    return getOneByIdQuery(client, id).catch(error => ({ error }));
+    return getOneByIdQuery(client, id).catch((error) => ({ error }));
 };
 
 module.exports = {

@@ -11,9 +11,9 @@ const filtersSanitizer = (filters, filterableFields) => {
     }
 
     return Object.keys(filters)
-        .filter(key => filterableFields.includes(key))
-        .filter(key => filters[key] !== undefined)
-        .filter(key => {
+        .filter((key) => filterableFields.includes(key))
+        .filter((key) => filters[key] !== undefined)
+        .filter((key) => {
             if (typeof filters[key] === 'string') {
                 return filters[key].trim() !== '';
             }
@@ -35,7 +35,7 @@ const filtersSanitizer = (filters, filterableFields) => {
 const sortSanitizer = (sort, sortableFields) => {
     const sortTwoFirstParameters = [
         sort ? sort[0] || null : null,
-        sort ? sort[1] || null : null,
+        sort ? sort[1] || null : null
     ];
     if (
         !sortTwoFirstParameters ||
@@ -57,10 +57,10 @@ const sortSanitizer = (sort, sortableFields) => {
  * @param {object} pagination - pagination object from query parameters
  * @returns {object} Ready-to-use filters for the sql query
  */
-const paginationSanitizer = pagination => {
+const paginationSanitizer = (pagination) => {
     const sortTwoFirstParameters = [
         pagination ? parseInt(pagination[0]) || null : null,
-        pagination ? parseInt(pagination[1]) || null : null,
+        pagination ? parseInt(pagination[1]) || null : null
     ];
 
     if (
@@ -93,7 +93,7 @@ const formatPaginationContentRange = (objectType, pagination) =>
  * @param {string} parameter - the query parameter expected in JSON
  * @returns {(object|boolean)} the parsed parameter or false if incorrectly formatted
  */
-const parseJsonQueryParameter = parameter => {
+const parseJsonQueryParameter = (parameter) => {
     if (parameter === undefined) {
         return false;
     }
@@ -109,5 +109,5 @@ module.exports = {
     formatPaginationContentRange,
     paginationSanitizer,
     parseJsonQueryParameter,
-    sortSanitizer,
+    sortSanitizer
 };

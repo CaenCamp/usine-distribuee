@@ -1,25 +1,25 @@
-import React, { useEffect } from "react";
-import { useShowController } from "react-admin";
-import Card from "@material-ui/core/Card";
-import CardContent from "@material-ui/core/CardContent";
-import Typography from "@material-ui/core/Typography";
-import IconButton from "@material-ui/core/IconButton";
+import React, { useEffect } from 'react';
+import { useShowController } from 'react-admin';
+import Card from '@material-ui/core/Card';
+import CardContent from '@material-ui/core/CardContent';
+import Typography from '@material-ui/core/Typography';
+import IconButton from '@material-ui/core/IconButton';
 import Tooltip from '@material-ui/core/Tooltip';
-import FileCopyIcon from "@material-ui/icons/FileCopy";
-import { makeStyles } from "@material-ui/core/styles";
+import FileCopyIcon from '@material-ui/icons/FileCopy';
+import { makeStyles } from '@material-ui/core/styles';
 
 import { ShowMainContent } from '../ShowMainContent';
 
 const useStyles = makeStyles({
-    root: { maxWidth: 800, margin: "auto" }
+    root: { maxWidth: 800, margin: 'auto' }
 });
 
-const copyToClipboard = str => {
-    const el = document.createElement("textarea");
+const copyToClipboard = (str) => {
+    const el = document.createElement('textarea');
     el.value = str;
     document.body.appendChild(el);
     el.select();
-    document.execCommand("copy");
+    document.execCommand('copy');
     document.body.removeChild(el);
 };
 
@@ -33,12 +33,12 @@ export default ({ renderActions, ...props }) => {
             return;
         }
         ref.current.scrollIntoView({
-            behavior: "smooth",
-            block: "center"
+            behavior: 'smooth',
+            block: 'center'
         });
     }, [ref]);
 
-    const handleCopyToClipboard = value => () => copyToClipboard(value);
+    const handleCopyToClipboard = (value) => () => copyToClipboard(value);
 
     if (!record) {
         return null;
@@ -55,7 +55,7 @@ export default ({ renderActions, ...props }) => {
                     align="right"
                     gutterBottom
                 >
-                    {record.id}{" "}
+                    {record.id}{' '}
                     <Tooltip title="Copier dans le presse-papier">
                         <IconButton
                             aria-label="Copier dans le presse-papier"

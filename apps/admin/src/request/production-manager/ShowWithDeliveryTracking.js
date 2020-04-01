@@ -1,16 +1,16 @@
-import React, { useEffect } from "react";
-import { useShowController } from "react-admin";
-import Card from "@material-ui/core/Card";
-import CardContent from "@material-ui/core/CardContent";
-import Grid from "@material-ui/core/Grid";
+import React, { useEffect } from 'react';
+import { useShowController } from 'react-admin';
+import Card from '@material-ui/core/Card';
+import CardContent from '@material-ui/core/CardContent';
+import Grid from '@material-ui/core/Grid';
 
-import { makeStyles } from "@material-ui/core/styles";
+import { makeStyles } from '@material-ui/core/styles';
 
 import { ShowMainContent } from '../ShowMainContent';
 import DeliveryTracking from './DeliveryTracking';
 
 const useStyles = makeStyles({
-    root: { maxWidth: 800, margin: "auto" }
+    root: { maxWidth: 800, margin: 'auto' }
 });
 
 export default ({ renderActions, ...props }) => {
@@ -23,8 +23,8 @@ export default ({ renderActions, ...props }) => {
             return;
         }
         ref.current.scrollIntoView({
-            behavior: "smooth",
-            block: "center"
+            behavior: 'smooth',
+            block: 'center'
         });
     }, [ref]);
 

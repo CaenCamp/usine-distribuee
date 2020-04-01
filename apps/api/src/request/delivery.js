@@ -1,4 +1,4 @@
-const products = ["maskSmallSize", "maskLargeSize"];
+const products = ['maskSmallSize', 'maskLargeSize'];
 
 const sumDelivered = (request, product) =>
     (request.deliveryTracking || []).reduce(
@@ -9,12 +9,12 @@ const sumDelivered = (request, product) =>
 const isProductFullyDelivered = (request, product) =>
     request[`${product}Quantity`] === sumDelivered(request, product);
 
-const isFullyDelivered = request => products.every(isProductFullyDelivered);
+const isFullyDelivered = (request) => products.every(isProductFullyDelivered);
 
-const hasDeliveryStarted = request =>
+const hasDeliveryStarted = (request) =>
     request.deliveryTracking && !!request.deliveryTracking.length;
 
-const extractQuantitiesFromDeliveries = deliveries => {
+const extractQuantitiesFromDeliveries = (deliveries) => {
     return (deliveries || []).reduce(
         (total, delivery) => {
             return {

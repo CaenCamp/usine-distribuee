@@ -1,10 +1,10 @@
-const Router = require("koa-router");
+const Router = require('koa-router');
 
-const { getGlobalStats } = require("./repository");
+const { getGlobalStats } = require('./repository');
 
 const router = new Router();
 
-router.get("/", async ctx => {
+router.get('/', async (ctx) => {
     const { globalStats, contentRange } = await getGlobalStats({
         client: ctx.state.db
     });

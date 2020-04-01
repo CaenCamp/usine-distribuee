@@ -1,25 +1,41 @@
 {
-	"parser": "babel-eslint",
-	"env": {
-		"browser": true,
-		"node": true,
-		"es2020": true
-	},
-	"parserOptions": {
-		"sourceType": "module",
-		"ecmaVersion": 2020
-	},
-	"plugins": ["prettier"],
-	"extends": [
-		"eslint:recommended",
-		"prettier",
-		"plugin:prettier/recommended",
-		"plugin:testing-library/recommended",
-		"plugin:jest/recommended",
-		"plugin:jest/style"
-	],
-	"rules": {
-		"prefer-expect-assertions": 0,
-		"prettier/prettier": "error"
-	}
+    "parser": "babel-eslint",
+    "env": {
+        "browser": true,
+        "node": true,
+        "es2020": true
+    },
+    "parserOptions": {
+        "sourceType": "module",
+        "ecmaVersion": 2020
+    },
+    "plugins": ["prettier"],
+    "extends": [
+        "eslint:recommended",
+        "prettier",
+        "plugin:prettier/recommended",
+        "plugin:testing-library/recommended",
+        "plugin:jest/recommended",
+        "plugin:jest/style"
+    ],
+    "rules": {
+        "prefer-expect-assertions": 0,
+        "prettier/prettier": "error",
+        "no-unused-vars": 0,
+        "no-undef": 0,
+        "no-useless-escape": 0,
+        "no-useless-catch": 0,
+        "no-prototype-builtins": 0,
+        "no-self-assign": 0,
+        "no-empty": 0,
+        "no-fallthrough": 0,
+        "no-sparse-arrays": 0,
+        "no-unsafe-finally": 0,
+        "no-func-assign": 0,
+        "no-cond-assign": 0,
+        "valid-typeof": 0,
+        "no-misleading-character-class": 0,
+        "no-control-regex": 0,
+        "no-constant-condition": 0
+    }
 }

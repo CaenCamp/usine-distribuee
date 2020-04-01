@@ -6,7 +6,7 @@ const knexfile = require('../knexfile');
 attachPaginate();
 const db = knex({
     ...knexfile,
-    pool: { min: 0, max: 7 },
+    pool: { min: 0, max: 7 }
 });
 
 module.exports = async (ctx, next) => {

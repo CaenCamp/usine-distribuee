@@ -1,4 +1,4 @@
-import PMIcon from "@material-ui/icons/Storefront";
+import PMIcon from '@material-ui/icons/Storefront';
 
 import { ProductionManagementCreate } from './Create';
 import { ProductionManagementEdit } from './Edit';
@@ -9,5 +9,5 @@ export default {
     edit: ProductionManagementEdit,
     icon: PMIcon,
     list: ProductionManagementList,
-    options: { label: "Pôles de gestion" }
+    options: { label: 'Pôles de gestion' }
 };
