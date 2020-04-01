@@ -119,13 +119,7 @@ const insertOne = async ({ client, data }) => {
 const updateOne = async ({ client, id, data }) => {
     return client('request')
         .where({ id: id })
-        .update({
-            ...data,
-            deliveryTracking: JSON.stringify(data.deliveryTracking),
-            productionManagementComments: data.productionManagementComments
-                ? JSON.stringify(data.productionManagementComments)
-                : null
-        })
+        .update(data)
         .then(() => getOneByIdQuery(client, id))
         .catch((error) => ({ error }));
 };

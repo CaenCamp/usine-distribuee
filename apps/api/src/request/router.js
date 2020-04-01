@@ -46,6 +46,20 @@ router.get('/:id', async (ctx) => {
     ctx.body = request;
 });
 
+const preparaDataForUpdate = (data) => {
+    const cleanedData = Object.assign(data);
+    if (data.deliveryTracking) {
+        cleanedData.deliveryTracking = JSON.stringify(data.deliveryTracking);
+    }
+    if (data.productionManagementComments) {
+        cleanedData.productionManagementComments = JSON.stringify(
+            data.productionManagementComments
+        );
+    }
+
+    return cleanedData;
+};
+
 router.put('/:id', async (ctx) => {
     const user = ctx.state.user;
     let updatedData = ctx.request.body;
@@ -80,11 +94,7 @@ router.put('/:id', async (ctx) => {
         }
     }
 
-    if (
-        updatedData.productionManagementComments &&
-        Array.isArray(updatedData.productionManagementComments) &&
-        updatedData.status === request.status
-    ) {
+    if (updatedData.productionManagementComments) {
         const cleanedComments = prepareCommentsForSave(
             updatedData.productionManagementComments,
             user
@@ -95,7 +105,7 @@ router.put('/:id', async (ctx) => {
     const updatedRequest = await updateOne({
         client: ctx.state.db,
         id: ctx.params.id,
-        data: updatedData
+        data: preparaDataForUpdate(updatedData)
     });
 
     if (!updatedRequest.id) {
