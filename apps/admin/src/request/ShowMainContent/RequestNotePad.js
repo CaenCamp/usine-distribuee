@@ -10,7 +10,6 @@ import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
-import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import formatDate from 'date-fns/format';
 import Paper from '@material-ui/core/Paper';
@@ -33,6 +32,16 @@ const useStyles = makeStyles((theme) => ({
     },
     button: {
         margin: theme.spacing(1)
+    },
+    commentDate: {
+        fontSize: '0.9rem',
+        fontStyle: 'italic',
+        fontWeight: 300
+    },
+    commentContent: {
+        fontSize: '1rem',
+        fontWeight: 500,
+        margin: '1rem'
     }
 }));
 
@@ -42,6 +51,19 @@ const sortComment = (a, b) => {
 
     return 0;
 };
+
+const CommentRow = ({ comment, classes }) => (
+    <TableRow>
+        <TableCell component="th" scope="row">
+            <p className={classes.commentDate}>
+                Posté le{' '}
+                {formatDate(new Date(comment.date), 'dd/MM/yyyy HH:mm')} par{' '}
+                {comment.email} ({comment.role})
+            </p>
+            <p className={classes.commentContent}>{comment.comment}</p>
+        </TableCell>
+    </TableRow>
+);
 
 export const RequestNotePad = ({ record, show, resource }) => {
     const classes = useStyles();
@@ -94,11 +116,13 @@ export const RequestNotePad = ({ record, show, resource }) => {
         <div role="tabpanel" hidden={!show}>
             <Grid container>
                 <Grid item xs={12}>
-                    <p>
-                        <Typography variant="h6" gutterBottom>
-                            Bloc-Notes de la demande #{record.publicNumber}
-                        </Typography>
-                    </p>
+                    <Typography
+                        variant="h6"
+                        gutterBottom
+                        style={{ marginTop: '1rem' }}
+                    >
+                        Commentaires de la demande #{record.publicNumber}
+                    </Typography>
                     <TextField
                         label="Votre commentaire"
                         style={{ margin: 8 }}
@@ -132,45 +156,15 @@ export const RequestNotePad = ({ record, show, resource }) => {
                                 size="small"
                                 aria-label="a dense table"
                             >
-                                <TableHead>
-                                    <TableRow>
-                                        <TableCell>Date</TableCell>
-                                        <TableCell align="right">
-                                            role
-                                        </TableCell>
-                                        <TableCell align="right">
-                                            email
-                                        </TableCell>
-                                        <TableCell align="right">
-                                            commentaire
-                                        </TableCell>
-                                    </TableRow>
-                                </TableHead>
                                 <TableBody>
                                     {(record.productionManagementComments || [])
                                         .sort(sortComment)
                                         .map((row) => (
-                                            <TableRow key={row.id}>
-                                                <TableCell
-                                                    component="th"
-                                                    scope="row"
-                                                >
-                                                    {formatDate(
-                                                        new Date(row.date),
-                                                        'dd/MM/yyyy HH:mm'
-                                                    )}
-                                                </TableCell>
-                                                <TableCell>
-                                                    {row.role}
-                                                </TableCell>
-                                                <TableCell align="right">
-                                                    {row.email}
-                                                </TableCell>
-                                                <TableCell align="right">
-                                                    {row.comment}
-                                                    <br />
-                                                </TableCell>
-                                            </TableRow>
+                                            <CommentRow
+                                                key={row.id}
+                                                comment={row}
+                                                classes={classes}
+                                            />
                                         ))}
                                 </TableBody>
                             </Table>
