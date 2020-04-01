@@ -4,6 +4,7 @@ const { parseJsonQueryParameter } = require('../toolbox/sanitizers');
 const { getPaginatedList, getOne, updateOne } = require('./repository');
 const { isAuthorized } = require('./authorization');
 const { extractQuantitiesFromDeliveries } = require('./delivery');
+const { prepareCommentsForSave } = require('./comments');
 
 const router = new Router();
 
@@ -45,6 +46,20 @@ router.get('/:id', async (ctx) => {
     ctx.body = request;
 });
 
+const preparaDataForUpdate = (data) => {
+    const cleanedData = Object.assign(data);
+    if (data.deliveryTracking) {
+        cleanedData.deliveryTracking = JSON.stringify(data.deliveryTracking);
+    }
+    if (data.productionManagementComments) {
+        cleanedData.productionManagementComments = JSON.stringify(
+            data.productionManagementComments
+        );
+    }
+
+    return cleanedData;
+};
+
 router.put('/:id', async (ctx) => {
     const user = ctx.state.user;
     let updatedData = ctx.request.body;
@@ -79,15 +94,23 @@ router.put('/:id', async (ctx) => {
         }
     }
 
+    if (updatedData.productionManagementComments) {
+        const cleanedComments = prepareCommentsForSave(
+            updatedData.productionManagementComments,
+            user
+        );
+        updatedData.productionManagementComments = cleanedComments;
+    }
+
     const updatedRequest = await updateOne({
         client: ctx.state.db,
         id: ctx.params.id,
-        data: updatedData
+        data: preparaDataForUpdate(updatedData)
     });
 
     if (!updatedRequest.id) {
         const error = new Error(
-            `The organization of id ${ctx.params.id} does not exist, so it could not be updated`
+            `The request of id ${ctx.params.id} does not exist, so it could not be updated`
         );
         error.status = 404;
 

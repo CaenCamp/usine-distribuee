@@ -18,7 +18,7 @@ import {
 import jsonExport from 'jsonexport/dist';
 
 import { requesterType, requestStatus as REQUEST_STATUS } from './index';
-import RequestShow from './Show';
+import RequestShow from '../PrintableShow';
 import { DeliveryPercentage } from '../DeliveryPercentage';
 
 const exporter = (requests, fetchRelatedRecords) => {

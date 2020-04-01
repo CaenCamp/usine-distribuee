@@ -38,7 +38,10 @@ export default ({ renderActions, ...props }) => {
                 <Grid item xs={5}>
                     <Card className={classes.root} ref={ref}>
                         <CardContent>
-                            <ShowMainContent record={record} />
+                            <ShowMainContent
+                                record={record}
+                                resource="production-manager-requests"
+                            />
                             {renderActions && renderActions(record, props)}
                         </CardContent>
                     </Card>
@@ -53,7 +56,10 @@ export default ({ renderActions, ...props }) => {
     return (
         <Card className={classes.root} ref={ref}>
             <CardContent>
-                <ShowMainContent record={record} />
+                <ShowMainContent
+                    record={record}
+                    resource="production-manager-requests"
+                />
                 {renderActions && renderActions(record, props)}
             </CardContent>
         </Card>
