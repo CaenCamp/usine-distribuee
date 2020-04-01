@@ -1,7 +1,5 @@
 const Router = require('koa-router');
 const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken');
-const crypto = require('crypto');
 const pick = require('lodash.pick');
 
 const { parseJsonQueryParameter } = require('../toolbox/sanitizers');

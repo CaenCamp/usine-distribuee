@@ -95,7 +95,7 @@ router.put('/:id', async (ctx) => {
     }
 
     if (updatedRequest.error) {
-        const error = new Error(updatedProductionManagement.error.message);
+        const error = new Error(updatedRequest.error.message);
         error.status = 400;
 
         throw error;
