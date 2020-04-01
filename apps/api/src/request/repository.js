@@ -121,7 +121,10 @@ const updateOne = async ({ client, id, data }) => {
         .where({ id: id })
         .update({
             ...data,
-            deliveryTracking: JSON.stringify(data.deliveryTracking)
+            deliveryTracking: JSON.stringify(data.deliveryTracking),
+            productionManagementComments: data.productionManagementComments
+                ? JSON.stringify(data.productionManagementComments)
+                : null
         })
         .then(() => getOneByIdQuery(client, id))
         .catch((error) => ({ error }));
