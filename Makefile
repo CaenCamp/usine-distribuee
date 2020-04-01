@@ -94,6 +94,8 @@ prepare-deploy: ## Prepare app for production
 	cp -R apps/admin/build/* apps/api/admin/
 
 clever-cloud-build: ## Post build step on Clever Cloud
+	cd apps/admin && yarn install
+	cd apps/api && yarn install
 	cd apps/admin && yarn build
 	rm -rf apps/api/admin
 	mkdir -p apps/api/admin
