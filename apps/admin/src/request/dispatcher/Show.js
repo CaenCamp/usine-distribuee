@@ -14,7 +14,7 @@ const useStyles = makeStyles({
     root: { maxWidth: 800, margin: 'auto' }
 });
 
-const copyToClipboard = str => {
+const copyToClipboard = (str) => {
     const el = document.createElement('textarea');
     el.value = str;
     document.body.appendChild(el);
@@ -38,7 +38,7 @@ export default ({ renderActions, ...props }) => {
         });
     }, [ref]);
 
-    const handleCopyToClipboard = value => () => copyToClipboard(value);
+    const handleCopyToClipboard = (value) => () => copyToClipboard(value);
 
     if (!record) {
         return null;

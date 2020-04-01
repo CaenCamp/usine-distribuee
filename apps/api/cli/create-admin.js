@@ -15,7 +15,7 @@ owasp.config({
 
 const pg = knex(knexConfig);
 
-const validateEmail = email => {
+const validateEmail = (email) => {
     const regex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     return regex.test(String(email).toLowerCase());
 };
@@ -68,7 +68,7 @@ createAdmin()
         signale.info('Le nouvel administrateur a bien été créé.');
         process.exit(0);
     })
-    .catch(error => {
+    .catch((error) => {
         signale.error(
             "Erreur lors de la création de l'administrateur : ",
             error.message

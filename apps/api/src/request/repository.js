@@ -37,10 +37,7 @@ const getFilteredQuery = (client, filters, sort, user) => {
         ownership,
         ...restFilters
     } = filters;
-    const query = client
-        .select('*')
-        .from(table)
-        .where(restFilters);
+    const query = client.select('*').from(table).where(restFilters);
 
     if (deliveryPostalCode) {
         query.andWhere(
@@ -92,7 +89,7 @@ const getPaginatedList = async ({
 
     return query
         .paginate({ perPage, currentPage, isLengthAware: true })
-        .then(result => ({
+        .then((result) => ({
             requests: result.data,
             contentRange: formatPaginationContentRange(
                 'requests',
@@ -102,10 +99,7 @@ const getPaginatedList = async ({
 };
 
 const getOneByIdQuery = (client, id) => {
-    const query = client
-        .first('*')
-        .from('request')
-        .where({ id });
+    const query = client.first('*').from('request').where({ id });
 
     return query;
 };
@@ -118,8 +112,8 @@ const insertOne = async ({ client, data }) => {
             deliveryTracking: JSON.stringify(data.deliveryTracking)
         })
         .then(([id]) => id)
-        .then(id => getOneByIdQuery(client, id))
-        .catch(error => ({ error }));
+        .then((id) => getOneByIdQuery(client, id))
+        .catch((error) => ({ error }));
 };
 
 const updateOne = async ({ client, id, data }) => {
@@ -130,11 +124,11 @@ const updateOne = async ({ client, id, data }) => {
             deliveryTracking: JSON.stringify(data.deliveryTracking)
         })
         .then(() => getOneByIdQuery(client, id))
-        .catch(error => ({ error }));
+        .catch((error) => ({ error }));
 };
 
 const getOne = async ({ client, id }) => {
-    return getOneByIdQuery(client, id).catch(error => ({ error }));
+    return getOneByIdQuery(client, id).catch((error) => ({ error }));
 };
 
 module.exports = {

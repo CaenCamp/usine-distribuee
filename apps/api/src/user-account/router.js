@@ -15,7 +15,7 @@ const {
 
 const router = new Router();
 
-router.get('/', async ctx => {
+router.get('/', async (ctx) => {
     const { users, contentRange } = await getPaginatedList({
         client: ctx.state.db,
         filters: parseJsonQueryParameter(ctx.query.filters),
@@ -27,12 +27,12 @@ router.get('/', async ctx => {
     ctx.body = users;
 });
 
-router.get('/:id', async ctx => {
+router.get('/:id', async (ctx) => {
     const user = await getOne({ client: ctx.state.db, id: ctx.params.id });
     ctx.body = user;
 });
 
-router.put('/:id', async ctx => {
+router.put('/:id', async (ctx) => {
     const { newPassword, ...updatedData } = ctx.request.body;
 
     if (newPassword && newPassword.trim().length) {
@@ -61,7 +61,7 @@ router.put('/:id', async ctx => {
     ctx.body = updatedUser;
 });
 
-router.delete('/:id', async ctx => {
+router.delete('/:id', async (ctx) => {
     const deletedUser = await deleteOne({
         client: ctx.state.db,
         id: ctx.params.id
@@ -86,7 +86,7 @@ router.delete('/:id', async ctx => {
     ctx.body = deletedUser;
 });
 
-router.post('/', async ctx => {
+router.post('/', async (ctx) => {
     const salt = bcrypt.genSaltSync(10);
     const hashedPassword = bcrypt.hashSync(ctx.request.body.password, salt);
 

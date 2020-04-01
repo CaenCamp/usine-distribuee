@@ -41,7 +41,7 @@ const sendRequestConfirmation = ({
             }
         ]
     });
-    request.catch(err => {
+    request.catch((err) => {
         signale.error('Mailjet error: ', {
             statusCode: err.statusCode,
             message: err.message,

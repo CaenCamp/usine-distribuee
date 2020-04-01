@@ -8,7 +8,7 @@ const config = require('../config');
 
 const router = new Router();
 
-router.post('/authenticate', async ctx => {
+router.post('/authenticate', async (ctx) => {
     const { email, password } = ctx.request.body;
 
     const user = await getOneByEmail({ client: ctx.state.db, email });

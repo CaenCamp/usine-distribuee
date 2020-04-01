@@ -29,7 +29,7 @@ export default ({ renderActions, ...props }) => {
     }
 
     const requesterType = REQUESTER_TYPES.find(
-        type => type.id === record.requesterType
+        (type) => type.id === record.requesterType
     );
     const numberType = requesterType.id === 'other' ? null : requesterType.name;
 

@@ -23,7 +23,7 @@ import {
 import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/core/styles';
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
     root: { maxWidth: 650, margin: 'auto' },
     table: {
         minWidth: 600
@@ -59,13 +59,13 @@ export default ({ record }) => {
     const [formError, setFormError] = useState({});
 
     const resetFormValues = () => {
-        Object.keys(defaultFormValues).forEach(key => {
+        Object.keys(defaultFormValues).forEach((key) => {
             setFormValues({ field: key, value: defaultFormValues[key] });
         });
         setFormError({});
     };
 
-    const validateForm = values => {
+    const validateForm = (values) => {
         const checkError = {};
         if (!values.date) {
             checkError.date = 'Vous devez indiquer une date';
@@ -142,7 +142,7 @@ export default ({ record }) => {
                                 </TableRow>
                             </TableHead>
                             <TableBody>
-                                {(record.deliveryTracking || []).map(row => (
+                                {(record.deliveryTracking || []).map((row) => (
                                     <TableRow key={row.name}>
                                         <TableCell component="th" scope="row">
                                             {row.number}
@@ -186,7 +186,7 @@ export default ({ record }) => {
                                         label="Date"
                                         value={formValues.date}
                                         fullWidth
-                                        onChange={value =>
+                                        onChange={(value) =>
                                             setFormValues({
                                                 field: 'date',
                                                 value
@@ -209,7 +209,7 @@ export default ({ record }) => {
                                 id="deliveryNumber"
                                 value={formValues.number}
                                 fullWidth
-                                onChange={event => {
+                                onChange={(event) => {
                                     setFormValues({
                                         field: 'number',
                                         value: event.currentTarget.value
@@ -232,7 +232,7 @@ export default ({ record }) => {
                                 fullWidth
                                 margin="normal"
                                 value={formValues.responsible}
-                                onChange={event => {
+                                onChange={(event) => {
                                     setFormValues({
                                         field: 'responsible',
                                         value: event.currentTarget.value
@@ -261,7 +261,7 @@ export default ({ record }) => {
                                 id="smallMask"
                                 defaultValue={0}
                                 value={formValues.maskSmallSizeDelivered}
-                                onChange={event => {
+                                onChange={(event) => {
                                     setFormValues({
                                         field: 'maskSmallSizeDelivered',
                                         value: parseInt(
@@ -285,7 +285,7 @@ export default ({ record }) => {
                                 id="largeMask"
                                 defaultValue={0}
                                 value={formValues.maskLargeSizeDelivered}
-                                onChange={event => {
+                                onChange={(event) => {
                                     setFormValues({
                                         field: 'maskLargeSizeDelivered',
                                         value: parseInt(

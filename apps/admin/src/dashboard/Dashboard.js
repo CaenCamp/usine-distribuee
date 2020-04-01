@@ -50,8 +50,8 @@ const Dashboard = () => {
     });
     const version = useVersion();
     const dataProvider = useDataProvider();
-    const isXSmall = useMediaQuery(theme => theme.breakpoints.down('xs'));
-    const isSmall = useMediaQuery(theme => theme.breakpoints.down('sm'));
+    const isXSmall = useMediaQuery((theme) => theme.breakpoints.down('xs'));
+    const isSmall = useMediaQuery((theme) => theme.breakpoints.down('sm'));
 
     const fetchStats = useCallback(async () => {
         const { data: stats } = await dataProvider.getList('stats', {
@@ -63,7 +63,7 @@ const Dashboard = () => {
         const requested_shade_qty = stats[0].requestedShadeQty;
         const in_production_shade_qty = stats[0].inProductionShadeQty;
         const delivered_shade_qty = stats[0].deliveredShadeQty;
-        setState(state => ({
+        setState((state) => ({
             ...state,
             request_nb,
             requester_nb,
@@ -75,7 +75,7 @@ const Dashboard = () => {
 
     useEffect(() => {
         fetchStats();
-    }, [version]); // eslint-disable-line react-hooks/exhaustive-deps
+    }, [version]);
 
     const {
         request_nb,

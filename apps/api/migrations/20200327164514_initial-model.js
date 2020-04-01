@@ -1,7 +1,7 @@
-exports.up = async function(knex) {
+exports.up = async function (knex) {
     await knex.raw(`CREATE extension IF NOT EXISTS "uuid-ossp"`);
     return knex.schema
-        .createTable('user_account', function(table) {
+        .createTable('user_account', function (table) {
             table
                 .uuid('id')
                 .primary()
@@ -20,7 +20,7 @@ exports.up = async function(knex) {
             table.dateTime('updated_at').defaultTo(knex.fn.now());
             table.unique('email');
         })
-        .createTable('production_management', function(table) {
+        .createTable('production_management', function (table) {
             table
                 .uuid('id')
                 .primary()
@@ -33,7 +33,7 @@ exports.up = async function(knex) {
             table.dateTime('created_at').defaultTo(knex.fn.now());
             table.dateTime('updated_at').defaultTo(knex.fn.now());
         })
-        .createTable('production_management_user', function(table) {
+        .createTable('production_management_user', function (table) {
             table.uuid('user_account_id').notNullable();
             table
                 .foreign('user_account_id')
@@ -48,7 +48,7 @@ exports.up = async function(knex) {
         });
 };
 
-exports.down = async function(knex) {
+exports.down = async function (knex) {
     await knex.schema
         .dropTable('production_management_user')
         .dropTable('production_management')

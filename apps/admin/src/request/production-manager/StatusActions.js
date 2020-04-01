@@ -1,9 +1,6 @@
 import React from 'react';
 import { useMutation, useRefresh } from 'react-admin';
-import {
-    Grid,
-    Button,
-} from '@material-ui/core';
+import { Grid, Button } from '@material-ui/core';
 
 import { makeStyles } from '@material-ui/core/styles';
 

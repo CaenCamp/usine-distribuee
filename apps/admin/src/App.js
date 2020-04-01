@@ -23,7 +23,7 @@ const App = () => (
         i18nProvider={i18nProvider}
         dashboard={Dashboard}
     >
-        {permissions =>
+        {(permissions) =>
             [
                 permissions['dispatcher-requests'] &&
                     permissions['dispatcher-requests'].enabled && (

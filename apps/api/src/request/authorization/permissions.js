@@ -8,7 +8,7 @@ const ownProductionManagement = (user, from) => {
 };
 
 const and = (...conditions) => (...args) =>
-    conditions.every(condition => condition(...args));
+    conditions.every((condition) => condition(...args));
 
 const production_manager = {
     MANAGEMENT_TODO: {

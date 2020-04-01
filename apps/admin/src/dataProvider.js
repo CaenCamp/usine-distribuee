@@ -21,10 +21,7 @@ const dataProvider = (apiUrl, httpClient = fetchUtils.fetchJson) => ({
             return {
                 data: json,
                 total: parseInt(
-                    headers
-                        .get('content-range')
-                        .split('/')
-                        .pop(),
+                    headers.get('content-range').split('/').pop(),
                     10
                 )
             };
@@ -66,10 +63,7 @@ const dataProvider = (apiUrl, httpClient = fetchUtils.fetchJson) => ({
             return {
                 data: json,
                 total: parseInt(
-                    headers
-                        .get('content-range')
-                        .split('/')
-                        .pop(),
+                    headers.get('content-range').split('/').pop(),
                     10
                 )
             };
@@ -85,13 +79,13 @@ const dataProvider = (apiUrl, httpClient = fetchUtils.fetchJson) => ({
     // simple-rest doesn't handle provide an updateMany route, so we fallback to calling update n times instead
     updateMany: (resource, params) =>
         Promise.all(
-            params.ids.map(id =>
+            params.ids.map((id) =>
                 httpClient(`${apiUrl}/${resource}/${id}`, {
                     method: 'PUT',
                     body: JSON.stringify(params.data)
                 })
             )
-        ).then(responses => ({ data: responses.map(({ json }) => json.id) })),
+        ).then((responses) => ({ data: responses.map(({ json }) => json.id) })),
 
     create: (resource, params) =>
         httpClient(`${apiUrl}/${resource}`, {
@@ -109,12 +103,12 @@ const dataProvider = (apiUrl, httpClient = fetchUtils.fetchJson) => ({
     // simple-rest doesn't handle filters on DELETE route, so we fallback to calling DELETE n times instead
     deleteMany: (resource, params) =>
         Promise.all(
-            params.ids.map(id =>
+            params.ids.map((id) =>
                 httpClient(`${apiUrl}/${resource}/${id}`, {
                     method: 'DELETE'
                 })
             )
-        ).then(responses => ({ data: responses.map(({ json }) => json.id) }))
+        ).then((responses) => ({ data: responses.map(({ json }) => json.id) }))
 });
 
 const httpClient = (url, options = {}) => {

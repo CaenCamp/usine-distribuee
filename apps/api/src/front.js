@@ -18,7 +18,7 @@ app.use(dbMiddleware);
 
 const { mtime } = fs.statSync(path.resolve(__dirname, './views/index.ejs'));
 
-const initContextState = ctx => {
+const initContextState = (ctx) => {
     ctx.state.errors = {};
     ctx.state.internalError = false;
     ctx.state.request = {};
@@ -26,7 +26,7 @@ const initContextState = ctx => {
     ctx.state.stats = {};
 };
 
-const getStats = async dbClient => {
+const getStats = async (dbClient) => {
     const { globalStats } = await getGlobalStats({
         client: dbClient
     });
@@ -37,7 +37,7 @@ const getStats = async dbClient => {
     }
 };
 
-const renderCachedHomepage = async ctx => {
+const renderCachedHomepage = async (ctx) => {
     ctx.set('ETag', `"${mtime.getTime().toString()}"`);
 
     if (ctx.fresh) {
@@ -119,7 +119,7 @@ const validate = ({
     return errors;
 };
 
-router.post('/', async ctx => {
+router.post('/', async (ctx) => {
     initContextState(ctx);
 
     if (!ctx.request.body) {
@@ -171,7 +171,7 @@ const requestStatuses = [
     'MANAGEMENT_DELIVERED'
 ];
 
-router.get('/track/:id', async ctx => {
+router.get('/track/:id', async (ctx) => {
     const request = await getOne({ client: ctx.state.db, id: ctx.params.id });
 
     ctx.state.commandNumber = `${request.publicNumber}`.padStart(5, '0');

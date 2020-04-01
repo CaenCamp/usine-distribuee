@@ -7,7 +7,7 @@ const { extractQuantitiesFromDeliveries } = require('./delivery');
 
 const router = new Router();
 
-router.get('/', async ctx => {
+router.get('/', async (ctx) => {
     const { requests, contentRange } = await getPaginatedList({
         client: ctx.state.db,
         filters: parseJsonQueryParameter(ctx.query.filters),
@@ -20,7 +20,7 @@ router.get('/', async ctx => {
     ctx.body = requests;
 });
 
-router.get('/:id', async ctx => {
+router.get('/:id', async (ctx) => {
     const request = await getOne({
         client: ctx.state.db,
         id: ctx.params.id
@@ -45,7 +45,7 @@ router.get('/:id', async ctx => {
     ctx.body = request;
 });
 
-router.put('/:id', async ctx => {
+router.put('/:id', async (ctx) => {
     const user = ctx.state.user;
     let updatedData = ctx.request.body;
 

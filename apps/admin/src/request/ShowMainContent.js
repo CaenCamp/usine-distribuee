@@ -13,7 +13,7 @@ import { requesterType as REQUESTER_TYPES } from './dispatcher/index';
 
 export const ShowMainContent = ({ record }) => {
     const requesterType = REQUESTER_TYPES.find(
-        type => type.id === record.requesterType
+        (type) => type.id === record.requesterType
     );
     const numberType = requesterType.id === 'other' ? null : requesterType.name;
     return (

@@ -18,7 +18,7 @@ import { requesterType } from './index';
 import RequestShow from './Show';
 import DispatchActions from './DispatchActions';
 
-const UserFilter = props => (
+const UserFilter = (props) => (
     <Filter {...props}>
         <SelectInput
             source="requesterType"
@@ -29,7 +29,7 @@ const UserFilter = props => (
     </Filter>
 );
 
-const RequestPagination = props => (
+const RequestPagination = (props) => (
     <Pagination rowsPerPageOptions={[10, 25]} {...props} />
 );
 
@@ -39,12 +39,12 @@ const tabs = [
     { id: 'DISPATCH_REJECTED', name: 'Rejeté' }
 ];
 
-const RequestDatagrid = props => (
+const RequestDatagrid = (props) => (
     <Datagrid
         {...props}
         expand={
             <RequestShow
-                renderActions={record => <DispatchActions record={record} />}
+                renderActions={(record) => <DispatchActions record={record} />}
             />
         }
         rowClick="expand"
@@ -65,7 +65,7 @@ const RequestDatagrid = props => (
     </Datagrid>
 );
 
-const TabbedList = props => {
+const TabbedList = (props) => {
     const handleChange = (event, value) => {
         const { setFilters, filterValues } = props;
         setFilters({ ...filterValues, status: value });
@@ -81,7 +81,7 @@ const TabbedList = props => {
                     indicatorColor="primary"
                     onChange={handleChange}
                 >
-                    {tabs.map(choice => (
+                    {tabs.map((choice) => (
                         <Tab
                             key={choice.id}
                             label={choice.name}
@@ -96,7 +96,7 @@ const TabbedList = props => {
     );
 };
 
-export default props => (
+export default (props) => (
     <List
         {...props}
         filters={<UserFilter />}

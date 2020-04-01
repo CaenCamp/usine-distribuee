@@ -11,7 +11,7 @@ const {
 
 const router = new Router();
 
-router.get('/', async ctx => {
+router.get('/', async (ctx) => {
     const { productionManagements, contentRange } = await getPaginatedList({
         client: ctx.state.db,
         filters: parseJsonQueryParameter(ctx.query.filters),
@@ -23,7 +23,7 @@ router.get('/', async ctx => {
     ctx.body = productionManagements;
 });
 
-router.post('/', async ctx => {
+router.post('/', async (ctx) => {
     const newProductionManagement = await insertOne({
         client: ctx.state.db,
         data: ctx.request.body
@@ -39,7 +39,7 @@ router.post('/', async ctx => {
     ctx.body = newProductionManagement;
 });
 
-router.get('/:productionManagementId', async ctx => {
+router.get('/:productionManagementId', async (ctx) => {
     const productionManagement = await getOne({
         client: ctx.state.db,
         productionManagementId: ctx.params.productionManagementId
@@ -64,7 +64,7 @@ router.get('/:productionManagementId', async ctx => {
     ctx.body = productionManagement;
 });
 
-router.delete('/:productionManagementId', async ctx => {
+router.delete('/:productionManagementId', async (ctx) => {
     const deletedProductionManagement = await removeOne({
         client: ctx.state.db,
         productionManagementId: ctx.params.productionManagementId
@@ -91,7 +91,7 @@ router.delete('/:productionManagementId', async ctx => {
     ctx.body = deletedProductionManagement;
 });
 
-router.put('/:productionManagementId', async ctx => {
+router.put('/:productionManagementId', async (ctx) => {
     const updatedProductionManagement = await updateOne({
         client: ctx.state.db,
         productionManagementId: ctx.params.productionManagementId,

@@ -16,13 +16,13 @@ import {
 
 import { userRoles } from './index';
 
-const UserFilter = props => (
+const UserFilter = (props) => (
     <Filter {...props}>
         <SelectInput source="role" label="Role" choices={userRoles} alwaysOn />
     </Filter>
 );
 
-const UserPagination = props => (
+const UserPagination = (props) => (
     <Pagination rowsPerPageOptions={[10, 25]} {...props} />
 );
 
@@ -33,10 +33,10 @@ const User = ({ record }) => {
 };
 
 const Role = ({ record }) => {
-    return userRoles.find(role => role.id === record.role).name;
+    return userRoles.find((role) => role.id === record.role).name;
 };
 
-export default props => (
+export default (props) => (
     <List
         {...props}
         filters={<UserFilter />}

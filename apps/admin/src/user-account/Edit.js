@@ -13,7 +13,7 @@ import { userRoles } from './index';
 const Title = ({ record }) =>
     record ? `Edition d'utilisateur "${record.email}"` : null;
 
-export default props => (
+export default (props) => (
     <Edit title={<Title />} {...props}>
         <SimpleForm>
             <TextInput source="email" label="Email" fullWidth />

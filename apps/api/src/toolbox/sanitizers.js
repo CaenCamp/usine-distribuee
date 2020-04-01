@@ -11,9 +11,9 @@ const filtersSanitizer = (filters, filterableFields) => {
     }
 
     return Object.keys(filters)
-        .filter(key => filterableFields.includes(key))
-        .filter(key => filters[key] !== undefined)
-        .filter(key => {
+        .filter((key) => filterableFields.includes(key))
+        .filter((key) => filters[key] !== undefined)
+        .filter((key) => {
             if (typeof filters[key] === 'string') {
                 return filters[key].trim() !== '';
             }
@@ -57,7 +57,7 @@ const sortSanitizer = (sort, sortableFields) => {
  * @param {object} pagination - pagination object from query parameters
  * @returns {object} Ready-to-use filters for the sql query
  */
-const paginationSanitizer = pagination => {
+const paginationSanitizer = (pagination) => {
     const sortTwoFirstParameters = [
         pagination ? parseInt(pagination[0]) || null : null,
         pagination ? parseInt(pagination[1]) || null : null
@@ -93,7 +93,7 @@ const formatPaginationContentRange = (objectType, pagination) =>
  * @param {string} parameter - the query parameter expected in JSON
  * @returns {(object|boolean)} the parsed parameter or false if incorrectly formatted
  */
-const parseJsonQueryParameter = parameter => {
+const parseJsonQueryParameter = (parameter) => {
     if (parameter === undefined) {
         return false;
     }

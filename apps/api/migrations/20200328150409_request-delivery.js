@@ -1,5 +1,5 @@
-exports.up = function(knex) {
-    return knex.schema.alterTable('request', table => {
+exports.up = function (knex) {
+    return knex.schema.alterTable('request', (table) => {
         table
             .integer('mask_small_size_delivered_quantity')
             .notNullable()
@@ -11,8 +11,8 @@ exports.up = function(knex) {
     });
 };
 
-exports.down = function(knex) {
-    return knex.schema.alterTable('request', table => {
+exports.down = function (knex) {
+    return knex.schema.alterTable('request', (table) => {
         table.dropColumn('mask_small_size_delivered_quantity');
         table.dropColumn('mask_large_size_delivered_quantity');
     });

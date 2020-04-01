@@ -26,8 +26,8 @@ const exporter = (requests, fetchRelatedRecords) => {
         requests,
         'productionManagementId',
         'production-managements'
-    ).then(managements => {
-        const data = requests.map(request => ({
+    ).then((managements) => {
+        const data = requests.map((request) => ({
             ...request,
             pole_de_gestion: request.productionManagementId
                 ? managements[request.productionManagementId].name
@@ -39,7 +39,7 @@ const exporter = (requests, fetchRelatedRecords) => {
     });
 };
 
-const UserFilter = props => (
+const UserFilter = (props) => (
     <Filter {...props}>
         <ReferenceInput
             label="Pôle de gestion"
@@ -87,18 +87,18 @@ const UserFilter = props => (
     </Filter>
 );
 
-const RequestPagination = props => (
+const RequestPagination = (props) => (
     <Pagination rowsPerPageOptions={[10, 25]} {...props} />
 );
 
-const RequestDatagrid = props => (
+const RequestDatagrid = (props) => (
     <Datagrid {...props} expand={<RequestShow />} rowClick="expand">
         <TextField source="requesterName" label="Organisation" />
         <FunctionField
             source="status"
             label="Statut"
             render={({ status }) =>
-                REQUEST_STATUS.find(s => s.id === `${status}`).name
+                REQUEST_STATUS.find((s) => s.id === `${status}`).name
             }
         />
         <ReferenceField
@@ -122,7 +122,7 @@ const RequestDatagrid = props => (
     </Datagrid>
 );
 
-export default props => (
+export default (props) => (
     <List
         {...props}
         filters={<UserFilter />}

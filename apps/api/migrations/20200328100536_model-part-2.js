@@ -1,9 +1,6 @@
-exports.up = function(knex) {
-    return knex.schema.createTable('request', function(table) {
-        table
-            .uuid('id')
-            .primary()
-            .defaultTo(knex.raw('uuid_generate_v4()'));
+exports.up = function (knex) {
+    return knex.schema.createTable('request', function (table) {
+        table.uuid('id').primary().defaultTo(knex.raw('uuid_generate_v4()'));
         table.string('requester_name').notNullable();
         table
             .enu('requester_type', ['finess', 'rpps', 'adeli', 'other'], {
@@ -19,14 +16,8 @@ exports.up = function(knex) {
         table.string('delivery_postal_code').notNullable();
         table.string('delivery_city').notNullable();
         table.text('requester_comment').nullable();
-        table
-            .integer('mask_small_size_quantity')
-            .notNullable()
-            .defaultTo(0);
-        table
-            .integer('mask_large_size_quantity')
-            .notNullable()
-            .defaultTo(0);
+        table.integer('mask_small_size_quantity').notNullable().defaultTo(0);
+        table.integer('mask_large_size_quantity').notNullable().defaultTo(0);
         table.uuid('production_management_id').nullable();
         table
             .foreign('production_management_id')
@@ -56,7 +47,7 @@ exports.up = function(knex) {
     });
 };
 
-exports.down = async function(knex) {
+exports.down = async function (knex) {
     await knex.schema.dropTable('request');
     await knex.raw('DROP TYPE IF EXISTS health_professional_type');
     return knex.raw('DROP TYPE IF EXISTS request_status_type');

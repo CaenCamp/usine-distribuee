@@ -4,7 +4,7 @@ import { Edit, TextInput, SimpleForm } from 'react-admin';
 const ProductionManagementTitle = ({ record }) =>
     record ? `Edition de du pôle de gestion "${record.name}"` : null;
 
-export const ProductionManagementEdit = props => {
+export const ProductionManagementEdit = (props) => {
     return (
         <Edit title={<ProductionManagementTitle />} {...props}>
             <SimpleForm>

@@ -1,11 +1,11 @@
 import React from 'react';
 import { Datagrid, EditButton, List, Pagination, TextField } from 'react-admin';
 
-const ProductionManagementPagination = props => (
+const ProductionManagementPagination = (props) => (
     <Pagination rowsPerPageOptions={[1, 10, 25, 50]} {...props} />
 );
 
-export const ProductionManagementList = props => {
+export const ProductionManagementList = (props) => {
     return (
         <List
             {...props}

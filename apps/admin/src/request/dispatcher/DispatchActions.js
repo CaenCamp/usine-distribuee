@@ -103,7 +103,7 @@ const DispatchActions = ({ record }) => {
         rejectLoading ||
         toDispatchLoading;
 
-    const handleProductionManagerChange = evt => {
+    const handleProductionManagerChange = (evt) => {
         setProductionManager(evt.target.value);
     };
 
@@ -165,7 +165,7 @@ const DispatchActions = ({ record }) => {
                             onChange={handleProductionManagerChange}
                         >
                             {productionManagers &&
-                                productionManagers.map(manager => (
+                                productionManagers.map((manager) => (
                                     <MenuItem
                                         key={manager.id}
                                         value={manager.id}

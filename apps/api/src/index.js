@@ -44,7 +44,7 @@ app.use(
  * @param {object} error - the catched error
  * @return {object} the content of the json error return
  */
-const formatError = error => {
+const formatError = (error) => {
     return {
         status: error.status,
         message: error.message

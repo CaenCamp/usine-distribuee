@@ -2,7 +2,7 @@ const get = require('lodash.get');
 
 const permissions = require('./permissions');
 
-const isFunction = value =>
+const isFunction = (value) =>
     value &&
     (Object.prototype.toString.call(value) === '[object Function]' ||
         'function' === typeof value ||
