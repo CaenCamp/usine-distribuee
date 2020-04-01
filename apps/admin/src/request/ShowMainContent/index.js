@@ -26,6 +26,10 @@ export const ShowMainContent = ({ record }) => {
         (type) => type.id === record.requesterType
     );
     const numberType = requesterType.id === 'other' ? null : requesterType.name;
+    const commentsLabel = record.productionManagementComments
+        ? `Commentaires (${record.productionManagementComments.length})`
+        : 'Commentaires';
+
     return (
         <div className={classes.root}>
             <AppBar position="static" color="transparent">
@@ -36,7 +40,7 @@ export const ShowMainContent = ({ record }) => {
                     indicatorColor="primary"
                 >
                     <Tab label="Résumé de la commande" />
-                    <Tab label="Bloc-notes" />
+                    <Tab label={commentsLabel} />
                 </Tabs>
             </AppBar>
             <RequestResume

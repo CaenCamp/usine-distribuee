@@ -5,6 +5,14 @@ import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import SendIcon from '@material-ui/icons/Send';
 import Button from '@material-ui/core/Button';
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableContainer from '@material-ui/core/TableContainer';
+import TableHead from '@material-ui/core/TableHead';
+import TableRow from '@material-ui/core/TableRow';
+import formatDate from 'date-fns/format';
+import Paper from '@material-ui/core/Paper';
 import { useMutation } from 'react-admin';
 
 const useStyles = makeStyles((theme) => ({
@@ -26,6 +34,8 @@ export const RequestNotePad = ({ record, show }) => {
     const classes = useStyles();
     const [mutate, { loading }] = useMutation();
     const [comment, setComment] = useState('');
+
+    console.log(record);
 
     const handleSendComment = () => {
         if (comment.trim() === '') {
@@ -86,6 +96,66 @@ export const RequestNotePad = ({ record, show }) => {
                     >
                         Envoyer votre commentaire
                     </Button>
+                </Grid>
+                <Grid item xs={12}>
+                    {(record.productionManagementComments || []).length !==
+                        0 && (
+                        <TableContainer component={Paper}>
+                            <Table
+                                className={classes.table}
+                                size="small"
+                                aria-label="a dense table"
+                            >
+                                <TableHead>
+                                    <TableRow>
+                                        <TableCell>Date</TableCell>
+                                        <TableCell align="right">
+                                            role
+                                        </TableCell>
+                                        <TableCell align="right">
+                                            email
+                                        </TableCell>
+                                        <TableCell align="right">
+                                            commentaire
+                                        </TableCell>
+                                    </TableRow>
+                                </TableHead>
+                                <TableBody>
+                                    {(
+                                        record.productionManagementComments ||
+                                        []
+                                    ).map((row) => (
+                                        <TableRow key={row.id}>
+                                            <TableCell
+                                                component="th"
+                                                scope="row"
+                                            >
+                                                {formatDate(
+                                                    new Date(row.date),
+                                                    'dd/MM/yyyy HH:mm'
+                                                )}
+                                            </TableCell>
+                                            <TableCell>{row.role}</TableCell>
+                                            <TableCell align="right">
+                                                {row.email}
+                                            </TableCell>
+                                            <TableCell align="right">
+                                                {row.comment}
+                                                <br />
+                                            </TableCell>
+                                        </TableRow>
+                                    ))}
+                                </TableBody>
+                            </Table>
+                        </TableContainer>
+                    )}
+                    {!record.productionManagementComments && (
+                        <p>
+                            <Typography variant="h6" gutterBottom>
+                                Aucun commentaires pour le moment
+                            </Typography>
+                        </p>
+                    )}
                 </Grid>
             </Grid>
         </div>
