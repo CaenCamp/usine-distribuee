@@ -3,11 +3,10 @@ import { useShowController } from "react-admin";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import Grid from "@material-ui/core/Grid";
-import Typography from "@material-ui/core/Typography";
 
 import { makeStyles } from "@material-ui/core/styles";
 
-import { ShowMainContent } from '../dispatcher/Show';
+import { ShowMainContent } from '../ShowMainContent';
 import DeliveryTracking from './DeliveryTracking';
 
 const useStyles = makeStyles({
