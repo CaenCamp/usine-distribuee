@@ -12,6 +12,7 @@ const and = (...conditions) => (...args) =>
 
 const production_manager = {
     MANAGEMENT_TODO: {
+        DISPATCH_TODO: ownProductionManagement,
         MANAGEMENT_TODO: ownProductionManagement,
         MANAGEMENT_BUILDING: ownProductionManagement,
         MANAGEMENT_DELIVERED: ownProductionManagement
