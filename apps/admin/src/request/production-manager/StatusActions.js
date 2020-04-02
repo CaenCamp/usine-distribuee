@@ -24,6 +24,8 @@ const DispatchActions = ({ record }) => {
     const downValues = { newStatus: null, newLabel: null };
     switch (record.status) {
         case 'MANAGEMENT_TODO':
+            downValues.newStatus = 'DISPATCH_TODO';
+            downValues.newLabel = 'Remettre au dispatch';
             upValues.newStatus = 'MANAGEMENT_BUILDING';
             upValues.newLabel = 'Passer en fabrication';
             break;
