@@ -44,7 +44,7 @@ export default {
         ...buildFullAccessFor(['production-manager-requests']),
         requests: {
             enabled: true,
-            list: false,
+            list: true,
             show: false,
             create: false,
             edit: false
