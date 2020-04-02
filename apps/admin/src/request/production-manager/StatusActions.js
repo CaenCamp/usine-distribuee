@@ -1,19 +1,12 @@
-import React, { useState } from 'react';
-import { useQuery, useMutation, useRefresh } from 'react-admin';
-import {
-    Grid,
-    Button,
-    FormControl,
-    InputLabel,
-    Select,
-    MenuItem,
-} from '@material-ui/core';
+import React from 'react';
+import { useMutation, useRefresh } from 'react-admin';
+import { Grid, Button } from '@material-ui/core';
 
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles({
     container: {
-        marginTop: 16,
+        marginTop: 16
     },
     formControl: {
         minWidth: 200,
@@ -21,7 +14,7 @@ const useStyles = makeStyles({
         top: -12,
         marginRight: 16
     }
-})
+});
 
 const DispatchActions = ({ record }) => {
     const classes = useStyles();
@@ -31,60 +24,72 @@ const DispatchActions = ({ record }) => {
     const downValues = { newStatus: null, newLabel: null };
     switch (record.status) {
         case 'MANAGEMENT_TODO':
+            downValues.newStatus = 'DISPATCH_TODO';
+            downValues.newLabel = 'Remettre au dispatch';
             upValues.newStatus = 'MANAGEMENT_BUILDING';
             upValues.newLabel = 'Passer en fabrication';
             break;
         case 'MANAGEMENT_BUILDING':
-            upValues.newStatus = 'MANAGEMENT_BUILT';
-            upValues.newLabel = 'Passer en livraison';
-            downValues.newStatus = 'MANAGEMENT_TODO';
-            downValues.newLabel = 'Remettre en attente'
-            break;
-        case 'MANAGEMENT_BUILT':
-            upValues.newStatus = 'MANAGEMENT_DELIVERED';
-            upValues.newLabel = 'Fabrication livrée';
-            downValues.newStatus = 'MANAGEMENT_BUILDING';
-            downValues.newLabel = 'Remettre en fabrication'
+            downValues.newStatus = !record.deliveryTracking
+                ? 'MANAGEMENT_TODO'
+                : null;
+            downValues.newLabel = !record.deliveryTracking
+                ? 'Remettre en attente'
+                : null;
             break;
         case 'MANAGEMENT_DELIVERED':
-            downValues.newStatus = 'MANAGEMENT_BUILT';
-            downValues.newLabel = 'Remettre en livraison'
+            downValues.newStatus = 'MANAGEMENT_BUILDING';
+            downValues.newLabel = 'Remettre en fabrication';
             break;
         default:
             break;
     }
 
-    const [up, { loading: upLoading }] = useMutation({
-        type: 'update',
-        resource: 'dispatcher-requests',
-        payload: {
-            id: record.id,
-            data: {
-                status: upValues.newStatus,
+    const [up, { loading: upLoading }] = useMutation(
+        {
+            type: 'update',
+            resource: 'dispatcher-requests',
+            payload: {
+                id: record.id,
+                data: {
+                    status: upValues.newStatus
+                }
             }
         },
-    }, { onSuccess: refresh });
-    const [down, { loading: downLoading }] = useMutation({
-        type: 'update',
-        resource: 'dispatcher-requests',
-        payload: {
-            id: record.id,
-            data: {
-                status: downValues.newStatus,
+        { onSuccess: refresh }
+    );
+    const [down, { loading: downLoading }] = useMutation(
+        {
+            type: 'update',
+            resource: 'dispatcher-requests',
+            payload: {
+                id: record.id,
+                data: {
+                    status: downValues.newStatus
+                }
             }
         },
-    }, { onSuccess: refresh });
+        { onSuccess: refresh }
+    );
 
     return (
         <Grid container className={classes.container}>
-            {downValues.newStatus && <Grid item xs={upValues.newStatus ? 6 : 12}>
-                <Button variant="contained" color="secondary" onClick={down} disabled={downLoading}>
-                    {downValues.newLabel}
-                </Button>
-            </Grid>}
+            {downValues.newStatus && (
+                <Grid item xs={upValues.newStatus ? 6 : 12}>
+                    <Button
+                        variant="contained"
+                        color="secondary"
+                        onClick={down}
+                        disabled={downLoading}
+                    >
+                        {downValues.newLabel}
+                    </Button>
+                </Grid>
+            )}
             {upValues.newStatus && (
                 <Grid
-                    item xs={downValues.newStatus ? 6 : 12}
+                    item
+                    xs={downValues.newStatus ? 6 : 12}
                     justify="flex-end"
                     alignItems="flex-start"
                     container
@@ -94,11 +99,13 @@ const DispatchActions = ({ record }) => {
                         color="primary"
                         onClick={up}
                         disabled={upLoading}
-                    >{upValues.newLabel}</Button>
+                    >
+                        {upValues.newLabel}
+                    </Button>
                 </Grid>
             )}
         </Grid>
-    )
-}
+    );
+};
 
 export default DispatchActions;

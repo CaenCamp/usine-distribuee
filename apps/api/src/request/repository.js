@@ -2,7 +2,7 @@ const {
     filtersSanitizer,
     formatPaginationContentRange,
     paginationSanitizer,
-    sortSanitizer,
+    sortSanitizer
 } = require('../toolbox/sanitizers');
 
 const filterableFields = [
@@ -13,7 +13,7 @@ const filterableFields = [
     'status',
     'createdAtBefore',
     'createdAtAfter',
-    'ownership',
+    'ownership'
 ];
 const sortableFields = [
     'createdAt',
@@ -37,14 +37,16 @@ const getFilteredQuery = (client, filters, sort, user) => {
         ownership,
         ...restFilters
     } = filters;
-    const query = client
-        .select('*')
-        .from(table)
-        .where(restFilters);
+    const query = client.select('*').from(table).where(restFilters);
 
     if (deliveryPostalCode) {
-        query.andWhere('delivery_postal_code', 'LIKE', `${deliveryPostalCode}%`);
+        query.andWhere(
+            'delivery_postal_code',
+            'LIKE',
+            `${deliveryPostalCode}%`
+        );
     }
+
     if (deliveryCity) {
         query.andWhere('delivery_city', 'LIKE', `%${deliveryCity}%`);
     }
@@ -57,7 +59,10 @@ const getFilteredQuery = (client, filters, sort, user) => {
         query.andWhere('created_at', '>', queryDate.toISOString());
     }
     if (ownership && ownership === 'me') {
-        query.whereIn('production_management_id', user.productionManagementIds || []);
+        query.whereIn(
+            'production_management_id',
+            user.productionManagementIds || []
+        );
     }
 
     if (sort && sort.length) {
@@ -84,20 +89,17 @@ const getPaginatedList = async ({
 
     return query
         .paginate({ perPage, currentPage, isLengthAware: true })
-        .then(result => ({
+        .then((result) => ({
             requests: result.data,
             contentRange: formatPaginationContentRange(
                 'requests',
                 result.pagination
-            ),
+            )
         }));
 };
 
 const getOneByIdQuery = (client, id) => {
-    const query = client
-        .first('*')
-        .from('request')
-        .where({ id });
+    const query = client.first('*').from('request').where({ id });
 
     return query;
 };
@@ -105,10 +107,13 @@ const getOneByIdQuery = (client, id) => {
 const insertOne = async ({ client, data }) => {
     return client('request')
         .returning('id')
-        .insert(data)
+        .insert({
+            ...data,
+            deliveryTracking: JSON.stringify(data.deliveryTracking)
+        })
         .then(([id]) => id)
-        .then(id => getOneByIdQuery(client, id))
-        .catch(error => ({ error }));
+        .then((id) => getOneByIdQuery(client, id))
+        .catch((error) => ({ error }));
 };
 
 const updateOne = async ({ client, id, data }) => {
@@ -116,17 +121,16 @@ const updateOne = async ({ client, id, data }) => {
         .where({ id: id })
         .update(data)
         .then(() => getOneByIdQuery(client, id))
-        .catch(error => ({ error }));
+        .catch((error) => ({ error }));
 };
 
 const getOne = async ({ client, id }) => {
-    return getOneByIdQuery(client, id)
-        .catch(error => ({ error }));
+    return getOneByIdQuery(client, id).catch((error) => ({ error }));
 };
 
 module.exports = {
     getPaginatedList,
     insertOne,
     updateOne,
-    getOne,
-}
+    getOne
+};

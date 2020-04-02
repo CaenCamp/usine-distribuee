@@ -10,8 +10,8 @@ const knexConfig = {
     client: 'pg',
     connection: config.db,
     migrations: {
-        tableName: 'migrations',
-    },
+        tableName: 'migrations'
+    }
 };
 
 module.exports = knexStringcase(knexConfig);

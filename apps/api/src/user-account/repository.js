@@ -22,7 +22,7 @@ const getOneByEmail = ({ client, email }) => {
 };
 
 const getOne = ({ client, id }) => {
-    return getOneQuery(client, id).catch(error => ({ error }));
+    return getOneQuery(client, id).catch((error) => ({ error }));
 };
 
 const getFilteredQuery = (client, filters, sort) => {
@@ -51,7 +51,7 @@ const getPaginatedList = async ({ client, filters, sort, pagination }) => {
 
     return query
         .paginate({ perPage, currentPage, isLengthAware: true })
-        .then(result => ({
+        .then((result) => ({
             users: result.data,
             contentRange: formatPaginationContentRange(
                 'users',
@@ -64,7 +64,7 @@ const updateOne = async ({ client, id, data }) => {
     const { productionManagementIds, ...userData } = data;
 
     try {
-        await client.transaction(trx => {
+        await client.transaction((trx) => {
             client('user_account')
                 .transacting(trx)
                 .where({ id })
@@ -80,7 +80,7 @@ const updateOne = async ({ client, id, data }) => {
                             .where({ userAccountId: id });
 
                         const linksToCreate = productionManagementIds.map(
-                            productionManagementId => ({
+                            (productionManagementId) => ({
                                 userAccountId: id,
                                 productionManagementId
                             })
@@ -99,7 +99,7 @@ const updateOne = async ({ client, id, data }) => {
         return { error };
     }
 
-    return getOneQuery(client, id).catch(error => ({ error }));
+    return getOneQuery(client, id).catch((error) => ({ error }));
 };
 
 const getOneQuery = (client, id) => {
@@ -119,7 +119,7 @@ const insertOne = async ({ client, data }) => {
     const { productionManagementIds, ...userData } = data;
 
     return client
-        .transaction(trx => {
+        .transaction((trx) => {
             client('user_account')
                 .transacting(trx)
                 .returning('id')
@@ -130,7 +130,7 @@ const insertOne = async ({ client, data }) => {
                         productionManagementIds.length
                     ) {
                         const linksToCreate = productionManagementIds.map(
-                            productionManagementId => ({
+                            (productionManagementId) => ({
                                 userAccountId,
                                 productionManagementId
                             })
@@ -146,18 +146,18 @@ const insertOne = async ({ client, data }) => {
                 .then(trx.commit)
                 .catch(trx.rollback);
         })
-        .then(userAccountId => getOneQuery(client, userAccountId))
-        .catch(error => ({ error }));
+        .then((userAccountId) => getOneQuery(client, userAccountId))
+        .catch((error) => ({ error }));
 };
 
 const deleteOne = ({ client, id }) => {
     return client('user_account')
         .where({ id })
         .del()
-        .then(nbDeletion => {
+        .then((nbDeletion) => {
             return nbDeletion ? { id } : {};
         })
-        .catch(error => ({ error }));
+        .catch((error) => ({ error }));
 };
 
 module.exports = {

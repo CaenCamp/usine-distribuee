@@ -1,25 +1,25 @@
-const crypto = require("crypto");
-const jwt = require("jsonwebtoken");
+const crypto = require('crypto');
+const jwt = require('jsonwebtoken');
 
-const { getOne } = require("../user-account/repository");
-const config = require("../config");
+const { getOne } = require('../user-account/repository');
+const config = require('../config');
 
 module.exports = async (ctx, next) => {
-    const token = ctx.request.get("Authorization");
-    const cookieToken = ctx.cookies.get("token");
+    const token = ctx.request.get('Authorization');
+    const cookieToken = ctx.cookies.get('token');
 
     if (!token) {
-        ctx.throw("Invalid credentials.", 401);
+        ctx.throw('Invalid credentials.', 401);
         return;
     }
 
     const expectedCookieToken = crypto
-        .createHmac("sha256", config.authentication.secret)
+        .createHmac('sha256', config.authentication.secret)
         .update(token)
-        .digest("hex");
+        .digest('hex');
 
     if (cookieToken !== expectedCookieToken) {
-        ctx.throw("Forbidden.", 403);
+        ctx.throw('Forbidden.', 403);
         return;
     }
 
@@ -30,7 +30,7 @@ module.exports = async (ctx, next) => {
         );
         ctx.state.user = await getOne({ client: ctx.state.db, id: userId });
     } catch (e) {
-        ctx.throw("Forbidden.", 403);
+        ctx.throw('Forbidden.', 403);
         return;
     }
 

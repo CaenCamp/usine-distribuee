@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 import {
     Datagrid,
     DateField,
@@ -9,21 +9,17 @@ import {
     TextField,
     NumberField,
     FunctionField,
-    EditButton,
-} from "react-admin";
-import {
-    Divider,
-    Tabs,
-    AppBar,
-    Tab,
-} from '@material-ui/core';
+    EditButton
+} from 'react-admin';
+import { Divider, Tabs, AppBar, Tab } from '@material-ui/core';
 import { PrintButton } from '../PrintButton';
 
 import { requesterType } from './index';
-import RequestShow from '../dispatcher/Show';
+import RequestShow from './ShowWithDeliveryTracking';
 import StatusActions from './StatusActions';
+import { DeliveryPercentage } from '../DeliveryPercentage';
 
-const UserFilter = props => (
+const UserFilter = (props) => (
     <Filter {...props}>
         <SelectInput
             source="requesterType"
@@ -33,29 +29,42 @@ const UserFilter = props => (
     </Filter>
 );
 
-const RequestPagination = props => (
+const RequestPagination = (props) => (
     <Pagination rowsPerPageOptions={[10, 25]} {...props} />
 );
 
 const tabs = [
-    { id: "MANAGEMENT_TODO", name: "A fabriquer" },
-    { id: "MANAGEMENT_BUILDING", name: "En fabrication" },
-    { id: "MANAGEMENT_BUILT", name: "A livrer" },
-    { id: "MANAGEMENT_DELIVERED", name: "Livré" },
+    { id: 'MANAGEMENT_TODO', name: 'A fabriquer' },
+    { id: 'MANAGEMENT_BUILDING', name: 'En fabrication / livraison' },
+    { id: 'MANAGEMENT_DELIVERED', name: 'Livré' }
 ];
 
-const RequestDatagrid = props => (
-    <Datagrid {...props} expand={<RequestShow renderActions={(record) => <StatusActions record={record} />} />} rowClick="expand">
+const RequestDatagrid = (props) => (
+    <Datagrid
+        {...props}
+        expand={
+            <RequestShow
+                renderActions={(record) => <StatusActions record={record} />}
+            />
+        }
+        rowClick="expand"
+    >
         <TextField source="publicNumber" label="#" />
         <TextField source="requesterName" label="Organisation" />
         <NumberField source="maskSmallSizeQuantity" label="Masques Standards" />
         <NumberField source="maskLargeSizeQuantity" label="Masques Longs" />
-        <FunctionField label="Localité" render={({ deliveryPostalCode, deliveryCity }) => `${deliveryPostalCode} ${deliveryCity}`} />
+        <FunctionField
+            label="Localité"
+            render={({ deliveryPostalCode, deliveryCity }) =>
+                `${deliveryPostalCode} ${deliveryCity}`
+            }
+        />
         <DateField source="createdAt" label="Passé le" showTime />
+        <DeliveryPercentage label="Commandes livrées" />
         <EditButton />
         <PrintButton />
     </Datagrid>
-)
+);
 
 const TabbedList = (props) => {
     const handleChange = (event, value) => {
@@ -65,7 +74,7 @@ const TabbedList = (props) => {
 
     return (
         <>
-            <AppBar position="relative" color="transparent" elevation={0} >
+            <AppBar position="relative" color="transparent" elevation={0}>
                 <Tabs
                     variant="fullWidth"
                     centered
@@ -73,7 +82,7 @@ const TabbedList = (props) => {
                     indicatorColor="primary"
                     onChange={handleChange}
                 >
-                    {tabs.map(choice => (
+                    {tabs.map((choice) => (
                         <Tab
                             key={choice.id}
                             label={choice.name}
@@ -87,8 +96,8 @@ const TabbedList = (props) => {
                 <RequestDatagrid {...props} />
             </div>
         </>
-    )
-}
+    );
+};
 
 export default (props) => (
     <List
@@ -96,9 +105,9 @@ export default (props) => (
         filters={<UserFilter />}
         filterDefaultValues={{
             ownership: 'me',
-            status: 'MANAGEMENT_TODO',
+            status: 'MANAGEMENT_TODO'
         }}
-        sort={{ field: "createdAt", order: "ASC" }}
+        sort={{ field: 'createdAt', order: 'ASC' }}
         exporter={false}
         pagination={<RequestPagination />}
         perPage={25}

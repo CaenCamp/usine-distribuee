@@ -17,26 +17,28 @@ import { makeStyles } from '@material-ui/core/styles';
 import { requesterType as REQUESTER_TYPES } from './request/index';
 
 const useStyles = makeStyles({
-    root: { maxWidth: 1200, margin: '1em 10%' },
+    root: { maxWidth: 1200, margin: '1em 10%' }
 });
 
-export default ({ renderActions, ...props }) => {
+export default (props) => {
     const { record } = useShowController(props);
     const classes = useStyles();
-
 
     if (!record) {
         return null;
     }
 
-    const requesterType = REQUESTER_TYPES.find(type => type.id === record.requesterType);
+    const requesterType = REQUESTER_TYPES.find(
+        (type) => type.id === record.requesterType
+    );
     const numberType = requesterType.id === 'other' ? null : requesterType.name;
 
     return (
         <Card className={classes.root}>
             <CardContent>
                 <Typography color="textSecondary" gutterBottom>
-                    Numéro de commande : #{record.publicNumber}<br />
+                    Numéro de commande : #{record.publicNumber}
+                    <br />
                     Identifiant interne : {record.id}
                 </Typography>
                 <Grid container>
@@ -44,11 +46,19 @@ export default ({ renderActions, ...props }) => {
                         <p>
                             <Typography variant="h6" gutterBottom>
                                 Organisation
-                        </Typography>
+                            </Typography>
                             <Typography gutterBottom>
-                                {record.requesterName}<br />
-                                {record.requesterOtherType && <>Numéro personnalisé : {record.requesterOtherType}<br /></>}
-                                {numberType && `[${numberType}]`} {record.requesterProfessionalIdentifier}
+                                {record.requesterName}
+                                <br />
+                                {record.requesterOtherType && (
+                                    <>
+                                        Numéro personnalisé :{' '}
+                                        {record.requesterOtherType}
+                                        <br />
+                                    </>
+                                )}
+                                {numberType && `[${numberType}]`}{' '}
+                                {record.requesterProfessionalIdentifier}
                             </Typography>
                         </p>
                         <p>
@@ -56,8 +66,10 @@ export default ({ renderActions, ...props }) => {
                                 Livraison
                             </Typography>
                             <Typography gutterBottom>
-                                {record.deliveryAddress}<br />
-                                {record.deliveryPostalCode} {record.deliveryCity}
+                                {record.deliveryAddress}
+                                <br />
+                                {record.deliveryPostalCode}{' '}
+                                {record.deliveryCity}
                             </Typography>
                         </p>
                     </Grid>
@@ -65,10 +77,12 @@ export default ({ renderActions, ...props }) => {
                         <p>
                             <Typography variant="h6" gutterBottom align="right">
                                 Contact
-                        </Typography>
+                            </Typography>
                             <Typography gutterBottom align="right">
-                                {record.contactName}<br />
-                                {record.contactEmail}<br />
+                                {record.contactName}
+                                <br />
+                                {record.contactEmail}
+                                <br />
                                 {record.contactPhone}
                             </Typography>
                         </p>
@@ -95,13 +109,17 @@ export default ({ renderActions, ...props }) => {
                                 <TableCell component="th" scope="row">
                                     Masque modèle standard (24cm)
                                 </TableCell>
-                                <TableCell align="right">{record.maskSmallSizeQuantity}</TableCell>
+                                <TableCell align="right">
+                                    {record.maskSmallSizeQuantity}
+                                </TableCell>
                             </TableRow>
                             <TableRow>
                                 <TableCell component="th" scope="row">
                                     Masque modèle long (34cm)
                                 </TableCell>
-                                <TableCell align="right">{record.maskLargeSizeQuantity}</TableCell>
+                                <TableCell align="right">
+                                    {record.maskLargeSizeQuantity}
+                                </TableCell>
                             </TableRow>
                         </TableBody>
                     </Table>
@@ -109,4 +127,4 @@ export default ({ renderActions, ...props }) => {
             </CardContent>
         </Card>
     );
-}
+};
