@@ -1,24 +1,28 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { useVersion, useDataProvider } from 'react-admin';
 import { useMediaQuery } from '@material-ui/core';
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableContainer from '@material-ui/core/TableContainer';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
+
+import { makeStyles } from '@material-ui/core/styles';
+import Grid from '@material-ui/core/Grid';
+import Paper from '@material-ui/core/Paper';
 
 import Collections from '@material-ui/icons/Collections';
 import AccountBox from '@material-ui/icons/AccountBox';
-import PanTool from '@material-ui/icons/PanTool';
-import Build from '@material-ui/icons/Build';
-import LocalShipping from '@material-ui/icons/LocalShipping';
 
 import { Button } from '@material-ui/core';
 
-import RequestKPI from './RequestKPI';
+import RequestKPI from './graph-components/RequestKPI';
+import HorizontalBar from './graph-components/HorizontalBar';
+import MaskByStatus from './graph-components/MaskByStatus';
+
+import departments from './data/departements.json';
 
 const styles = {
+    main: {
+        flex: '2',
+        marginRight: '1em',
+        marginTop: 20
+    },
     flex: {
         display: 'flex'
     },
@@ -44,9 +48,9 @@ const Dashboard = () => {
     const [state, setState] = useState({
         request_nb: 0,
         requester_nb: 0,
-        requested_shade_qty: 0,
-        in_production_shade_qty: 0,
-        delivered_shade_qty: 0
+        request_by_status: { labels: [], datasets: [] },
+        requester_by_dept: { labels: [], datasets: [] },
+        mask_by_status: { labels: [], datasets: [] }
     });
     const version = useVersion();
     const dataProvider = useDataProvider();
@@ -60,29 +64,118 @@ const Dashboard = () => {
         });
         const request_nb = stats[0].requestNb;
         const requester_nb = stats[0].requesterNb;
-        const requested_shade_qty = stats[0].requestedShadeQty;
-        const in_production_shade_qty = stats[0].inProductionShadeQty;
-        const delivered_shade_qty = stats[0].deliveredShadeQty;
+        const request_by_status = {
+            labels: [
+                'à affecter',
+                'à produire',
+                'en production',
+                'livrées',
+                'en attente',
+                'rejets et annulations'
+            ],
+            datasets: [
+                {
+                    label: 'Demandes par statut',
+                    backgroundColor: 'rgba(99,255,132,0.2)',
+                    borderColor: 'rgba(99,255,132,1)',
+                    borderWidth: 1,
+                    hoverBackgroundColor: 'rgba(99,255,132,0.4)',
+                    hoverBorderColor: 'rgba(99,255,132,1)',
+                    data: [
+                        stats[0].requestNbToDispatch,
+                        stats[0].requestNbToBuild,
+                        stats[0].requestNbInProduction,
+                        stats[0].requestNbDelivered,
+                        stats[0].requestNbPending,
+                        stats[0].requestNbCancel
+                    ]
+                }
+            ]
+        };
+
+        const mask_by_status = {
+            labels: ['Visières'],
+
+            datasets: [
+                {
+                    label: 'A produire',
+                    data: [stats[0].requestedShadeToBuild],
+                    backgroundColor: 'rgba(63,103,126,0.6)',
+                    hoverBackgroundColor: 'rgba(50,90,100,1)'
+                },
+                {
+                    label: 'En production',
+                    data: [stats[0].requestedShadeInProduction],
+                    backgroundColor: 'rgba(195,194,110,0.6)',
+                    hoverBackgroundColor: 'rgba(195,194,110,1)'
+                },
+                {
+                    label: 'Livrées',
+                    data: [stats[0].requestedShadeDelivered],
+                    backgroundColor: 'rgba(57,177,91,0.6)',
+                    hoverBackgroundColor: 'rgba(57,177,91,1)'
+                },
+                {
+                    label: 'Rejets et annulations',
+                    data: [stats[0].requestedShadeCanceled],
+                    backgroundColor: 'rgba(201,145,155,0.6)',
+                    hoverBackgroundColor: 'rgba(201,145,155,1)'
+                }
+            ]
+        };
+
         setState((state) => ({
             ...state,
             request_nb,
             requester_nb,
-            requested_shade_qty,
-            in_production_shade_qty,
-            delivered_shade_qty
+            request_by_status,
+            mask_by_status
         }));
+    }, [dataProvider]);
+
+    const fetchRequesterBydept = useCallback(async () => {
+        const { data: raw } = await dataProvider.getList(
+            'stats/requesterByDept',
+            {
+                sort: { field: 'id', order: 'ASC' },
+                pagination: { page: 1, perPage: 1 }
+            }
+        );
+
+        var result = {
+            labels: raw.map((a) => {
+                let dpt = departments.find(
+                    (o) => String(o.num_dep) === a.department
+                );
+                return dpt !== undefined ? dpt.dep_name : a.department;
+            }),
+            datasets: [
+                {
+                    label: 'Demandeurs par département',
+                    backgroundColor: 'rgba(255,99,132,0.2)',
+                    borderColor: 'rgba(255,99,132,1)',
+                    borderWidth: 1,
+                    hoverBackgroundColor: 'rgba(255,99,132,0.4)',
+                    hoverBorderColor: 'rgba(255,99,132,1)',
+                    data: raw.map((a) => a.requesterNbByDepartment)
+                }
+            ]
+        };
+
+        setState((state) => ({ ...state, requester_by_dept: result }));
     }, [dataProvider]);
 
     useEffect(() => {
         fetchStats();
-    }, [version]);
+        fetchRequesterBydept();
+    }, [version]); // eslint-disable-line react-hooks/exhaustive-deps
 
     const {
         request_nb,
         requester_nb,
-        requested_shade_qty,
-        in_production_shade_qty,
-        delivered_shade_qty
+        request_by_status,
+        requester_by_dept,
+        mask_by_status
     } = state;
 
     const request_nb_props = {
@@ -95,30 +188,24 @@ const Dashboard = () => {
         value: requester_nb,
         icon: AccountBox
     };
-    const requested_shade_qty_props = {
-        title: 'Visières demandées',
-        value: requested_shade_qty,
-        icon: PanTool
-    };
-    const in_production_shade_qty_props = {
-        title: 'Visières en production',
-        value: in_production_shade_qty,
-        icon: Build
-    };
-    const delivered_shade_qty_props = {
-        title: 'Visières livrées',
-        value: delivered_shade_qty,
-        icon: LocalShipping
-    };
+
+    const useStyles = makeStyles((theme) => ({
+        root: {
+            flexGrow: 1
+        },
+        paper: {
+            padding: theme.spacing(2),
+            textAlign: 'center',
+            color: theme.palette.text.secondary
+        }
+    }));
+    const classes = useStyles();
 
     return isXSmall ? (
         <div>
             <div style={styles.flexColumn}>
                 <RequestKPI {...request_nb_props} />
                 <RequestKPI {...requester_nb_props} />
-                <RequestKPI {...requested_shade_qty_props} />
-                <RequestKPI {...in_production_shade_qty_props} />
-                <RequestKPI {...delivered_shade_qty_props} />
                 <Button variant="contained" color="primary" href="#/requests">
                     Voir la liste des demandes
                 </Button>
@@ -129,53 +216,82 @@ const Dashboard = () => {
             <div style={styles.flexColumn}>
                 <RequestKPI {...request_nb_props} />
                 <RequestKPI {...requester_nb_props} />
-                <RequestKPI {...requested_shade_qty_props} />
-                <RequestKPI {...in_production_shade_qty_props} />
-                <RequestKPI {...delivered_shade_qty_props} />
                 <Button variant="contained" color="primary" href="#/requests">
                     Voir la liste des demandes
                 </Button>
             </div>
         </div>
     ) : (
-        <TableContainer>
-            <Table>
-                <TableHead>
-                    <TableRow>
-                        <TableCell>
-                            <RequestKPI {...request_nb_props} />
-                        </TableCell>
-                        <TableCell>
-                            <RequestKPI {...requester_nb_props} />
-                        </TableCell>
-                    </TableRow>
-                </TableHead>
-                <TableBody>
-                    <TableRow>
-                        <TableCell>
-                            <RequestKPI {...requested_shade_qty_props} />
-                        </TableCell>
-                        <TableCell>
-                            <RequestKPI {...in_production_shade_qty_props} />
-                        </TableCell>
-                    </TableRow>
-                    <TableRow>
-                        <TableCell>
-                            <RequestKPI {...delivered_shade_qty_props} />
-                        </TableCell>
-                        <TableCell align="center">
-                            <Button
-                                variant="contained"
-                                color="primary"
-                                href="#/requests"
-                            >
-                                Voir la liste des demandes
-                            </Button>
-                        </TableCell>
-                    </TableRow>
-                </TableBody>
-            </Table>
-        </TableContainer>
+        <div className={classes.root}>
+            <Grid container spacing={3}>
+                <Grid item xs={6}>
+                    <RequestKPI {...request_nb_props} />
+                </Grid>
+                <Grid item xs={6}>
+                    <RequestKPI {...requester_nb_props} />
+                </Grid>
+            </Grid>
+            <Grid container spacing={3}>
+                <Grid item xs={6}>
+                    <div>
+                        <HorizontalBar
+                            data={request_by_status}
+                            height={250}
+                            options={{
+                                maintainAspectRatio: false,
+                                scales: {
+                                    xAxes: [
+                                        {
+                                            ticks: {
+                                                min: 0
+                                            }
+                                        }
+                                    ]
+                                }
+                            }}
+                        />
+                    </div>
+                </Grid>
+                <Grid item xs={6}>
+                    <div>
+                        <HorizontalBar
+                            data={requester_by_dept}
+                            height={250}
+                            options={{
+                                maintainAspectRatio: false,
+                                scales: {
+                                    xAxes: [
+                                        {
+                                            ticks: {
+                                                min: 0
+                                            }
+                                        }
+                                    ]
+                                }
+                            }}
+                        />
+                    </div>
+                </Grid>
+            </Grid>
+            <Grid container spacing={3}>
+                <Grid item xs={11}>
+                    <Paper className={classes.paper}>
+                        <MaskByStatus data={mask_by_status} height={250} />
+                    </Paper>
+                </Grid>
+            </Grid>
+            <Grid container spacing={3}>
+                <Grid item xs style={{ textAlign: 'center' }}>
+                    <Button
+                        variant="contained"
+                        color="primary"
+                        href="#/requests"
+                    >
+                        Voir la liste des demandes
+                    </Button>
+                </Grid>
+            </Grid>
+        </div>
     );
 };
 
