@@ -1,5 +1,6 @@
 import React from 'react';
 import {
+    DeleteButton,
     Edit,
     NumberInput,
     TabbedForm,
@@ -22,12 +23,22 @@ const Title = ({ record }) => {
         : null;
 };
 
-const RequestEditToolbar = (props) => (
-    <Toolbar {...props}>
-        <SaveButton label="Sauver" redirect="list" submitOnEnter={false} />
-        <ListButton label="Annuler et revenir à la liste" />
-    </Toolbar>
-);
+const RequestEditToolbar = (props) => {
+    const displayDeleteButton = [
+        'DISPATCH_TODO',
+        'DISPATCH_REJECTED',
+        'DISPATCH_PENDING',
+        'MANAGEMENT_TODO'
+    ].includes(props.record.status);
+
+    return (
+        <Toolbar {...props}>
+            <SaveButton label="Sauver" redirect="list" submitOnEnter={false} />
+            <ListButton label="Annuler et revenir à la liste" />
+            {displayDeleteButton && <DeleteButton label="Demande annulée" />}
+        </Toolbar>
+    );
+};
 
 const RequestEditActions = () => null;
 

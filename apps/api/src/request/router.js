@@ -127,4 +127,25 @@ router.put('/:id', async (ctx) => {
     ctx.body = updatedRequest;
 });
 
+router.delete('/:id', async (ctx) => {
+    if (
+        !['admin', 'dispatcher', 'production_manager'].includes(
+            ctx.state.user.role
+        )
+    ) {
+        ctx.throw('Forbidden.', 403);
+        return;
+    }
+
+    const updatedRequest = await updateOne({
+        client: ctx.state.db,
+        id: ctx.params.id,
+        data: {
+            status: 'CUSTOMER_CANCELED'
+        }
+    });
+
+    ctx.body = updatedRequest;
+});
+
 module.exports = router;
