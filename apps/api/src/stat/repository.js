@@ -6,6 +6,22 @@ const getGlobalStats = ({ client }) => {
     }));
 };
 
+const getRequesterByDept = ({ client }) => {
+    const query = client
+        .select(client.raw(`left(delivery_postal_code, 2) as department`))
+        .countDistinct(`requester_professional_identifier as requester_nb_by_department`)
+        .from('request')
+        .whereNotIn('status', ['DISPATCH_REJECTED','CUSTOMER_CANCELED'])
+        .groupBy(client.raw(`left(delivery_postal_code, 2)`))
+        .orderBy('requester_nb_by_department', 'DESC');
+
+    return query
+        .then(result => ({
+            requesterByDept: result
+        }));
+};
+
 module.exports = {
-    getGlobalStats
+    getGlobalStats,
+    getRequesterByDept
 };
