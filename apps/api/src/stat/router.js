@@ -1,10 +1,10 @@
 const Router = require('koa-router');
 
-const { getGlobalStats, getRequesterByDept } = require("./repository");
+const { getGlobalStats, getRequesterByDept } = require('./repository');
 
 const router = new Router();
 
-router.get('/', async (ctx) => {
+router.get('/', async ctx => {
     const { globalStats, contentRange } = await getGlobalStats({
         client: ctx.state.db
     });
@@ -13,7 +13,7 @@ router.get('/', async (ctx) => {
     ctx.body = globalStats;
 });
 
-router.get("/requesterByDept", async ctx => {
+router.get('/requesterByDept', async ctx => {
     const { requesterByDept, contentRange } = await getRequesterByDept({
         client: ctx.state.db
     });

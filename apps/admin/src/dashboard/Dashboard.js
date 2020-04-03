@@ -21,7 +21,7 @@ const styles = {
     main: {
         flex: '2',
         marginRight: '1em',
-        marginTop: 20,
+        marginTop: 20
     },
     flex: {
         display: 'flex'
@@ -46,11 +46,11 @@ const styles = {
 
 const Dashboard = () => {
     const [state, setState] = useState({
-        request_nb:0,
-        requester_nb:0,
-        request_by_status:{labels:[], datasets:[]},
-        requester_by_dept:{labels:[], datasets:[]},
-        mask_by_status:{labels:[], datasets:[]}
+        request_nb: 0,
+        requester_nb: 0,
+        request_by_status: { labels: [], datasets: [] },
+        requester_by_dept: { labels: [], datasets: [] },
+        mask_by_status: { labels: [], datasets: [] }
     });
     const version = useVersion();
     const dataProvider = useDataProvider();
@@ -75,7 +75,7 @@ const Dashboard = () => {
             ],
             datasets: [
                 {
-                    label: "Demandes par statut",
+                    label: 'Demandes par statut',
                     backgroundColor: 'rgba(99,255,132,0.2)',
                     borderColor: 'rgba(99,255,132,1)',
                     borderWidth: 1,
@@ -89,35 +89,40 @@ const Dashboard = () => {
                         stats[0].requestNbPending,
                         stats[0].requestNbCancel
                     ]
-                },
+                }
             ]
         };
 
         const mask_by_status = {
-            labels: ["Visières"],
-            
-            datasets: [{
-                label: "A produire",
-                data: [stats[0].requestedShadeToBuild],
-                backgroundColor: "rgba(63,103,126,0.6)",
-                hoverBackgroundColor: "rgba(50,90,100,1)"
-            },{
-                label: "En production",
-                data: [stats[0].requestedShadeInProduction],
-                backgroundColor: "rgba(195,194,110,0.6)",
-                hoverBackgroundColor: "rgba(195,194,110,1)"
-            },{
-                label: "Livrées",
-                data: [stats[0].requestedShadeDelivered],
-                backgroundColor: "rgba(57,177,91,0.6)",
-                hoverBackgroundColor: "rgba(57,177,91,1)"
-            },{
-                label: "Rejets et annulations",
-                data: [stats[0].requestedShadeCanceled],
-                backgroundColor: "rgba(201,145,155,0.6)",
-                hoverBackgroundColor: "rgba(201,145,155,1)"
-            }]
-        }
+            labels: ['Visières'],
+
+            datasets: [
+                {
+                    label: 'A produire',
+                    data: [stats[0].requestedShadeToBuild],
+                    backgroundColor: 'rgba(63,103,126,0.6)',
+                    hoverBackgroundColor: 'rgba(50,90,100,1)'
+                },
+                {
+                    label: 'En production',
+                    data: [stats[0].requestedShadeInProduction],
+                    backgroundColor: 'rgba(195,194,110,0.6)',
+                    hoverBackgroundColor: 'rgba(195,194,110,1)'
+                },
+                {
+                    label: 'Livrées',
+                    data: [stats[0].requestedShadeDelivered],
+                    backgroundColor: 'rgba(57,177,91,0.6)',
+                    hoverBackgroundColor: 'rgba(57,177,91,1)'
+                },
+                {
+                    label: 'Rejets et annulations',
+                    data: [stats[0].requestedShadeCanceled],
+                    backgroundColor: 'rgba(201,145,155,0.6)',
+                    hoverBackgroundColor: 'rgba(201,145,155,1)'
+                }
+            ]
+        };
 
         setState((state) => ({
             ...state,
@@ -129,30 +134,35 @@ const Dashboard = () => {
     }, [dataProvider]);
 
     const fetchRequesterBydept = useCallback(async () => {
-        const { data : raw } = await dataProvider.getList('stats/requesterByDept', {
-            sort: { field: 'id', order: 'ASC' },
-            pagination: { page: 1, perPage: 1 }
-        });
+        const { data: raw } = await dataProvider.getList(
+            'stats/requesterByDept',
+            {
+                sort: { field: 'id', order: 'ASC' },
+                pagination: { page: 1, perPage: 1 }
+            }
+        );
 
         var result = {
-            labels: raw.map(a =>{
-                let dpt = departments.find(o => String(o.num_dep) === a.department);
+            labels: raw.map((a) => {
+                let dpt = departments.find(
+                    (o) => String(o.num_dep) === a.department
+                );
                 return dpt !== undefined ? dpt.dep_name : a.department;
             }),
             datasets: [
                 {
-                    label: "Demandeurs par département",
+                    label: 'Demandeurs par département',
                     backgroundColor: 'rgba(255,99,132,0.2)',
                     borderColor: 'rgba(255,99,132,1)',
                     borderWidth: 1,
                     hoverBackgroundColor: 'rgba(255,99,132,0.4)',
                     hoverBorderColor: 'rgba(255,99,132,1)',
-                    data: raw.map(a => a.requesterNbByDepartment)
-                },
+                    data: raw.map((a) => a.requesterNbByDepartment)
+                }
             ]
         };
-        
-        setState(state => ({ ...state, requester_by_dept: result }));
+
+        setState((state) => ({ ...state, requester_by_dept: result }));
     }, [dataProvider]);
 
     useEffect(() => {
@@ -181,16 +191,16 @@ const Dashboard = () => {
 
     const useStyles = makeStyles((theme) => ({
         root: {
-            flexGrow: 1,
+            flexGrow: 1
         },
         paper: {
             padding: theme.spacing(2),
             textAlign: 'center',
-            color: theme.palette.text.secondary,
-        },
+            color: theme.palette.text.secondary
+        }
     }));
     const classes = useStyles();
-    
+
     return isXSmall ? (
         <div>
             <div style={styles.flexColumn}>
@@ -224,36 +234,40 @@ const Dashboard = () => {
             <Grid container spacing={3}>
                 <Grid item xs>
                     <div>
-                        <HorizontalBar 
+                        <HorizontalBar
                             data={request_by_status}
                             height={250}
-                            options={{ 
+                            options={{
                                 maintainAspectRatio: false,
                                 scales: {
-                                    xAxes: [{
-                                        ticks: {
-                                            min: 0,
+                                    xAxes: [
+                                        {
+                                            ticks: {
+                                                min: 0
+                                            }
                                         }
-                                    }]
-                                } 
+                                    ]
+                                }
                             }}
                         />
                     </div>
                 </Grid>
                 <Grid item xs>
                     <div>
-                        <HorizontalBar 
-                            data={requester_by_dept} 
+                        <HorizontalBar
+                            data={requester_by_dept}
                             height={250}
-                            options={{ 
+                            options={{
                                 maintainAspectRatio: false,
                                 scales: {
-                                    xAxes: [{
-                                        ticks: {
-                                            min: 0,
+                                    xAxes: [
+                                        {
+                                            ticks: {
+                                                min: 0
+                                            }
                                         }
-                                    }]
-                                } 
+                                    ]
+                                }
                             }}
                         />
                     </div>
@@ -262,15 +276,12 @@ const Dashboard = () => {
             <Grid container spacing={3}>
                 <Grid item xs>
                     <Paper className={classes.paper}>
-                        <MaskByStatus 
-                            data={mask_by_status} 
-                            height={250}
-                        />
+                        <MaskByStatus data={mask_by_status} height={250} />
                     </Paper>
                 </Grid>
             </Grid>
             <Grid container spacing={3}>
-                <Grid item xs style={{textAlign: "center"}}>
+                <Grid item xs style={{ textAlign: 'center' }}>
                     <Button
                         variant="contained"
                         color="primary"
