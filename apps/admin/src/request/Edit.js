@@ -1,5 +1,6 @@
 import React from 'react';
 import {
+    DeleteButton,
     Edit,
     NumberInput,
     TabbedForm,
@@ -26,6 +27,7 @@ const RequestEditToolbar = (props) => (
     <Toolbar {...props}>
         <SaveButton label="Sauver" redirect="list" submitOnEnter={false} />
         <ListButton label="Annuler et revenir à la liste" />
+        <DeleteButton label="Demande annulée" />
     </Toolbar>
 );
 

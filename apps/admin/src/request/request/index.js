@@ -8,7 +8,8 @@ export const requestStatus = [
     { id: 'DISPATCH_PENDING', name: 'En attente' },
     { id: 'MANAGEMENT_TODO', name: 'Fabrication demandée' },
     { id: 'MANAGEMENT_BUILDING', name: 'En fabrication' },
-    { id: 'MANAGEMENT_DELIVERED', name: 'Livré' }
+    { id: 'MANAGEMENT_DELIVERED', name: 'Livré' },
+    { id: 'CUSTOMER_CANCELED', name: 'Annulé' }
 ];
 
 export const requesterType = [
