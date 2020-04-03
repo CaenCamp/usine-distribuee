@@ -9,14 +9,6 @@
         "format": "prettier --write --check \"**/*.+(js|md|json)\"",
         "format:ci": "prettier --check \"**/*.+(js|md|json)\""
     },
-    "lint-staged": {
-        "*.{js,md,json}": "yarn lint"
-    },
-    "husky": {
-        "hooks": {
-            "pre-commit": "lint-staged"
-        }
-    },
     "devDependencies": {
         "babel-eslint": "10.1.0",
         "eslint": "6.8.0",
