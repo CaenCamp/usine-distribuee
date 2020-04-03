@@ -224,15 +224,15 @@ const Dashboard = () => {
     ) : (
         <div className={classes.root}>
             <Grid container spacing={3}>
-                <Grid item xs>
+                <Grid item xs={6}>
                     <RequestKPI {...request_nb_props} />
                 </Grid>
-                <Grid item xs>
+                <Grid item xs={6}>
                     <RequestKPI {...requester_nb_props} />
                 </Grid>
             </Grid>
             <Grid container spacing={3}>
-                <Grid item xs>
+                <Grid item xs={6}>
                     <div>
                         <HorizontalBar
                             data={request_by_status}
@@ -252,7 +252,7 @@ const Dashboard = () => {
                         />
                     </div>
                 </Grid>
-                <Grid item xs>
+                <Grid item xs={6}>
                     <div>
                         <HorizontalBar
                             data={requester_by_dept}
@@ -274,7 +274,7 @@ const Dashboard = () => {
                 </Grid>
             </Grid>
             <Grid container spacing={3}>
-                <Grid item xs>
+                <Grid item xs={11}>
                     <Paper className={classes.paper}>
                         <MaskByStatus data={mask_by_status} height={250} />
                     </Paper>
