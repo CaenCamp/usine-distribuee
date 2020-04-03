@@ -13,7 +13,6 @@ const getRequesterByDept = ({ client }) => {
             `requester_professional_identifier as requester_nb_by_department`
         )
         .from('request')
-        .whereNotIn('status', ['DISPATCH_REJECTED', 'CUSTOMER_CANCELED'])
         .groupBy(client.raw(`left(delivery_postal_code, 2)`))
         .orderBy('requester_nb_by_department', 'DESC');
 
