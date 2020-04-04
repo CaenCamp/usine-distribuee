@@ -18,8 +18,8 @@ module.exports = () => ({
     deliveryAddress: faker.address.streetAddress(),
     deliveryPostalCode: faker.address.zipCode(),
     deliveryCity: faker.address.city(),
-    maskSmallSizeQuantity: faker.random.number(75),
-    maskLargeSizeQuantity: faker.random.number(75),
+    maskSmallSizeQuantity: faker.random.number({ min: 5, max: 75 }),
+    maskLargeSizeQuantity: faker.random.number({ min: 5, max: 75 }),
     forecastQuantity: faker.random.number(150),
     forecastDays: faker.random.number(15),
     requesterComment: faker.lorem.sentence()
