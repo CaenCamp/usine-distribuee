@@ -51,3 +51,18 @@ Cypress.Commands.add('fillRequestForm', (payload) => {
         cy.root();
     });
 });
+
+Cypress.Commands.add('authenticate', () => {
+    cy.request({
+        method: 'POST',
+        url: '/authenticate',
+        body: {
+            email: Cypress.env('ADMIN_EMAIL'),
+            password: Cypress.env('ADMIN_PASSWORD')
+        }
+    })
+        .its('body')
+        .then((body) => {
+            window.localStorage.setItem('token', body.token);
+        });
+});
