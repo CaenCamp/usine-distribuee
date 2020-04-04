@@ -1,7 +1,7 @@
 const getGlobalStats = ({ client }) => {
     const query = client.select(`*`).from('global_stats');
 
-    return query.then(result => ({
+    return query.then((result) => ({
         globalStats: result
     }));
 };
@@ -16,7 +16,7 @@ const getRequesterByDept = ({ client }) => {
         .groupBy(client.raw(`left(delivery_postal_code, 2)`))
         .orderBy('requester_nb_by_department', 'DESC');
 
-    return query.then(result => ({
+    return query.then((result) => ({
         requesterByDept: result
     }));
 };

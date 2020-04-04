@@ -1,4 +1,4 @@
-exports.up = async function(knex) {
+exports.up = async function (knex) {
     await knex.raw(`DROP VIEW IF EXISTS global_stats`);
     return knex.raw(`
         CREATE OR REPLACE VIEW global_stats AS
@@ -77,6 +77,6 @@ exports.up = async function(knex) {
     `);
 };
 
-exports.down = async function(knex) {
+exports.down = async function (knex) {
     return knex.raw('DROP VIEW IF EXISTS global_stats');
 };
