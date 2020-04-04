@@ -1,3 +1,5 @@
+const payloadFactory = require('../utils/payloadFactory');
+
 describe('Index page', function () {
     beforeEach(function () {
         cy.visit('/');
@@ -7,11 +9,16 @@ describe('Index page', function () {
         cy.title().should('contain', 'Usine Partagée');
     });
 
+    it('it has global quantity stats', function () {
+        cy.get('p#stats-requested-quantity').should('contain', '/ 5000');
+    });
+
     it('it contains each block titles', function () {
         const blockTitles = [
             'ORGANISATION',
             'CONTACT OPERATIONNEL',
             'ADRESSE DE LIVRAISON',
+            'MATERIEL',
             'PREVISIONNEL',
             'COMMENTAIRE'
         ];
@@ -45,6 +52,11 @@ describe('Index page', function () {
         cy.get('input[name=delivery_city]').should('exist');
     });
 
+    it('it contains a material block with inputs', function () {
+        cy.get('input[name=mask_small_size_quantity]').should('exist');
+        cy.get('input[name=mask_large_size_quantity]').should('exist');
+    });
+
     it('it contains a prevision block with inputs', function () {
         cy.get('input[name=forecast_quantity]').should('exist');
         cy.get('input[name=forecast_days]').should('exist');
@@ -52,5 +64,14 @@ describe('Index page', function () {
 
     it('it contains a comment block with textarea', function () {
         cy.get('textarea[name=requester_comment]').should('exist');
+    });
+
+    it('it should successfully submit form with valid payload', function () {
+        const payload = payloadFactory();
+
+        cy.fillRequestForm(payload).submit();
+
+        cy.get('.alert.alert-success').should('exist');
+        cy.get('.alert.alert-danger').should('not.exist');
     });
 });
