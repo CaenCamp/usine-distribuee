@@ -31,7 +31,7 @@ if (config.env === 'production') {
 app.use(
     cors({
         credentials: true,
-        origin: config.env === 'development' ? '*' : null,
+        origin: config.env === 'development' ? 'http://localhost:8002' : null,
         allowHeaders: ['Origin, Content-Type, Accept, Authorization, Cookie'],
         exposeHeaders: ['Content-Range']
     })
