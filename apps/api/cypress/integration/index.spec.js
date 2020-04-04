@@ -74,4 +74,56 @@ describe('Index page', function () {
         cy.get('.alert.alert-success').should('exist');
         cy.get('.alert.alert-danger').should('not.exist');
     });
+
+    it('it should successfully submit form with other requester type', function () {
+        const payload = payloadFactory();
+
+        cy.fillRequestForm({
+            ...payload,
+            requesterType: 'other',
+            requesterOtherType: 'ccc'
+        }).submit();
+
+        cy.get('.alert.alert-danger').should('not.exist');
+        cy.get('.alert.alert-success').should('exist');
+    });
+
+    it('it should fail to submit form with empty payload', function () {
+        cy.get('form').submit();
+
+        cy.get('.alert.alert-success').should('not.exist');
+        cy.get('.alert.alert-danger').within(() => {
+            cy.get('h4').contains('Erreur de validation');
+        });
+    });
+
+    it('it should fail to submit form with insufficient amount of items', function () {
+        const payload = payloadFactory();
+
+        cy.fillRequestForm({
+            ...payload,
+            maskSmallSizeQuantity: 1,
+            maskLargeSizeQuantity: 1
+        }).submit();
+
+        cy.get('.alert.alert-success').should('not.exist');
+        cy.get('.alert.alert-danger').within(() => {
+            cy.get('h4').contains('Erreur de validation');
+        });
+    });
+
+    it('it should fail to submit form with maximum amount of items reached', function () {
+        const payload = payloadFactory();
+
+        cy.fillRequestForm({
+            ...payload,
+            maskSmallSizeQuantity: 100,
+            maskLargeSizeQuantity: 100
+        }).submit();
+
+        cy.get('.alert.alert-success').should('not.exist');
+        cy.get('.alert.alert-danger').within(() => {
+            cy.get('h4').contains('Erreur de validation');
+        });
+    });
 });

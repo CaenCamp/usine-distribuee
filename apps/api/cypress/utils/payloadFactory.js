@@ -22,5 +22,5 @@ module.exports = () => ({
     maskLargeSizeQuantity: faker.random.number(75),
     forecastQuantity: faker.random.number(150),
     forecastDays: faker.random.number(15),
-    requesterComment: faker.lorem.sentences()
+    requesterComment: faker.lorem.sentence()
 });

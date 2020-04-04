@@ -17,7 +17,7 @@ Cypress.Commands.add('fillRequestForm', (payload) => {
         );
 
         if (payload.requesterType === 'other') {
-            cy.get('input[name=requester_other_type]').check(
+            cy.get('input[name=requester_other_type]').type(
                 payload.requesterOtherType
             );
         }
