@@ -1,0 +1,52 @@
+name: End-to-end
+
+on: push
+
+jobs:
+  cypress:
+    runs-on: ubuntu-16.04
+
+    container: cypress/browsers:node12.13.0-chrome78-ff70
+
+    services:
+      postgres:
+        image: postgres:10.8
+        ports:
+        - 5432:5432
+        options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
+
+    env:
+      NODE_ENV: test
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: postgres
+      ADMIN_EMAIL: cypress@caen.camp
+      ADMIN_PASSWORD: Cypr3ss-Caen-Camp
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v1
+
+    - name: Dependencies
+      run: yarn install
+      working-directory: ./apps/api
+
+    - name: Migrations
+      run: yarn run migrate:latest
+      working-directory: ./apps/api
+
+    - name: Create Admin
+      run: node ./cli/create-admin.js
+      working-directory: ./apps/api
+
+    - name: Run Cypress
+      uses: cypress-io/github-action@v1
+      with:
+        start: yarn start
+        wait-on: http://localhost:3001
+        working-directory: ./apps/api
+      env:
+        CYPRESS_baseUrl: http://localhost:3001
+        CYPRESS_ADMIN_EMAIL: ${{ env.ADMIN_EMAIL }}
+        CYPRESS_ADMIN_PASSWORD: ${{ env.ADMIN_PASSWORD }}
+

@@ -168,7 +168,7 @@ const Dashboard = () => {
     useEffect(() => {
         fetchStats();
         fetchRequesterBydept();
-    }, [version]); // eslint-disable-line react-hooks/exhaustive-deps
+    }, [version]);
 
     const {
         request_nb,
