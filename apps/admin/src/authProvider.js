@@ -1,16 +1,7 @@
-import {
-    AUTH_LOGIN,
-    AUTH_LOGOUT,
-    AUTH_ERROR,
-    AUTH_CHECK,
-    AUTH_GET_PERMISSIONS
-} from 'react-admin';
-
 import permissions from './permissions';
 
-export default (type, params) => {
-    if (type === AUTH_LOGIN) {
-        const { username, password } = params;
+export default {
+    login: ({ username, password }) => {
         const request = new Request(
             `${process.env.REACT_APP_API_URL || ''}/authenticate`,
             {
@@ -32,23 +23,22 @@ export default (type, params) => {
                 localStorage.setItem('token', token);
                 localStorage.setItem('role', role);
             });
-    }
-    if (type === AUTH_LOGOUT) {
+    },
+    logout: () => {
         localStorage.removeItem('token');
         localStorage.removeItem('role');
         return Promise.resolve();
-    }
-    if (type === AUTH_ERROR) {
-        // ...
-    }
-    if (type === AUTH_CHECK) {
+    },
+    checkError: (error) => {
+        return error.status === 403 ? Promise.reject() : Promise.resolve();
+    },
+    checkAuth: () => {
         return localStorage.getItem('token')
             ? Promise.resolve()
             : Promise.reject();
-    }
-    if (type === AUTH_GET_PERMISSIONS) {
+    },
+    getPermissions: () => {
         const role = localStorage.getItem('role');
         return role ? Promise.resolve(permissions[role]) : Promise.reject();
     }
-    return Promise.reject('Unknown method');
 };
