@@ -36,7 +36,7 @@ services:
     command: "yarn dev"
 
   postgres:
-    image: postgres:12.2
+    image: postgres:11.6
     volumes:
       - usine-distribuee-pgData:/var/lib/postgresql/data
     ports:
