@@ -12,7 +12,7 @@ const sendRequestConfirmation = ({
     maskRequestId,
     publicNumber
 }) => {
-    if (config.env === 'development') {
+    if (config.env !== 'production') {
         signale.info(
             `Envoi d'un mail de tracking à "${nameTo}<${emailTo}>". Demande #${publicNumber} (${maskRequestId})`
         );
