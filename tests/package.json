@@ -1,0 +1,14 @@
+{
+    "name": "usine-partagee-tests",
+    "version": "0.1.0",
+    "description": "Les tests de l'usine partagée",
+    "private": true,
+    "license": "GPL-3.0",
+    "scripts": {
+        "cypress:open": "cypress open"
+    },
+    "dependencies": {
+        "cypress": "4.3.0",
+        "eslint-plugin-cypress": "2.10.3"
+    }
+}

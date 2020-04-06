@@ -22,6 +22,7 @@ jobs:
       POSTGRES_DB: postgres
       ADMIN_EMAIL: cypress@caen.camp
       ADMIN_PASSWORD: Cypr3ss-Caen-Camp
+      API_URL: http://localhost:3001
 
     steps:
     - name: Checkout
@@ -29,7 +30,7 @@ jobs:
 
     - name: Dependencies
       run: |
-        yarn install
+        cd tests && yarn install
         cd apps/api && yarn install
 
     - name: Migrations
@@ -40,14 +41,17 @@ jobs:
       run: node ./cli/create-admin.js
       working-directory: ./apps/api
 
+    - name: Start api in background
+      run: yarn start &
+      working-directory: ./apps/api
+
     - name: Run Cypress
       uses: cypress-io/github-action@v1
       with:
-        start: cd apps/api && yarn start
-        wait-on: http://localhost:3001
-        working-directory: ./
+        wait-on: ${{ env.API_URL }}
+        working-directory: ./tests
       env:
-        CYPRESS_baseUrl: http://localhost:3001
+        CYPRESS_baseUrl: ${{ env.API_URL }}
         CYPRESS_ADMIN_EMAIL: ${{ env.ADMIN_EMAIL }}
         CYPRESS_ADMIN_PASSWORD: ${{ env.ADMIN_PASSWORD }}
 
