@@ -8,7 +8,6 @@
         "cypress:open": "cypress open"
     },
     "dependencies": {
-        "cypress": "4.3.0",
-        "eslint-plugin-cypress": "2.10.3"
+        "cypress": "4.3.0"
     }
 }
