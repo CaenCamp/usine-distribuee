@@ -1,4 +1,4 @@
-exports.up = function (knex) {
+exports.up = function () {
     // This migration is disabled to fix migration problem on Clever Cloud
     // To fix it for newcomers, CUTOMER_CANCELD status has been added
     // in migration 20200328100536_model-part-2.js
