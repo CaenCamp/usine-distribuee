@@ -45,6 +45,7 @@ jobs:
       with:
         start: cd apps/api && yarn start
         wait-on: http://localhost:3001
+        working-directory: ./
       env:
         CYPRESS_baseUrl: http://localhost:3001
         CYPRESS_ADMIN_EMAIL: ${{ env.ADMIN_EMAIL }}
