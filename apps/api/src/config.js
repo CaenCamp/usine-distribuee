@@ -65,6 +65,12 @@ const config = convict({
         default: 3001,
         env: 'API_PORT'
     },
+    suspendedOrders: {
+        doc: 'Suspended Public Order Form',
+        format: 'Boolean',
+        default: true,
+        env: 'SUSPENDED_ORDERS'
+    },
     mailjet: {
         publicKey: {
             doc: 'Mailjet API public key',
