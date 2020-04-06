@@ -36,7 +36,8 @@ exports.up = function (knex) {
                     'MANAGEMENT_TODO',
                     'MANAGEMENT_BUILDING',
                     'MANAGEMENT_BUILT',
-                    'MANAGEMENT_DELIVERED'
+                    'MANAGEMENT_DELIVERED',
+                    'CUSTOMER_CANCELED'
                 ],
                 { useNative: true, enumName: 'request_status_type' }
             )
