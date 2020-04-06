@@ -9,6 +9,8 @@ jobs:
   api_admin:
     runs-on: ubuntu-latest
 
+    needs: [lint, e2e]
+
     steps:
     - uses: actions/checkout@v2
     - run: git fetch --prune --unshallow
