@@ -51,7 +51,7 @@ const renderCachedHomepage = async (ctx) => {
     } catch (error) {
         signale.error(error);
     }
-    return ctx.render('index.ejs');
+    return ctx.render('suspended.ejs');
 };
 
 router.get('/', renderCachedHomepage);
