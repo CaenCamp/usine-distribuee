@@ -14,6 +14,7 @@ import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import TextField from '@material-ui/core/TextField';
 import Grid from '@material-ui/core/Grid';
+import Switch from '@material-ui/core/Switch';
 import DateFnsUtils from '@date-io/date-fns';
 import formatDate from 'date-fns/format';
 import {
@@ -112,6 +113,26 @@ export default ({ record }) => {
         );
     };
 
+    const handleReadyForDelivery = (event) => {
+        mutate(
+            {
+                type: 'update',
+                resource: 'dispatcher-requests',
+                payload: {
+                    id: record.id,
+                    data: {
+                        productsAvailableForDelivery: event.target.checked
+                    }
+                }
+            },
+            {
+                onSuccess: () => {
+                    refresh();
+                }
+            }
+        );
+    };
+
     if (!record) {
         return null;
     }
@@ -124,51 +145,94 @@ export default ({ record }) => {
                         Gestion des livraisons
                     </Typography>
                 </p>
-                {(record.deliveryTracking || []).length !== 0 && (
-                    <TableContainer component={Paper}>
-                        <Table
-                            className={classes.table}
-                            size="small"
-                            aria-label="a dense table"
+                <p>
+                    <Typography variant="h6" gutterBottom>
+                        Des visières sont-elles disponibles pour une livraison ?
+                    </Typography>
+                    <Typography component="div">
+                        <Grid
+                            component="label"
+                            container
+                            alignItems="center"
+                            spacing={1}
                         >
-                            <TableHead>
-                                <TableRow>
-                                    <TableCell>#</TableCell>
-                                    <TableCell>Date</TableCell>
-                                    <TableCell align="right">Livreur</TableCell>
-                                    <TableCell align="right">
-                                        Quantité
-                                    </TableCell>
-                                </TableRow>
-                            </TableHead>
-                            <TableBody>
-                                {(record.deliveryTracking || []).map((row) => (
-                                    <TableRow key={row.name}>
-                                        <TableCell component="th" scope="row">
-                                            {row.number}
-                                        </TableCell>
-                                        <TableCell>
-                                            {formatDate(
-                                                new Date(row.date),
-                                                'dd/MM/yyyy HH:mm'
-                                            )}
+                            <Grid item>Non</Grid>
+                            <Grid item>
+                                <Switch
+                                    checked={
+                                        record.productsAvailableForDelivery
+                                    }
+                                    onChange={handleReadyForDelivery}
+                                    name="Disponible"
+                                    color="primary"
+                                    inputProps={{
+                                        'aria-label': 'secondary checkbox'
+                                    }}
+                                />
+                            </Grid>
+                            <Grid item>Oui</Grid>
+                        </Grid>
+                    </Typography>
+                </p>
+                {(record.deliveryTracking || []).length !== 0 && (
+                    <>
+                        <Typography variant="h6" gutterBottom>
+                            Livraisons réalisées
+                        </Typography>
+                        <TableContainer component={Paper}>
+                            <Table
+                                className={classes.table}
+                                size="small"
+                                aria-label="a dense table"
+                            >
+                                <TableHead>
+                                    <TableRow>
+                                        <TableCell>#</TableCell>
+                                        <TableCell>Date</TableCell>
+                                        <TableCell align="right">
+                                            Livreur
                                         </TableCell>
                                         <TableCell align="right">
-                                            {row.responsible}
-                                        </TableCell>
-                                        <TableCell align="right">
-                                            {row.maskSmallSizeDelivered} modèle
-                                            standard
-                                            <br />
-                                            {row.maskLargeSizeDelivered} modèle
-                                            long
-                                            <br />
+                                            Quantité
                                         </TableCell>
                                     </TableRow>
-                                ))}
-                            </TableBody>
-                        </Table>
-                    </TableContainer>
+                                </TableHead>
+                                <TableBody>
+                                    {(record.deliveryTracking || []).map(
+                                        (row) => (
+                                            <TableRow key={row.name}>
+                                                <TableCell
+                                                    component="th"
+                                                    scope="row"
+                                                >
+                                                    {row.number}
+                                                </TableCell>
+                                                <TableCell>
+                                                    {formatDate(
+                                                        new Date(row.date),
+                                                        'dd/MM/yyyy HH:mm'
+                                                    )}
+                                                </TableCell>
+                                                <TableCell align="right">
+                                                    {row.responsible}
+                                                </TableCell>
+                                                <TableCell align="right">
+                                                    {row.maskSmallSizeDelivered}{' '}
+                                                    modèle standard
+                                                    <br />
+                                                    {
+                                                        row.maskLargeSizeDelivered
+                                                    }{' '}
+                                                    modèle long
+                                                    <br />
+                                                </TableCell>
+                                            </TableRow>
+                                        )
+                                    )}
+                                </TableBody>
+                            </Table>
+                        </TableContainer>
+                    </>
                 )}
                 <p>
                     <Typography variant="h6" gutterBottom>

@@ -13,7 +13,8 @@ const filterableFields = [
     'status',
     'createdAtBefore',
     'createdAtAfter',
-    'ownership'
+    'ownership',
+    'productsAvailableForDelivery'
 ];
 const sortableFields = [
     'createdAt',
@@ -23,7 +24,8 @@ const sortableFields = [
     'productionManagementId',
     'status',
     'maskSmallSizeQuantity',
-    'maskLargeSizeQuantity'
+    'maskLargeSizeQuantity',
+    'productsAvailableForDelivery'
 ];
 
 const table = 'request';

@@ -9,6 +9,8 @@ import {
     TextField,
     NumberField,
     FunctionField,
+    BooleanField,
+    NullableBooleanInput,
     EditButton
 } from 'react-admin';
 import { Divider, Tabs, AppBar, Tab } from '@material-ui/core';
@@ -25,6 +27,12 @@ const UserFilter = (props) => (
             source="requesterType"
             label="Type de numéro professionnel"
             choices={requesterType}
+        />
+        <NullableBooleanInput
+            source="productsAvailableForDelivery"
+            label="Visières disponibles à la livraison"
+            style={{ minWidth: 300 }}
+            alwaysOn
         />
     </Filter>
 );
@@ -63,6 +71,10 @@ const RequestDatagrid = (props) => (
         <DeliveryPercentage label="Commandes livrées" />
         <EditButton />
         <PrintButton />
+        <BooleanField
+            source="productsAvailableForDelivery"
+            label="Livraison disponible"
+        />
     </Datagrid>
 );
 
