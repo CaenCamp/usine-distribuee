@@ -92,6 +92,8 @@ router.put('/:id', async (ctx) => {
         ) {
             updatedData.status = 'MANAGEMENT_DELIVERED';
         }
+
+        updatedData.productsAvailableForDelivery = false;
     }
 
     if (updatedData.productionManagementComments) {
