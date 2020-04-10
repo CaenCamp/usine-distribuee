@@ -23,6 +23,7 @@ jobs:
       ADMIN_EMAIL: cypress@caen.camp
       ADMIN_PASSWORD: Cypr3ss-Caen-Camp
       API_URL: http://localhost:3001
+      SUSPENDED_ORDERS: false
 
     steps:
     - name: Checkout
