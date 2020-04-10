@@ -9,7 +9,7 @@
         "sourceType": "module",
         "ecmaVersion": 2020
     },
-    "plugins": ["prettier"],
+    "plugins": ["prettier", "react-hooks"],
     "extends": [
         "eslint:recommended",
         "prettier",
@@ -20,6 +20,7 @@
         "plugin:jest/style"
     ],
     "rules": {
+        "arrow-parens": 0,
         "prefer-expect-assertions": 0,
         "prettier/prettier": "error",
         "no-useless-escape": 0,

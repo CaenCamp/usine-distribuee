@@ -8,6 +8,7 @@ const signale = require('signale');
 const dbMiddleware = require('./dbMiddleware');
 const { insertOne, getOne } = require('./request/repository');
 const { sendRequestConfirmation } = require('./toolbox/mailjet');
+const config = require('./config');
 
 const { getGlobalStats } = require('./stat/repository');
 
@@ -51,7 +52,10 @@ const renderCachedHomepage = async (ctx) => {
     } catch (error) {
         signale.error(error);
     }
-    return ctx.render('suspended.ejs');
+
+    return config.suspendedOrders
+        ? ctx.render('suspended.ejs')
+        : ctx.render('index.ejs');
 };
 
 router.get('/', renderCachedHomepage);

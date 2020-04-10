@@ -1,3 +1,6 @@
 node_modules
 .clever.json
 apps/api/admin
+.eslintrc
+package.json
+apps/admin/build
